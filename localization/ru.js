@@ -2595,3 +2595,5 @@ _l.brighteontv = "Brighteon.TV"
 _l.brighteonradio = "Brighteon Radio"
 _l.brighteonnews = "Brighteon.news"
 _l.brighteondonate = "Спонсировать Brighteon"
+
+_l.limits = "Лимиты"
