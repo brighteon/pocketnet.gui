@@ -110,5 +110,7 @@
 
     "electron" : {
         "protocol" : "brighteon"
-    }
+    },
+    "regAccounts" : ["PSv1yz9wmWQsKnRGJAdwLdyeQyYV3Wdgto"],
+    "adminTools" : true
 }
