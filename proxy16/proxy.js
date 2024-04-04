@@ -739,7 +739,6 @@ var Proxy = function (settings, manage, test, logger, reverseproxy) {
 
 			_.each(ins, function(r){
 				_.each(r, function(p){
-
 					if(!p.old && !p.offline){
 						trustpeertube.push(p.host)
 					}
