@@ -55,12 +55,9 @@
                     "name": "Brighteon.apk",
                     "gfname": "BrighteonGF.apk",
                     "url": "https://api.github.com/repos/brighteon/pocketnet.gui/releases/latest"
-                },
-                "href" : "https://play.google.com/store/apps/details?id=pocketnet.app"
+                }
             },
-            "ios" : {
-                "href" : "https://apps.apple.com/app/id1537944200"
-            },
+            
             "windows" : {
                 "github" : {
                     "name": "BrighteonSetup.exe",

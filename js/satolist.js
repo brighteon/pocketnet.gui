@@ -694,7 +694,7 @@ Platform = function (app, listofnodes) {
                     githublabel : 'downloadgithub'
                 },
 
-                ios : {
+                /*ios : {
                     appname: app.meta.fullname,
                     id: "ios",
                     text: {
@@ -706,7 +706,7 @@ Platform = function (app, listofnodes) {
                     modile : true,
                     image : 'applications_ios.jpg',
                     hreflabel : 'installpwa',
-                },
+                },*/
 
                 windows: {
 
