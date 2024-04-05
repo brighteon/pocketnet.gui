@@ -156,6 +156,7 @@ jobs:
       - name: Prepare building
         run: |
           npm i
+          npm run build:proxy16
           npm run minimize:cordova -- -sha=${{ github.sha }}
           cd ./cordova
           npm i
@@ -214,6 +215,7 @@ jobs:
       - name: Prepare building
         run: |
           npm i
+          npm run build:proxy16
           npm run minimize:cordova:gfree -- -sha=${{ github.sha }} -run=${{ github.run_number }}${{ github.run_attempt }}
           cd ./cordova
           npm i
