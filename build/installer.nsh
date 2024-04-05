@@ -1,4 +1,4 @@
-InstallDir "$LocalAppData\Programs\Pocketnet"
+InstallDir "$LocalAppData\Programs\Brighteon"
 
 !macro customRemoveFiles
     # RMDir /r "$INSTDIR"

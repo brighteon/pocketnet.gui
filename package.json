@@ -105,7 +105,7 @@
     "build": {
         "productName": "Brighteon",
         "afterSign": "electron-builder-notarize",
-        "appId": "app.pocketnet.gui",
+        "appId": "io.brighteon",
         "files": [
             "**/*",
             "!cordova${/*}",
