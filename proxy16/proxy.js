@@ -793,7 +793,7 @@ var Proxy = function (settings, manage, test, logger, reverseproxy) {
 				const res = await fetch(config.peertubesListLink);
 				var data = await res.json();
 
-				if(!_.isEmpty(data)) {
+				if(data && !_.isEmpty(data) && data.swarms) {
 					fileRead = data
 				}
 
