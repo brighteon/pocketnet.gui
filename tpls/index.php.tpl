@@ -8,10 +8,8 @@
         <meta http-equiv='expires' content='0'>
         <meta http-equiv="X-Frame-Options: SAMEORIGIN">
         
-        <link rel="alternate" href="android-app://pocketnet.app/https/pocketnet.app" />
-        <link rel="alternate" href="android-app://pocketnet.app/https/test.pocketnet.app" />
-        <link rel="alternate" href="android-app://pocketnet.app/https/bastyon.com" />
-        <link rel="alternate" href="android-app://pocketnet.app/https/bastyon.com" />
+        <link rel="alternate" href="android-app://brighteon.io/https/brighteon.io" />
+        <link rel="alternate" href="android-app://brighteon.io/https/brighteon.io" />
 
         <meta name="theme-color" content="#ffffff">
         <meta name="msapplication-navbutton-color" content="#ffffff">

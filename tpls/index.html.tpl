@@ -26,10 +26,9 @@
         font-src 'self' data: __VAR__.domain:* use.fontawesome.com;
         media-src data: blob: *">
         
-        <link rel="alternate" href="android-app://pocketnet.app/https/pocketnet.app" />
-        <link rel="alternate" href="android-app://pocketnet.app/https/test.pocketnet.app" />
-        <link rel="alternate" href="android-app://pocketnet.app/https/bastyon.com" />
-        <link rel="alternate" href="android-app://pocketnet.app/https/bastyon.com" />
+
+        <link rel="alternate" href="android-app://brighteon.io/https/brighteon.io" />
+        <link rel="alternate" href="android-app://brighteon.io/https/brighteon.io" />
 
         <link rel="manifest" href="manifest.json">
         <link rel="apple-touch-icon" href="img/res/blue_pad_250.png" sizes="250x250">

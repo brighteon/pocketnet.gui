@@ -88,7 +88,7 @@ autoUpdater.on('update-downloaded', (ev) => {
 });
 //---------------------------------------------------
 
-var appName = global.TESTPOCKETNET ? 'BastyonTest' : 'Bastyon';
+var appName = global.TESTPOCKETNET ? 'BrighteonTest' : 'Brighteon';
 
 var defaultIcon = require('path').join(__dirname, 'res/electron/icons/win/icon.ico')
 var defaultTrayIcon = require('path').join(__dirname, 'res/electron/icons/win/icon.ico')
@@ -450,7 +450,7 @@ function createWindow() {
 
         currenturl = url
 
-        win.setTitle('Bastyon')
+        win.setTitle('Brighteon')
 
     })
 
@@ -905,11 +905,11 @@ if(!r) {
 
 const saveBlobToFile = async (blob)=>{
     return new Promise((resolve, reject) => {
-        if(!fs.existsSync(path.join(os.tmpdir(), "bastyon"))){
-            fs.mkdirSync(path.join(os.tmpdir(), "bastyon"))
+        if(!fs.existsSync(path.join(os.tmpdir(), "brighteon"))){
+            fs.mkdirSync(path.join(os.tmpdir(), "brighteon"))
         }
         var base64Data = blob.replace(/^data:image\/png;base64,/, "");
-        const pathImage = path.join(os.tmpdir(), "bastyon", `${Math.floor(Math.random() * 1000000000)}.png`);
+        const pathImage = path.join(os.tmpdir(), "brighteon", `${Math.floor(Math.random() * 1000000000)}.png`);
         fs.writeFile(pathImage, base64Data, 'base64', function(err) {
             if(err){
                 reject(err);
