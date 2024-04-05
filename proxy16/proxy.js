@@ -791,7 +791,12 @@ var Proxy = function (settings, manage, test, logger, reverseproxy) {
 
 			try {
 				const res = await fetch(config.peertubesListLink);
-				fileRead = await res.json();
+				var data = await res.json();
+
+				if(!_.isEmpty(data)) {
+					fileRead = data
+				}
+
 			} catch (e) {
 				console.error('No peertube servers list!');
 			}
