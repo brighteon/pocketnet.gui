@@ -48,6 +48,7 @@ jobs:
       - name: Prepare building
         run: |
           npm i
+          npm run build:proxy16
           npm run dev:brighteon -- -sha=${{ github.sha }}
       - name: Prepare for app notarization
         run: |
@@ -88,6 +89,7 @@ jobs:
         run: |
           apt update && apt install -y binutils rpm
           npm i
+          npm run build:proxy16
           npm run dev:brighteon -- -sha=${{ github.sha }}
       - name: Building
         run: |
@@ -118,6 +120,7 @@ jobs:
       - name: Prepare building
         run: |
           npm i
+          npm run build:proxy16
           npm run dev:brighteon -- -sha=${{ github.sha }}
       - name: Building
         run: |
