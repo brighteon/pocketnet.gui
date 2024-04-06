@@ -723,7 +723,7 @@ Platform = function (app, listofnodes) {
                     node : true
                 },
 
-                macos: {
+                /*macos: {
                     appname: app.meta.fullname,
                     id: 'macos',
                     text: {
@@ -734,7 +734,7 @@ Platform = function (app, listofnodes) {
 
                     icon: '<i class="fab fa-apple"></i>',
                     image : 'applications_macos.png'
-                },
+                },*/
 
                 linux: {
                     appname: app.meta.fullname,
