@@ -17,7 +17,7 @@
         "start": "electron . --development",
         "start:test": "electron . --development --test",
         "pack": "electron-builder -w --dir --x64",
-        "build": "npm run build:proxy16 && npm run dev:bastyon",
+        "build": "npm run build:proxy16 && npm run dev:brighteon",
         "build:proxy16": "cd proxy16 && npm run build",
         "dist": "electron-builder -w --x64 --ia32 -p never",
         "distl": "electron-builder -l --x64 -p never",
