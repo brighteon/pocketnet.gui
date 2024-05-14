@@ -609,7 +609,6 @@ var lenta = (function(){
 				actions.observe()
 
 				isotopeinited = false
-				
 
 				clearnewmaterials()	
 
@@ -618,6 +617,8 @@ var lenta = (function(){
 				essenserenderclbk()
 
 				self.app.actions.scroll(0)
+
+				self.app.psdk.clearallfromdb('shareRequest')
 
 				make(clbk);
 
@@ -744,6 +745,8 @@ var lenta = (function(){
 					var last = _.min(larray, (s) => {
 						return s.id
 					})
+
+					console.log('save observe', essenseData.observe + k, first, last)
 
 					if (first && last){
 						self.app.platform.sdk.sharesObserver.view(essenseData.observe + k, first.id, last.id)
@@ -4608,6 +4611,8 @@ var lenta = (function(){
 
 							var _beginmaterial = ''
 
+							var ignoreerror = false
+
 							
 
 							if(!author){
@@ -4720,6 +4725,8 @@ var lenta = (function(){
 
 								includingsub = true
 
+								ignoreerror = true
+
 							}
 
 
@@ -4743,6 +4750,19 @@ var lenta = (function(){
 								tagsexcluded : tagsexcluded
 
 							}, function(shares, error, pr){
+
+								if(error && ignoreerror){
+									loading = false
+									if(essenseData.includesub){
+										includingsub = false
+										subloaded = true
+									}
+									
+									if(clbk) clbk([])
+									return
+								}
+
+								console.log("error", error)
 
 								offsetblock = offsetblock + period
 
@@ -5022,7 +5042,7 @@ var lenta = (function(){
 						}
 					}*/
 	
-					self.app.platform.ws.messages.event.clbks[mid] = function(data){
+					/*self.app.platform.ws.messages.event.clbks[mid] = function(data){
 	
 						if(data.mesType == 'upvoteShare' && data.share){
 	
@@ -5040,10 +5060,10 @@ var lenta = (function(){
 	
 						}
 						
-					}
+					}*/
 
 
-					self.app.platform.actionListeners[mid] = function({type, alias, status}){
+					self.app.psdk.updatelisteners[mid] = self.app.platform.actionListeners[mid] = function({type, alias, status}){
 
 						if(type == 'upvoteShare'){
 
@@ -5302,6 +5322,9 @@ var lenta = (function(){
 				subloaded = !self.app.platform.sdk.sharesObserver.hasnewkeys([essenseData.observe + '_sub', 'sub'])
 
 
+				console.log('observer', subloaded)
+
+
 				var tagsfilter = self.app.platform.sdk.categories.gettags()
 				var tagsexcluded = self.app.platform.sdk.categories.gettagsexcluded()
 
@@ -5359,6 +5382,12 @@ var lenta = (function(){
 								events.videosInview()
 							}, 50)
 
+							///
+
+							/*if(beginmaterial){
+								console.log('beginmaterial', beginmaterial)
+							}*/
+
 
 							window.requestAnimationFrame(function(){
 								if(!el.shares) return
@@ -5382,12 +5411,12 @@ var lenta = (function(){
 							var p = parameters()
 
 							if(!essenseData.second){
-								if (p.s && !p.msh && !p.np){
+								if ((p.s) && !p.msh && !p.np){
 
 									setTimeout(function(){
 
-										actions.openPost(p.s, function(){
-											actions.scrollToPost(p.s)
+										actions.openPost(p.s || p.v, function(){
+											actions.scrollToPost(p.s || p.v)
 										}, null, null, p.commentid)
 										
 									}, 500)
@@ -5396,6 +5425,8 @@ var lenta = (function(){
 	
 								if (p.i){
 									var share = self.psdk.share.get(p.i)
+
+									actions.scrollToPost(p.i)
 									
 									var src = null;
 	
@@ -5410,14 +5441,20 @@ var lenta = (function(){
 	
 										
 								}
+
+								console.log("PPP", p)
 	
 								if(p.v){
+
+									console.log("HERE", video)
 	
 									if(video){
 									}
 									else{	
-										actions.scrollToPost(p.v)
-										actions.fullScreenVideo(p.v, function(){})
+										setTimeout(function(){
+											actions.scrollToPost(p.v)
+											actions.fullScreenVideo(p.v, function(){})
+										}, 500)
 									}
 									
 								}
@@ -5442,6 +5479,9 @@ var lenta = (function(){
 
 
 							if(shares.length < 5 && essenseData.includesub && !loading && (!ended && recommended != 'recommended' && recommended != 'best')){
+
+								console.log('actions.loadmore')
+
 								actions.loadmore()
 							}
 
@@ -5681,7 +5721,7 @@ var lenta = (function(){
 				}
 			
 				delete self.app.platform.actionListeners[mid]
-
+				delete self.app.psdk.updatelisteners[mid]
 				
 
 				_.each(initedcommentes, function(c){
