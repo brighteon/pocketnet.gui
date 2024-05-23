@@ -3,9 +3,9 @@
     "project": "Brighteon",
 
     "version": "0.8.89",
-    "versionsuffix": "1",
+    "versionsuffix": "2",
     "cordovaversion": "1.8.89",
-    "cordovaversioncode": "180891",
+    "cordovaversioncode": "180892",
 
     "description": "Brighteon desktop application",
     "author": "Pocketnet Community <support@brighteon.io>",
@@ -141,7 +141,14 @@
             ]
         },
         "mac": {
-            "target": "dmg",
+            "target": [
+                {
+                    "target": "dmg",
+                    "arch": [
+                        "universal"
+                    ]
+                }
+            ],
             "artifactName": "${productName}Setup.${ext}",
             "icon": "res/electron/icons/mac/icon.icns",
             "extendInfo": "brighteon",
