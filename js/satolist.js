@@ -20261,9 +20261,8 @@ Platform = function (app, listofnodes) {
 
                 fastMessageEvents: function (data, message, close) {
 
-                    if(data.opmessage == 'a:monetization'){
+                    if(data.opmessage == 'a:monetization' && app.monetization){
                         message.el.find('.infomain,.extra').on('click', function(){
-
 
                             
                             platform.app.nav.api.go({
