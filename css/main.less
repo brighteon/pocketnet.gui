@@ -969,6 +969,11 @@ button{
         padding-left: 0;
         padding-right: 0;
     }
+
+    .logo20{
+        width: 15px;
+        display: inline;
+    }
 }
 ///// HOVER REFACTORING
 @media (pointer:hover) {
@@ -1320,6 +1325,8 @@ l{
         }
 
     }
+
+
 }
 @media only screen and (max-width: 1640px) {
 
@@ -5348,6 +5355,11 @@ html.mobileview.android{
 			}
 		}
 
+        &.donate{
+            .fa-heart{
+                color : #ed1f1f;
+            }
+        }
 
 	}
 
@@ -5448,8 +5460,7 @@ html.mobileview{
 
         -webkit-overflow-scrolling: touch;
         overscroll-behavior: contain;
-        backdrop-filter: blur(4px);
-        -webkit-backdrop-filter: blur(4px);  
+        background: rgba(var(--color-shadow-var), 0.96);
 
         .mobiledialogcontent{
             -webkit-transform: translateY(100%);
@@ -6176,6 +6187,9 @@ html.allcontent_application{
             color : rgb(var(--neutral-grad-3));
         }
     }
+    .fa-heart{
+        color : #ed1f1f;
+    }
 
     .messagethumbs{
         width : 44px;
@@ -6467,7 +6481,7 @@ html.allcontent_application{
                 }
 
                 .donate{
-                    color: rgb(var(--color-good));
+                    font-weight: 700;
                 }
 
                 .tips{
@@ -6508,14 +6522,21 @@ html.allcontent_application{
 
 .fastMessage{
     border-radius: 12px;
-    .transition(0.3s, bottom);
+    
+    .transition(0.2s, bottom);
+    &.willhidden{
+        .transition(0.2s, opacity);
+        opacity: 0;
+    }
     &.smallsize{
         padding : @rhythm;
         width: 390px;
         cursor : pointer;
 
-        &:hover{
-            background: rgba(var(--color-shadow-base), 0.8);
+        @media (pointer:hover) {
+            &:hover{
+                background: rgba(var(--color-shadow-base), 0.8);
+            }
         }
 
         .cwrapper  {
@@ -6557,7 +6578,7 @@ html.allcontent_application{
         width: 390px;
         background: rgba(var(--color-shadow-base), 0.98);
         color: rgb(var(--color-txt-ac-1));
-        z-index: 140;
+        z-index: 1400;
         overflow: hidden;
         padding: 2 * @rhythm;
         text-align: center;
@@ -6567,10 +6588,16 @@ html.allcontent_application{
         justify-content: center;
         border-radius: 12px;
         cursor: pointer;
-        .transition(0.3s, opacity);
+        .transition(0.2s, opacity);
 
         &:hover{
             opacity: 0.8;
+        }
+    }
+
+    &.willhidden{
+        .hidenf{
+            opacity: 0;
         }
     }
 }
@@ -6643,7 +6670,7 @@ html.allcontent_application{
         color : rgb(var(--text-on-bg-shadow-color));
         text-align: center;
         font-size: 0.9em;
-        z-index: 140;
+        z-index: 1400;
         cursor: pointer;
 
         &:hover{
@@ -6662,9 +6689,15 @@ html.allcontent_application{
     color : rgb(var(--text-on-bg-shadow-color));
     padding : 1.5 * @rhythm;
     padding-left : 2 * @rhythm;
+    padding-right: 4 * @rhythm;
     font-size: 1em;
-    z-index: 140;
+    z-index: 1400;
     overflow: hidden;
+
+    &.smallsize{
+        padding-right : 4 * @rhythm;
+    }
+
     button{
         padding-right: 0;
     }
@@ -6693,6 +6726,10 @@ html.allcontent_application{
                 }
             }
         }
+    }
+
+    .cwrapper{
+        align-items: center;
     }
 
     .commentmessagewrapper{
@@ -6740,9 +6777,10 @@ html.allcontent_application{
         cursor: pointer;
         padding : @rhythm 1.5 * @rhythm;
         .transition(0.3s);
-
-        &:hover{
-            color : rgb(var(--neutral-grad-3))
+        @media (pointer:hover) {
+            &:hover{
+                color : rgb(var(--neutral-grad-3))
+            }
         }
 
     }
@@ -6846,6 +6884,21 @@ html.allcontent_application{
     .ghost{
         color : rgb(var(--color-bg-ac));
 
+    }
+
+    &.dnt{
+
+        background: #ed1f1f;
+
+        .transactionmessagewrapper{
+            >div{
+    
+                &.foramount{
+                    color : rgb(var(--text-on-bg-shadow-color))
+                }
+            }
+        }
+        
     }
 
     &.bright{
@@ -7043,6 +7096,7 @@ html.allcontent_application{
     }
 
     .article_image{
+        
         margin-bottom: @rhythm;
 
         &.withBorder{
@@ -7073,6 +7127,7 @@ html.allcontent_application{
         img{
             border-radius: 5px;
             display: block;
+            cursor: pointer;
         }
 
         .article_image_caption{
@@ -7122,6 +7177,7 @@ html.allcontent_application{
 
         .img{
             background-size: contain!important;
+            cursor: pointer;
         }
     }
 
@@ -7362,7 +7418,18 @@ html{
             }
         }
         #hideallnotificationsel{
-            display: none;
+            .hidenf{
+                position: fixed;
+                top : calc(5px + var(--app-margin-top));
+                left : 0.5 * @rhythm;
+                right : 0.5 * @rhythm;
+                bottom : auto;
+                width: auto;
+        
+                &:hover{
+                    opacity: 0.8;
+                }
+            }
         }
 
         #panelWrapper{
@@ -7403,7 +7470,7 @@ html{
             -webkit-backface-visibility: hidden;
         }
 
-        #navigation{
+        #bnavigation{
             will-change: transform;
             -webkit-backface-visibility: hidden;
         }
@@ -7425,7 +7492,7 @@ html{
                 }
             }
     
-            #navigation{
+            #bnavigation{
                 .nmenu{
                     transform: translateY(calc(var(--app-margin-bottom, 0) + 60px + @rhythm));
                 }
@@ -7441,7 +7508,7 @@ html{
             }
         }
 
-        #navigation{
+        #bnavigation{
             .fakem{
                 display: none;
             }
@@ -7497,7 +7564,7 @@ html{
             -webkit-backface-visibility: hidden;
         }
     
-        #navigation{
+        #bnavigation{
             will-change: transform;
             -webkit-backface-visibility: hidden;
         }
@@ -7513,7 +7580,7 @@ html{
                 
             }
     
-            #navigation{
+            #bnavigation{
                 .nmenu{
                     transform: translateY(calc(var(--app-margin-bottom, 0) + 60px + @rhythm));
                 }
@@ -7529,7 +7596,7 @@ html{
             }
         }
     
-        #navigation{
+        #bnavigation{
             .fakem{
                 display: none;
             }
@@ -8251,8 +8318,15 @@ html.mobileview{
         width: auto;
         min-width: 0;
         max-width: none;
-        border-radius: 6px;
+        border-radius: 12px;
         bottom : auto;
+        padding-right: 2 * @rhythm;
+        .transition(0.3s, top);
+
+        &.willhidden{
+            .transition(0.2s, opacity);
+            opacity: 0;
+        }
 
         .fmCnt{
             width: 100%;
@@ -8300,7 +8374,20 @@ html.mobileview{
         .foramount{
             width: auto!important;
         }
+        
 
+        &.smallsize{
+
+            padding-right: 4 * @rhythm;
+
+            .close{
+                padding-top: 0;
+                padding-bottom: 0;
+                height: 100%;
+                display: flex;
+                align-items: center;
+            }
+        }
        
 
     }

@@ -290,8 +290,6 @@ var test = (function(){
 
 					self.app.platform.sdk.users.nameExist(userInfo.name.v, function(exist){
 
-						console.log('exist2', userInfo.name.v, exist)
-
 						//exist = false
 
 						if(!exist || (exist == self.app.user.address.value)){
@@ -399,7 +397,7 @@ var test = (function(){
 			},
 			upload	: function(file, clbk){
 
-				if(file.ext == 'gif' && 1 == 2){
+				if(file.ext == 'gif' && self.app.platform.real[self.app.user.address.value]){
 
 					globalpreloader(true)
 
@@ -408,6 +406,8 @@ var test = (function(){
 
 						self.app.gifResizer.resize(file.base64, {width : 150, height : 150}).then((base64) => {
 							globalpreloader(false)
+
+							
 
 							tempInfo.image = base64;
 
@@ -590,8 +590,6 @@ var test = (function(){
 									var n = tempInfo[parameter.id]
 
 									self.app.platform.sdk.users.nameExist(n, function(exist){
-
-										console.log('exist', tempInfo[parameter.id], n)
 
 										if(tempInfo[parameter.id] != n) return
 
@@ -990,7 +988,7 @@ var test = (function(){
 					initUpload({
 						el : _p.el.find('.pgroup'),
 			
-						ext : ['png', 'jpeg', 'jpg', 'webp', /*'gif', */'jfif'],
+						ext : ['png', 'jpeg', 'jpg', 'webp', 'gif', 'jfif', 'avif'],
 
 						dropZone : el.c,
 
@@ -1091,7 +1089,7 @@ var test = (function(){
 
 			renders.icon(() => {
 				renders.options(() => {
-					window.requestAnimationFrame(() => {
+					window.rifticker.add(() => {
 						el.c.addClass('rendered')
 					})
 				})

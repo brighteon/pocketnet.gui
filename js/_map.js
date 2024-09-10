@@ -87,6 +87,7 @@ __map =  {
 		"js/localization.js",
 	
 		{path : "js/lib/client/system16.js", babelify : true},
+		{path : "js/lib/client/monetization.js", babelify : true},
 		{path : "js/lib/client/api.js", babelify : true},
 		{path : "js/lib/client/resoursesdb.js", babelify : true},
 		{path : "js/kit.js", babelify : true},
@@ -156,11 +157,11 @@ __map =  {
 	},
 	
 	__templates : [
-		{ c : 'navigation', n : 'menu' },
+		{ c : 'bnavigation', n : 'menu' },
 		{ c : 'menu', n : 'index' },
+		{ c : 'menu', n : 'userinfo' },
 		
-		//{ c : 'toppanel', n : 'index' },
-		{ c : 'navigation', n : 'index' },
+		{ c : 'bnavigation', n : 'index' },
 		{ c : 'footer', n : 'index' },
 		{ c : 'main', n : 'menu' },
 		{ c : 'main', n : 'index' },
@@ -761,7 +762,6 @@ __map =  {
 			anonimus : true,
 		},
 
-		
 	
 		embeding : {
 			uri : "embeding",
@@ -904,11 +904,15 @@ __map =  {
 		transactionview : {
 			uri : "transactionview",
 			href : "transactionview",
-			add : {
-				el : 'content'
-			},
+			add : insertingfunc,
 			exportcss : true,
 			anonimus : true,
+		},	
+
+		transactionslist : {
+			uri : "transactionslist",
+			href : "transactionslist",
+			add : insertingfunc,
 		},	
 
 	
@@ -954,9 +958,9 @@ __map =  {
 	
 	
 
-	navigation : {
-		uri : "navigation",
-		href : "navigation",
+	bnavigation : {
+		uri : "bnavigation",
+		href : "bnavigation",
 		add : {
 			el : 'navigation'
 		},
@@ -1141,16 +1145,16 @@ __map =  {
 		
 	},
 
+	advertising : {
+		uri : "advertising",
+		href : "advertising",
+		add : insertingfunc
+	},
+
 	earnings : {
 		uri : "earnings",
 		href : "earnings",
-		add : insertingfunc,
-
-		relations : [
-			{src : 'js/vendor/chart.min.js',			   f : 'js', require : function(){
-				Chart = require('./js/vendor/chart.min.js')
-			}},	
-		]
+		add : insertingfunc
 	},
 
 	videoCabinet : {

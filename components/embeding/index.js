@@ -291,7 +291,7 @@ var embeding = (function(){
 				initUpload({
 					el : el.upload,
 		
-					ext : ['png', 'jpeg', 'jpg', 'gif'],
+					ext : ['png', 'jpeg', 'jpg', 'gif', 'webp', 'avif'],
 					app : self.app,
 					dropZone : el.c.closest('.wnd'),
 
@@ -435,7 +435,7 @@ var embeding = (function(){
 
 		_.each(essenses, function(essense){
 
-			window.requestAnimationFrame(() => {
+			window.rifticker.add(() => {
 				essense.destroy();
 			})
 

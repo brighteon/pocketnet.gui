@@ -34,7 +34,7 @@ import android.os.IBinder;
 import android.os.PowerManager;
 import org.json.JSONObject;
 import androidx.core.app.NotificationCompat;
-
+import android.content.pm.ServiceInfo;
 import static android.os.PowerManager.PARTIAL_WAKE_LOCK;
 
 /**
@@ -53,7 +53,7 @@ public class ForegroundService extends Service {
 
     // Default text of the background notification
     private static final String NOTIFICATION_TEXT =
-            "Doing heavy tasks.";
+            "This allows you to download videos in stealth mode, or listen to videos with the screen off";
 
     // Default icon of the background notification
     private static final String NOTIFICATION_ICON = "icon";
@@ -129,9 +129,9 @@ public class ForegroundService extends Service {
             //startForeground(notification, FOREGROUND_SERVICE_TYPE_MICROPHONE);
             //startForeground(NOTIFICATION_ID, makeNotification());
          
-           if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
+           if (Build.VERSION.SDK_INT >= 34) {
                 //LOG.d("My  debug","if");
-                //startForeground(NOTIFICATION_ID,  makeNotification(), FOREGROUND_SERVICE_TYPE_MICROPHONE);
+                startForeground(NOTIFICATION_ID,  makeNotification(), ServiceInfo.FOREGROUND_SERVICE_TYPE_DATA_SYNC);
             } else {
                 //LOG.d("My  debug","else");
                 startForeground(NOTIFICATION_ID, makeNotification());

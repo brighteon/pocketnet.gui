@@ -100,8 +100,6 @@ var instance = function (host, ip, Roy) {
 
 		}).catch(e => {
 
-			//console.log("E", self.host, e)
-
 			return Promise.resolve()
 
 		})
@@ -155,8 +153,6 @@ var instance = function (host, ip, Roy) {
 				timeout,
 			}).then(async (result) => {
 
-
-
 				const meta = {
 					code: 200,
 					difference: performance.now() - responseTime,
@@ -170,8 +166,9 @@ var instance = function (host, ip, Roy) {
 				try {
 					resultStr = JSON.parse(await result.text());
 				} catch (err) {
-					console.log(err)
 					resultStr = {};
+
+					return Promise.reject({})
 				}
 
 				return Promise.resolve({
@@ -196,7 +193,7 @@ var instance = function (host, ip, Roy) {
 
 			statistic.add(meta);
 
-			return Promise.reject(error || {}).response || {};
+			return Promise.reject(error || {});
 		}
 	};
 

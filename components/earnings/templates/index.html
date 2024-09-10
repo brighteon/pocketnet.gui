@@ -1,21 +1,14 @@
 
 <div id="<%-module.map.id%>">
 
-  <div class="work">
-    <div class="earnings">
-      <div class="top">
-        <div class="caption">
-          <%= e('earnings') %>
-        </div>
-        <div class="form"></div>
-      </div>
-
-      <div class="content">
-        <div class="preloaderWrapper">
-          <div class="preloader5"><img src="./img/three-dots.svg"/></div>
-        </div>
-      </div>
+  <% if(monetizationOpportunity) { %> 
+    <div class="monetizationOpportunity">
+      
     </div>
-  </div>
+  <% } else { %>
+    <div class="monetizationOpportunityFail">
+        <span>Please write to support@bastyon.com to enable monetization</span>
+    </div>
+  <% } %>
 
 </div>

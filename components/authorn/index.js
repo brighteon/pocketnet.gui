@@ -29,7 +29,7 @@ var authorn = (function(){
 
 				events.up()
 
-				window.requestAnimationFrame(() => {
+				window.rifticker.add(() => {
 				
 					el.c.addClass('opensvishowed')
 
@@ -470,7 +470,19 @@ var authorn = (function(){
 
 			sendcoins : function(){
 				self.app.platform.sdk.user.stateAction(() => {
+					self.app.platform.ui.wallet.send({address : author.address}).catch(e => {})
+				})
+			},
+
+			donate : function(){
+				self.app.platform.sdk.user.stateAction(() => {
 					self.app.platform.ui.wallet.donate({receiver : author.address}).catch(e => {})
+				})
+			},
+
+			donatetrue : function(){
+				self.app.platform.sdk.user.stateAction(() => {
+					self.app.platform.ui.wallet.donate({receiver : author.address, donatemode : true}).catch(e => {})
 				})
 			},
 
@@ -883,6 +895,7 @@ var authorn = (function(){
 					p.el.find('.openwallet').on('click', events.openwallet)
 					p.el.find('.videoCabinet').on('click', events.videoCabinet)
 					p.el.find('.sendcoins').on('click', events.sendcoins)
+					p.el.find('.donate').on('click', events.donate)
 					p.el.find('.settings').on('click', events.settings)
 
 					p.el.find('.follow').on('click', events.subscribe)
@@ -977,7 +990,19 @@ var authorn = (function(){
 
 						right : isTablet(),
 
-						events : {							
+						events : {		
+							active : function(){
+								if(isMobile()){
+
+									self.app.blockscroll = true
+
+									_scrollTo(p.el.find('.searchIcon'), el.c.closest('.customscroll'), 0)
+
+									setTimeout(() => {
+										self.app.blockscroll = false
+									}, 200)
+								}
+							},				
 							search : function(value, clbk, e, helpers){
 
 								var href = '';
@@ -1065,7 +1090,7 @@ var authorn = (function(){
 						})
 
 						el.find('.donate').on('click', function(){
-							events.sendcoins()
+							events.donatetrue()
 							close()
 						})
 
@@ -1120,6 +1145,8 @@ var authorn = (function(){
 
 						return true
 					},
+
+					//includeboost : !self.user.isItMe(author.address) && self.app.boost && !self.app.pkoindisable
 				}
 
 				var method = currentLenta()
@@ -1128,26 +1155,49 @@ var authorn = (function(){
 					method.extend(params)
 				}
 
+
+				
+
+				
+
 				el.lenta.html('')
 
 				if(!author.reputationBlocked && !author.deleted){
-					self.nav.api.load({
 
-						open : true,
-						id : 'lenta',
-						el : el.lenta,
-						animation : false,
-	
-						mid : author.address,
-						insertimmediately : true,
-						essenseData : params,
-						fade : el.lenta,
-						
-						clbk : function(e, p){
-							modules.lenta = p;
-						}
-	
+					var monetizationPromise = (() => {return Promise.resolve(false)})()
+
+					var monetizationStatic = /*!self.user.isItMe(author.address) && */!params.searchValue && !params.searchTags && !params.read && !params.audio && !params.video
+
+					if (monetizationStatic) 
+						monetizationPromise = self.app.platform.sdk.users.checkMonetization(author.address)
+
+
+					monetizationPromise.then((m) => {
+
+						params.includeboost = monetizationStatic && m
+
+
+
+						self.nav.api.load({
+
+							open : true,
+							id : 'lenta',
+							el : el.lenta,
+							animation : false,
+		
+							mid : author.address,
+							insertimmediately : true,
+							essenseData : params,
+							fade : el.lenta,
+							
+							clbk : function(e, p){
+								modules.lenta = p;
+							}
+		
+						})
+
 					})
+					
 				}
 				else{
 					el.lenta.html('<div class="dummylenta"><i class="fas fa-dot-circle"></i></div>')
@@ -1312,12 +1362,9 @@ var authorn = (function(){
 
 		var relationsClbk = function(address){
 
-			console.log('address == author.address', address, author.address)
 			if (address == author.address){
 
 				author.data = self.psdk.userInfo.get(author.address)
-
-				console.log('author', author)
 
 				if(!self.app.mobileview){
 					renders.subscribes()
@@ -1336,8 +1383,6 @@ var authorn = (function(){
 		var initEvents = function(){
 			
 			self.app.psdk.updatelisteners.authorn = self.app.platform.actionListeners.authorn = function({type, alias, status}){
-
-				console.log("AUTHORN CLBK", type, alias)
 
 				if(type == 'blocking' || type == 'unblocking'){
 
@@ -1390,7 +1435,7 @@ var authorn = (function(){
 
 		var redir = function(page){
 
-			window.requestAnimationFrame(() => {
+			window.rifticker.add(() => {
 				self.app.el.html.removeClass('allcontent')
 			})
 
@@ -1511,7 +1556,7 @@ var authorn = (function(){
 
 			getdata : function(clbk, p){
 
-				window.requestAnimationFrame(() => {
+				window.rifticker.add(() => {
 					self.app.el.html.addClass('allcontent')
 				})
 
@@ -1555,6 +1600,8 @@ var authorn = (function(){
 
 				delete self.app.platform.actionListeners.authorn
 
+				if (el.c) el.c.empty()
+
 				ed = {};
 				el = {};
 			},
@@ -1572,7 +1619,7 @@ var authorn = (function(){
 				el.alentanavigation = el.c.find('.alentanavigation')
 				el.lenta = el.c.find('.lentawrapper')
 				el.up = el.c.find('.upbuttonwrapper');
-				el.w = $(window);
+				el.w = self.app.el.window;
 				el.bg = el.c.find('.bgwallpaperWrapper')
 				el.subscribes = el.c.find('.subscribes')
 				el.subscribers = el.c.find('.subscribers')
@@ -1603,7 +1650,7 @@ var authorn = (function(){
 
 		_.each(essenses, function(essense){
 
-			window.requestAnimationFrame(() => {
+			window.rifticker.add(() => {
 				essense.destroy();
 			})
 

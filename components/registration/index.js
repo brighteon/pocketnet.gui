@@ -660,7 +660,7 @@ var registration = (function(){
 			},
 
 			preloader : function(sh){
-				window.requestAnimationFrame(() => {
+				window.rifticker.add(() => {
 					if(sh){
 						el.c.addClass('loading')
 					}
@@ -739,13 +739,13 @@ var registration = (function(){
 	
 								return
 							}
-							window.requestAnimationFrame(() => {
+							window.rifticker.add(() => {
 								
 							})
 	
 							renders.step(step, function(_el){
 
-								window.requestAnimationFrame(() => {
+								window.rifticker.add(() => {
 									_scrollTop(_el, scrollel)
 									actions.preloader(false)
 									el.c.attr('step', step.id)
@@ -779,7 +779,7 @@ var registration = (function(){
 
 				grayscaleImage(src, function(image){
 
-					qrscanner.q.callback = function(data){
+					bfqrscanner.q.callback = function(data){
 
 						if(data == 'error decoding QR Code'){
 
@@ -795,7 +795,7 @@ var registration = (function(){
 						}
 					}
 
-					qrscanner.q.decode(image)
+					bfqrscanner.q.decode(image)
 					
 				})
 
@@ -1094,7 +1094,7 @@ var registration = (function(){
 							ext = p
 
 							setTimeout(() => {
-								window.requestAnimationFrame(() => {
+								window.rifticker.add(() => {
 									_p.el.find('.elpanel').removeClass('hidden')
 
 									if (clbk)
@@ -1298,7 +1298,7 @@ var registration = (function(){
 
 		_.each(essenses, function(essense){
 
-			window.requestAnimationFrame(() => {
+			window.rifticker.add(() => {
 				essense.destroy();
 			})
 

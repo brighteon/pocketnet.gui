@@ -227,13 +227,10 @@ var Node = function(options, manager){
     
                 timedifference(block.time)
 
-                // if(block?.msg === 'new block') {
-                //
-                //     self.notification(block)
-                // }
+                chain = f.lastelements(chain, 30, 10)
             }
 
-            chain = f.lastelements(chain, 150, 10)
+            
 
             lastnodeblock = block
 
@@ -314,6 +311,7 @@ var Node = function(options, manager){
         host: self.host,
         port: webport,
         portPrivate: self.portPrivate,
+        transports : manager ? manager.transports : null
     })
 
     self.rpcs = function(method, parsed){

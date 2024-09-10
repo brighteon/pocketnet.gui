@@ -15,6 +15,8 @@ var Peertube = function (settings) {
 
 	var roys = {};
 	var statistic = new Statistic();
+	
+	self.instanses = {}
 
 	var parselink = function (link) {
 		var ch = link.replace(PEERTUBE_ID, '').split(SLASH);
@@ -454,6 +456,14 @@ var Peertube = function (settings) {
 
 	self.destroy = function () {
 		statistic.destroy();
+
+		_.each(roys, (roy) => {
+			roy.destroy()
+		})
+
+		roys = {}
+
+		return Promise.resolve()
 	};
 
 	self.extendApi = function (api, cache) {
@@ -466,8 +476,6 @@ var Peertube = function (settings) {
 					return f.pretry(() => {
 						return inited
 					}).then(() => {
-
-						console.log("INITED")
 
 						return fu(data, cache)
 					}).then((r) => {

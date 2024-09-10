@@ -2,10 +2,11 @@
     "name": "brighteon",
     "project": "Brighteon",
 
-    "version": "0.8.89",
-    "versionsuffix": "2",
-    "cordovaversion": "1.8.89",
-    "cordovaversioncode": "180892",
+    "version": "0.8.99",
+
+    "versionsuffix": "5",
+    "cordovaversion": "1.8.99",
+    "cordovaversioncode": "180995",
 
     "description": "Brighteon desktop application",
     "author": "Pocketnet Community <support@brighteon.io>",

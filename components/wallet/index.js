@@ -587,9 +587,17 @@ var wallet = (function(){
 					
 				}
 
-				var c = 0
 
-				_.each(self.sdk.activity.latest, function(c, k){
+				var r = self.sdk.activity.getlatest(['visited', 'transaction'], 'user', 7) || []
+
+				_.each(r, (v) => {
+					if(v.id != self.app.user.address.value){
+						send.parameters.reciever.possibleValues.push(v.id)
+						send.parameters.reciever.possibleValuesLabels.push(v.data)
+					}
+				})
+
+				/*_.each(self.sdk.activity.getlatest(), function(c, k){
 
 					_.each(c, function(v){
 
@@ -609,7 +617,7 @@ var wallet = (function(){
 
 					})
 					
-				})
+				})*/
 
 				if (send.parameters.reciever.value == v || send.parameters.reciever.value == recv[v]){
 					send.parameters.reciever.value = send.parameters.reciever.possibleValuesLabels[0];
@@ -935,6 +943,9 @@ var wallet = (function(){
 				self.app.platform.actions.addActionAndSendIfCan(transaction, 1, null, {
 					calculatedFee
 				}).then((txdata) => {
+					
+
+					
 
 					if(clbk) clbk(txdata)
 
@@ -1090,6 +1101,7 @@ var wallet = (function(){
 					el.totaler = el.c.find('.total .tttlforerror');
 					el.addresses = el.c.find('.addresses');
 					el.payments = el.c.find('.payments')
+					el.stats = el.c.find('.stats')
 					el.buy = el.c.find('.buy');
 					
 					el.send = el.c.find('.send');
@@ -1104,6 +1116,18 @@ var wallet = (function(){
 							inWnd : true,
 			
 							essenseData : {
+							}
+						})
+					})
+
+					_p.el.find('.transactionsHistoryIcon').on('click', function(){
+						app.nav.api.load({
+							open : true,
+							id : 'transactionslist',
+							inWnd : true,
+			
+							essenseData : {
+								addresses : [self.app.user.address.value]
 							}
 						})
 					})
@@ -1159,7 +1183,9 @@ var wallet = (function(){
 
 					renders.clearMain(function(){
 
-						_scrollToTop(el.step, w, 50, -70)
+						console.log('_scrollToTop', el.step, w)
+
+						_scrollTop(el.step, w, 50)
 
 						self.shell({
 
@@ -2072,8 +2098,6 @@ var wallet = (function(){
 
 									actions.sendTransaction(amount, reciever, feemode, message, calculatedFee, (txdata, err) => {
 
-										console.error('e', err)
-
 										sendpreloader(false)
 
 										if (err){
@@ -2084,8 +2108,41 @@ var wallet = (function(){
 
 										renders.mainWithClear()
 
-										sitemessage(self.app.localization.e('wssuccessfully'))
+										if(reciever.indexOf('P') == 0){
+											console.log('reciever', reciever)
+											self.sdk.users.get(reciever, function(){
+												if(self.psdk.userInfo.get(reciever)){
+													self.sdk.activity.adduser('transaction', reciever)
+													console.log("adduser")
+												}
+											})
+										}
+										
 
+										
+
+
+										sitemessage(self.app.localization.e('wssuccessfully'), null, 5000, {
+											action : {
+												text : self.app.localization.e('gototransaction'),
+												do : function(){
+
+													app.nav.api.load({
+														open : true,
+														id : 'transactionview',
+														inWnd : true,
+										
+														essenseData : {
+															txid : txdata.transaction,
+															share : true,
+															checkauto : true
+														}
+													})
+
+												}
+											}
+										})
+										
 
 										//// TODO_REF_ACTIONS
 
@@ -2120,7 +2177,7 @@ var wallet = (function(){
 					act()
 
 				},
-				send : function(clbk, _el, nsp){
+				send : function(clbk, _el, nsp, calcnow){
 
 
 					if(!nsp){
@@ -2172,7 +2229,7 @@ var wallet = (function(){
 
 							ParametersLive([send.parameters.amount], _p.el)
 
-							if (mode == 1){
+							if (mode == 1 || calcnow){
 								actions.showSendInStep('calculateFee', 1, self.app.localization.e('wscalculatefees'))
 							}
 
@@ -2257,8 +2314,7 @@ var wallet = (function(){
 							}
 						})
 
-						_p.el.find('.calculateFee').on('click', function(){
-							
+						var calcfee = function(){
 							if (actions.validSend()){
 								actions.showSendInStep('calculateFee', 1, self.app.localization.e('wscalculatefees'))
 
@@ -2268,11 +2324,11 @@ var wallet = (function(){
 							{
 								_p.el.find('.required').removeClass('hidden')
 							}
+						}
 
-							
-						})
+						_p.el.find('.calculateFee').on('click', calcfee)
 
-					
+						if(calcnow) calcfee()
 
 						changerActive()
 
@@ -2312,8 +2368,6 @@ var wallet = (function(){
 			},
 			payments : function(clbk){
 				var payments = self.app.platform.sdk.payments.get()
-
-				console.log('payments', payments)
 
 				if(!payments.length){
 					if(clbk) clbk()
@@ -2376,6 +2430,71 @@ var wallet = (function(){
 
 				})
 			},
+
+
+			stats : function(clbk){
+
+				self.app.platform.sdk.user.getaccountearning(self.app.user.address.value).then(stats => {
+					self.shell({
+
+						name :  'stats',
+						el :   el.stats,
+						data : {
+							stats
+						},
+	
+					}, function(_p){
+
+						_p.el.find('.transactionhistory').on('click', function(){
+							app.nav.api.load({
+								open : true,
+								id : 'transactionslist',
+								inWnd : true,
+				
+								essenseData : {
+									addresses : [self.app.user.address.value]
+								}
+							})
+						})
+	
+						if(clbk) clbk()
+	
+					})
+				}).catch(e => {
+					if(clbk) clbk()
+
+				})
+
+				/*self.app.api.rpc('getaccountearning', [self.app.user.address.value, 0, 1627534]).then(function (s) {
+
+					console.log("STATS", s)
+					
+					var stats = {...s[0]}
+
+					delete stats.address
+
+					_.each(stats, (v, i) => {
+						stats[i] = v / 100000000
+					})
+
+					self.shell({
+
+						name :  'stats',
+						el :   el.stats,
+						data : {
+							stats
+						},
+	
+					}, function(_p){
+	
+						if(clbk) clbk()
+	
+					})
+				})*/
+
+
+				
+			},
 			
 			addresses : function(clbk){
 
@@ -2416,7 +2535,7 @@ var wallet = (function(){
 					el :   el.addresses,
 					data : {
 						addressesGroup : _addressesGroup,
-						total : account.actualBalance().actual
+						total : account.actualBalance(account.allAddresses()).actual
 					},
 
 				}, function(_p){
@@ -2580,8 +2699,6 @@ var wallet = (function(){
 
 				if (el.total)
 					el.total.html('')
-
-					console.log('mode', mode)
 				
 			 	drawCircles(null)
 				
@@ -2722,7 +2839,7 @@ var wallet = (function(){
 
 				/*renders.crowdfunding,*/ 
 
-				var actions = [renders.send, renders.buy, renders.deposit, renders.addresses, renders.payments/*, renders.htls*/]
+				var actions = [renders.send, renders.buy, renders.deposit, renders.addresses, renders.payments, renders.stats/*, renders.htls*/]
 
 				lazyActions(actions, clbk)
 
@@ -2842,7 +2959,13 @@ var wallet = (function(){
 								if (send.parameters.amount._onChange)
 									send.parameters.amount._onChange();
 
-								renders.send(null, null, true)
+								if (send.parameters.reciever._onChange)
+									send.parameters.reciever._onChange();
+
+								if (send.parameters.message._onChange)
+									send.parameters.message._onChange();
+
+								renders.send(null, null, true, true)
 								
 
 							}
@@ -2898,7 +3021,7 @@ var wallet = (function(){
 
 		_.each(essenses, function(essense){
 
-			window.requestAnimationFrame(() => {
+			window.rifticker.add(() => {
 				essense.destroy();
 			})
 

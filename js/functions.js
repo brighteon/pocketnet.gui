@@ -3,6 +3,11 @@
 /* DATE */
 
 
+getWeek = function(date){
+	var onejan = new Date(date.getFullYear(), 0, 1);
+	return Math.ceil((((date - onejan) / 86400000) + onejan.getDay() + 1) / 7);
+}
+
 secInTime = function (sec) {
 
 	var h = sec / 3600 ^ 0;
@@ -21,6 +26,73 @@ secInTime = function (sec) {
 	return result.join(":")
 }
 
+getWeekNumber = function(d){
+	// Copy date so don't modify original
+	d = new Date(+d);
+	d.setHours(0, 0, 0, 0);
+	// Set to nearest Thursday: current date + 4 - current day number
+	// Make Sunday's day number 7
+	d.setDate(d.getDate() + 4 - (d.getDay() || 7));
+	// Get first day of year
+	var yearStart = new Date(d.getFullYear(), 0, 1);
+	// Calculate full weeks to nearest Thursday
+	var weekNo = Math.ceil((((d - yearStart) / 86400000) + 1) / 7)
+	// Return array of year and week number
+	return [d.getFullYear(), weekNo];
+}
+  
+weeksInYear = function(year){
+	var month = 11,
+	  day = 31,
+	  week;
+
+	var result = []
+	var end = moment.utc(new Date(year + 1, 0, 1)).unix();
+  
+	// Find week that 31 Dec is in. If is first week, reduce date until
+	// get previous week.
+	do {
+	  var d = new Date(year, month, day--);
+
+	  week = getWeekNumber(d)[1];
+
+	} while (week == 1);
+
+	for(var i = 1; i <= week; i++){
+
+		var ds = moment.utc(year + "W" + addZero(i))
+		var de = moment(ds).add(7, 'days').unix()
+
+		if (de > end) de = end
+
+		result.push({
+			n : i,
+			date : ds.unix(),
+			end : de
+		})
+	}
+  
+	return result;
+}
+
+monthsInYear = function(year){
+
+	var result = []
+	var end = moment.utc(new Date(year + 1, 0, 1)).unix();
+
+	for (var i = 0; i < 12; i++){
+		var d = moment.utc(new Date(year, i, 1))
+		var e = moment.utc(new Date(year, i + 1, 1))
+
+		result.push({
+			n : i + 1,
+			date : d.unix(),
+			end : e.unix()
+		})
+	}
+  
+	return result;
+}
 
 
 addZero = function (n) {
@@ -267,7 +339,7 @@ successCheck = function (p) {
 
 	var self = this,
 		el = p.el || $('body');
-	var _w = $(window);
+
 	var ch = null;
 
 
@@ -284,23 +356,23 @@ successCheck = function (p) {
 			"html": h
 		});
 
-		window.requestAnimationFrame(() => {
+		window.rifticker.add(() => {
 			el.append(ch);
 			ch.find('svg')[0].classList.add('animate')
 
-			window.requestAnimationFrame(() => {
+			window.rifticker.add(() => {
 				ch.addClass('active')
 			})
 		})
 
 		setTimeout(function () {
 
-			window.requestAnimationFrame(() => {
+			window.rifticker.add(() => {
 				ch.removeClass('active')
 			})
 
 			setTimeout(function () {
-				window.requestAnimationFrame(() => {
+				window.rifticker.add(() => {
 					ch.remove()
 				})
 				
@@ -448,7 +520,7 @@ wnd = function (p) {
 			app.actions.offScroll(wnd);
 		}
 
-		window.requestAnimationFrame(() => {
+		window.rifticker.add(() => {
 
 			if (hiddenState.length) {
 				hiddenState.before(wnd)
@@ -499,7 +571,7 @@ wnd = function (p) {
 
 
 			setTimeout(function () {
-				window.requestAnimationFrame(() => {
+				window.rifticker.add(() => {
 					wnd.addClass('sette')
 				})
 
@@ -507,7 +579,7 @@ wnd = function (p) {
 			}, 20)
 
 			setTimeout(function () {
-				window.requestAnimationFrame(() => {
+				window.rifticker.add(() => {
 					if (wnd)
 						wnd.removeClass('asette')
 				})
@@ -523,7 +595,7 @@ wnd = function (p) {
 
 
 						setTimeout(function () {
-							window.requestAnimationFrame(() => {
+							window.rifticker.add(() => {
 
 
 								if (wnd)
@@ -771,7 +843,7 @@ wnd = function (p) {
 			delete app.events.resize[id]
 			delete app.events.scroll[id]
 
-			window.requestAnimationFrame(() => {
+			window.rifticker.add(() => {
 				destroySwipable()
 
 				wnd.addClass('asette')
@@ -787,7 +859,7 @@ wnd = function (p) {
 			var cl = function () {
 				if (self.essenseDestroy) self.essenseDestroy(key)
 
-				window.requestAnimationFrame(() => {
+				window.rifticker.add(() => {
 
 					wnd.remove();
 
@@ -1700,7 +1772,7 @@ sitemessage = function (message, func, delay = 5000, p = {}) {
 
 		setTimeout(function () {
 
-			messageel.detach();
+			messageel.remove();
 
 			messageel = null
 
@@ -1775,6 +1847,7 @@ bgImages = function (el, p) {
 }
 
 var imagesLoadedCache = {}
+var imagesLoadingCache = {}
 
 bgImagesClApply = function (el, src) {
 	el.setAttribute('image', '*')
@@ -1790,10 +1863,14 @@ bgImagesClApplyTemplate = function (src) {
 	src = clearStringXss(src || "");
 	src = replaceArchiveInImage(src);
 
-	
+	if (src.includes('www.youtube.com')) {
+		const videoId = src.match(/\/(shorts|embed)\/(.*|)\?/)[2];
+
+		src = `https://i.ytimg.com/vi/${videoId}/maxresdefault.jpg`;
+	}
 
 	if (src && imagesLoadedCache[src]) {
-		return 'image="*" imageloaded="true" style="background-image:url(' + src + ');background-size:cover;background-position:center center;background-repeat:no-repeat"'
+		return 'image="*" imageloaded="true" style="background-image:url(' + imagesLoadedCache[src] + ');background-size:cover;background-position:center center;background-repeat:no-repeat"'
 	}
 	else {
 		return 'image="' + (src || "*") + '"'
@@ -1820,7 +1897,7 @@ bgImagesCl = function (el, p) {
 			var src = el.getAttribute('image')
 
 			if (!src || src == '*') {
-				window.requestAnimationFrame(() => {
+				window.rifticker.add(() => {
 					el.setAttribute('imageloaded', 'true')
 				})
 				return Promise.resolve()
@@ -1829,6 +1906,9 @@ bgImagesCl = function (el, p) {
 			el.setAttribute('data-image', src)
 
 			var image = new Image()
+			var disablegifplay = false
+
+			
 
 			src = replaceArchiveInImage(src)
 
@@ -1838,38 +1918,107 @@ bgImagesCl = function (el, p) {
 				src = `https://i.ytimg.com/vi/${videoId}/maxresdefault.jpg`;
 			}
 
-			image.src = src
-
-			if (imagesLoadedCache[src]) {
-				bgImagesClApply(el, src)
-				resolve()
+			if (src.indexOf('.gif') > -1 && typeof app != 'undefined' && app.disablegif){
+				disablegifplay = app.disablegif()
 			}
-			else {
-				image.onload = () => {
 
-					imagesLoadedCache[src] = true
+			var rclbk = function(){
+				if(!imagesLoadedCache[src] || imagesLoadedCache[src] == '*'){
+					window.rifticker.add(() => {
+						el.setAttribute('image', '*')
+					})
+				}
+				else{
+					window.rifticker.add(() => {
 
-					window.requestAnimationFrame(() => {
-
-						bgImagesClApply(el, src)
+						bgImagesClApply(el, imagesLoadedCache[src])
 
 					})
-
-					resolve()
 				}
+
+				resolve()
 			}
 
+			var dclbk = function(tsrc){
 
+				return new Promise((resolve, reject) => {
+					
+					image.src = tsrc
 
-			image.onerror = (e) => {
-				console.error(src, e)
+					image.onerror = (e) => {
+						console.error(tsrc, e)
 
-				window.requestAnimationFrame(() => {
-					el.setAttribute('image', '*')
+						imagesLoadedCache[src] = '*'
+	
+						/*window.rifticker.add(() => {
+							el.setAttribute('image', '*')
+						})*/
+	
+						resolve(false)
+					}
+	
+					image.onload = () => {
+	
+						imagesLoadedCache[src] = tsrc
+	
+						/*window.rifticker.add(() => {
+	
+							bgImagesClApply(el, tsrc)
+	
+						})*/
+	
+						resolve(true)
+					}
+				})
+			
+				
+			}
+
+			if (imagesLoadedCache[src]) {
+
+				window.rifticker.add(() => {
+					bgImagesClApply(el, imagesLoadedCache[src])
 				})
 
 				resolve()
 			}
+			else {
+
+				if (imagesLoadingCache[src]){
+					return imagesLoadingCache[src].then((r) => {
+						rclbk()
+					})
+				}
+				
+				imagesLoadingCache[src] = new Promise((resolve) => {
+
+					
+					if(disablegifplay){
+
+						return convertimages([src]).then((imgs) => {
+							return dclbk(imgs[0]).then(() => {
+								rclbk()
+								resolve()
+							})
+						})
+	
+					}
+					else{
+						return dclbk(src).then(() => {
+							rclbk()
+							resolve()
+						})
+					}
+				}).then(() => {
+					delete imagesLoadingCache[src]
+
+					return Promise.resolve()
+				})
+				
+
+			}
+
+			
 
 		})
 
@@ -1891,7 +2040,7 @@ carousel = function (el, _items, _container) {
 	var currentscroll = 0
 	var currentitem = 0
 
-	window.requestAnimationFrame(() => {
+	window.rifticker.add(() => {
 		if (!container.hasClass('carousel')) container.addClass('carousel')
 
 		for (var i = 0; i < items.length; i++) {
@@ -1942,7 +2091,7 @@ carousel = function (el, _items, _container) {
 	}
 
 	var gotoslide = function (index) {
-		window.requestAnimationFrame(() => {
+		window.rifticker.add(() => {
 
 			container[0].scrollLeft = items[index].offsetLeft
 
@@ -1956,7 +2105,7 @@ carousel = function (el, _items, _container) {
 
 		currentscroll = el.scrollLeft
 
-		window.requestAnimationFrame(() => {
+		window.rifticker.add(() => {
 			var activeindex = findactive()
 
 			if (activeindex > -1) {
@@ -2080,6 +2229,9 @@ resizeFit = function (srcData, width, height, clbk, format) {
 }
 
 resize = function (srcData, width, height, clbk, format) {
+
+	/**/
+
 	var imageObj = new Image(),
 		canvas = document.createElement("canvas"),
 		ctx = canvas.getContext('2d'),
@@ -6016,6 +6168,8 @@ _scrollToTop = function (to, el, time, offset) {
 
 	var ofssetObj = to.offset();
 
+	console.log('scr ofssetObj', ofssetObj)
+
 	if (ofssetObj) {
 		var scrollTop = ofssetObj.top + offset;
 
@@ -6026,6 +6180,8 @@ _scrollToTop = function (to, el, time, offset) {
 			catch (e) { }
 
 		}
+
+		console.log('scroll', scrollTop)
 
 		_scrollTop(scrollTop, el, time);
 	}
@@ -6968,13 +7124,19 @@ AJAX = function(p) {
 
 					if (r.responseText) {
 
-						data = JSON.parse(r.responseText);
+						try{
+							data = JSON.parse(r.responseText);
 
-						if(typeof p.errors == 'undefined' || p.errors == true)
-						{
-							e = error(data.status, p, data.data);
-
+							if(typeof p.errors == 'undefined' || p.errors == true)
+							{
+								e = error(data.status, p, data.data);
+							}
+							
+						}catch(e){
+							e = error(null, p);
 						}
+
+						
 
 					}
 					else
@@ -7402,7 +7564,7 @@ fastars = function (el) {
 mobsearch = function (el, p) {
 
 	if (p.mobileSearch && p.app) {
-		window.requestAnimationFrame(() => {
+		window.rifticker.add(() => {
 
 			el.html('<div class="mobsearch">' + (p.icon || p.placeholder) + '</div>')
 			el.find('div').on('click', function () {
@@ -7719,6 +7881,12 @@ search = function (el, p) {
 
 				}
 			}
+			else{
+				events.search(searchInput)
+				e.stopPropagation()
+				e.preventDefault()
+				return false
+			}
 
 		});
 
@@ -7743,13 +7911,13 @@ search = function (el, p) {
 			}, 300)*/
 		})
 
-		searchInput.on('keypress', function (e) {
+		/*searchInput.on('keypress', function (e) {
 
 			if ((e.keyCode || e.which) == 13) {
 				events.search(searchInput)
 			}
 
-		});
+		});*/
 
 		searchEl.find('.searchIconLabel').on('click', function () {
 
@@ -7868,6 +8036,10 @@ initUpload = function (p) {
 			}
 
 		})(file);
+
+		reader.onerror = function(e){
+			error(e)
+		}
 	}
 
 	var errorHandler = function (file, clbk) {
@@ -8068,11 +8240,15 @@ initUpload = function (p) {
 			files = p.onStartUpload(files)
 		}
 
+		console.log('files', files)
+
 		lazyEach({
 			sync: true,
 			array: files,
 			all: {
 				success: function () {
+
+					console.log('success')
 					end();
 
 					if (p.onSuccess)
@@ -8081,6 +8257,9 @@ initUpload = function (p) {
 				fail: function () {
 					end();
 
+					console.log('failed')
+
+
 					if (p.onFail)
 						p.onFail()
 				}
@@ -8088,6 +8267,8 @@ initUpload = function (p) {
 			action: function (_p) {
 
 				var file = _p.item;
+
+				console.log('file', file)
 
 				var processId = makeid();
 
@@ -8122,13 +8303,18 @@ initUpload = function (p) {
 
 					readFile(reader, error, file, files, function (fileObject) {
 
+						console.log("read")
+
 
 						imageresize(file, fileObject.base64, function (base64) {
 
 							fileObject.base64 = base64;
 
+							console.log("resize")
 
 							autorotation(file, fileObject.base64, function (base64) {
+
+								console.log('autorotation')
 
 								fileObject.base64 = base64;
 
@@ -8140,30 +8326,33 @@ initUpload = function (p) {
 									_p.fail();
 								}
 								else {
-									var fd = new FormData();
-									fd.append('file', file);
-
-									_.each(p.data, function (data, key) {
-
-										if (typeof data == 'function') data = data();
-
-										if (key == 'data') {
-											if (p.user) {
-												p.user.extendAjaxData(data);
-											}
-										}
-
-										if (_.isArray(data) || _.isObject(data))
-											data = JSON.stringify(data);
-
-										fd.append(key, data);
-									})
+									
 
 									if (p.beforeUpload) {
 										p.beforeUpload(fileObject, processId)
 									}
 
 									if (p.server) {
+
+										var fd = new FormData();
+											fd.append('file', file);
+
+											_.each(p.data, function (data, key) {
+
+												if (typeof data == 'function') data = data();
+
+												if (key == 'data') {
+													if (p.user) {
+														p.user.extendAjaxData(data);
+													}
+												}
+
+												if (_.isArray(data) || _.isObject(data))
+													data = JSON.stringify(data);
+
+												fd.append(key, data);
+											})
+											
 										var xhr = new XMLHttpRequest();
 
 										xhr.onreadystatechange = function (e) {
@@ -8206,9 +8395,11 @@ initUpload = function (p) {
 										if (p.action) {
 											p.action(fileObject, _p.success)
 										}
-										else
-
+										else{
 											_p.success();
+										}
+
+											
 									}
 
 
@@ -8315,7 +8506,7 @@ initUpload = function (p) {
 		var thisid = makeid()
 
 
-		window.requestAnimationFrame(() => {
+		window.rifticker.add(() => {
 
 			if (dark){
 				el.addClass('dark')
@@ -10049,6 +10240,16 @@ resizeGif = function (app) {
 	return self
 }
 
+strToNumHash = function(str = '', max = 1){
+	var r = 0
+
+	for(var i = 0; i < str.length; i++){
+		r += str[i].charCodeAt(0) % max
+	}
+
+	return r % max
+}
+
 class LoadingBar {
 	constructor(barElem, styles) {
 		const self = this;
@@ -10231,6 +10432,8 @@ var connectionSpeed = function()
 };
 
 replaceArchiveInImage = function(src) {
+	if(!src) return ''
+
 	var srcNew = src;
 
 	window.project_config.archivedPeertubeServers.map(server => {

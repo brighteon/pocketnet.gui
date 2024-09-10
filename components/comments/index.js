@@ -97,6 +97,8 @@ var comments = (function(){
 					//newcomments : 'newcomments'
 				}
 
+				console.log('comment, optype', comment, optype)
+
 				if(optype == 'comment' || optype == 'commentEdit' || optype == 'commentDelete'){
 
 					var _el = el.c.find('#' + comment.id + ',#' + comment.actionId);
@@ -244,6 +246,7 @@ var comments = (function(){
 							receiver: receiver,
 							value : prevdonatevalue,
 							storage,
+							donatemode : true,
 							clbk  : function(value){
 
 								value = Number(value);
@@ -355,12 +358,12 @@ var comments = (function(){
 					return Promise.resolve(null)
 				}
 
-				var cmtsTo = _.filter([self.psdk.comment.get(p.pid), self.psdk.comment.get(p.aid)], (c) => c)
+				//var cmtsTo = _.filter([self.psdk.comment.get(p.pid), self.psdk.comment.get(p.aid)], (c) => c)
 				var authors = [share.address]
 
-				_.each(cmtsTo, (c) => {
+				/*_.each(cmtsTo, (c) => {
 					authors.push(c.address)
-				})
+				})*/
 
 
 				return self.psdk.userInfo.load(authors).then(() => {
@@ -607,15 +610,38 @@ var comments = (function(){
 
 					app.platform.ui.uploadImage({
 						multiple : true,
-						
-						onSuccess : function(imgs){
+						action : (image, clbk) => {
 
-							Promise.all(_.map(imgs, (img) => {
-								return resizePromise(img, 1080, 1080)
-							})).then(imgs => {
-								_.each(imgs, added)
-							})
+							var ext = fkit.extensionBase64(image.base64)
+
+							console.log("EXT", ext)
+
+							if (ext == 'gif'){
+								added(image.base64)
+
+								clbk()
+							}
+							else{
+								resizePromise(image.base64, 1080, 1080).then((img) => {
+									added(img)
+
+									clbk()
+								})
+							}
+
 							
+
+							
+
+						},
+						onSuccess : function(){
+
+						},
+						onError : function(e){
+							console.log(e)
+						},
+						onFail : function(){
+							console.log("Fail")
 						}
 					})
 
@@ -653,6 +679,8 @@ var comments = (function(){
 				delete areas[id]
 				delete currents[id]
 
+				console.log('removeForm')
+
 				el.c.find("#" + id + ' .answer').html('')
 				el.c.find("#" + id + ' .edit').html('')
 			},
@@ -662,8 +690,12 @@ var comments = (function(){
 
 				var current = currents[id];
 
+				console.log('currents', currents)
+
 				if (current){
 					var e = current.validation();
+
+					console.log('comment', e, current)
 
 					if (e){
 						actions.removeSending(wrapper)
@@ -726,14 +758,11 @@ var comments = (function(){
 							}
 
 							if(!error){
-
-								
-
 								successCheck()
 							}
 							else{
 
-								delete currents[id]
+								currents[id] = fxc
 
 								if(error == 'actions_noinputs_wait') error = 'actions_noinputs_wait_comment'
 
@@ -742,11 +771,13 @@ var comments = (function(){
 
 							state.save()
 
-							window.requestAnimationFrame(() => {
+							window.rifticker.add(() => {
 								wrapper.find('.emojionearea-editor').blur();
 								actions.removeSending(wrapper)
 
 								if(!error){
+
+									delete currents[id]
 	
 									wrapper.find('.newcommentimages').html('');
 									wrapper.find('.newcommentdonate').html('');
@@ -755,7 +786,7 @@ var comments = (function(){
 										el : wrapper
 									})
 
-									window.requestAnimationFrame(() => {
+									window.rifticker.add(() => {
 
 										if (areas[id]) {
 											areas[id].setText('');
@@ -828,8 +859,6 @@ var comments = (function(){
 
 				if (currents[id])
 					currents[id].message.set(findAndReplaceLinkClearReverse(v.replace('⠀', ' ')))
-
-				console.log('currents', currents)
 
 				state.save()
 
@@ -968,7 +997,7 @@ var comments = (function(){
 
 				if (show){
 
-					window.requestAnimationFrame(() => {
+					window.rifticker.add(() => {
 						c.addClass('showedreplies')
 						c.find('.repliesloaderWrapper').removeClass('hidden')
 					})
@@ -990,7 +1019,7 @@ var comments = (function(){
 
 								renders.list(p, function(){
 
-									window.requestAnimationFrame(() => {
+									window.rifticker.add(() => {
 										c.find('.repliesloaderWrapper').addClass('hidden')
 									})
 	
@@ -1023,7 +1052,7 @@ var comments = (function(){
 
 					actions.removeForm(id)
 
-					window.requestAnimationFrame(() => {
+					window.rifticker.add(() => {
 						c.removeClass('showedreplies')
 						p.el.html('')
 					})
@@ -1141,7 +1170,7 @@ var comments = (function(){
 				showedall = false;
 				ed.showall = false;
 
-				window.requestAnimationFrame(() => {
+				window.rifticker.add(() => {
 
 					el.c.removeClass('showedall')	
 					el.c.addClass('listpreview')
@@ -1161,7 +1190,7 @@ var comments = (function(){
 
 				if (listpreview){
 
-					window.requestAnimationFrame(() => {
+					window.rifticker.add(() => {
 						el.preloader.removeClass('hidden')
 					})
 				
@@ -1170,7 +1199,7 @@ var comments = (function(){
 						if(e){
 							self.app.platform.errorHandler(e, true)
 
-							window.requestAnimationFrame(() => {
+							window.rifticker.add(() => {
 								el.preloader.addClass('hidden')
 
 							})
@@ -1193,7 +1222,7 @@ var comments = (function(){
 						p.inner = html
 
 						renders.list(p, function(){
-							window.requestAnimationFrame(() => {
+							window.rifticker.add(() => {
 								actions.showhideLabel()	
 								el.c.addClass('showedall')	
 								el.c.removeClass('listpreview')
@@ -1233,7 +1262,7 @@ var comments = (function(){
 					needtoshow = true
 				}
 
-				window.requestAnimationFrame(() => {
+				window.rifticker.add(() => {
 					if (showedall){
 						if(!el.showall.hasClass('hidden'))
 							el.showall.addClass('hidden')
@@ -1354,7 +1383,6 @@ var comments = (function(){
 
 					setTimeout(() => {
 						self.app.blockscroll = false
-
 					}, 200)
 				}
 			}
@@ -1464,7 +1492,7 @@ var comments = (function(){
 	
 				comments = _.sortBy(comments, function(c){
 
-					if(c.temp || c.relay) return 10000000000
+					if(c.temp || c.relay) return 10000000000 * 100
 
 					/*if (self.app.platform.sdk.comments.blocked[c.address]) {
 						return 0
@@ -1479,6 +1507,47 @@ var comments = (function(){
 
 					return - (commentPoint(c) + (timec * 3000) ) / count
 				}) 
+
+				/*var answerOrderedComments = []
+
+				for(var i = 0; i < comments.length; i++){
+					var c = comments[i]
+
+					if (c.answerid){
+
+						var i = _.findIndex(comments, (cc) => {
+							return c.answerid == cc.id
+						})
+
+						if (i == -1){
+							answerOrderedComments.push(c)
+						}
+						else{
+							var j = _.findIndex(answerOrderedComments, (cc) => {
+								return c.id == cc.id
+							})
+
+							if (j > -1){
+								answerOrderedComments.splice(j + 1, 0, c)
+							}
+							else{
+								var k = _.findIndex(answerOrderedComments, (cc) => {
+									return c.answerid == cc.id
+								})
+
+								if (k > -1){
+									answerOrderedComments.splice(k, 0, c)
+								}
+								else{
+									answerOrderedComments.push(c)
+								}
+							}
+						}
+					}
+					else{
+						answerOrderedComments.push(c)
+					}
+				}*/
 
 				return comments
 			}
@@ -2051,17 +2120,20 @@ var comments = (function(){
 
 			})
 
-			actions.checkBanned(p).then((user) => {
-				if (user){
-
-					var info = self.psdk.userInfo.getShortForm(user.address)
-
-					if (info){
-						_p.el.find('.errormessage').removeClass('hidden').html(self.app.localization.e('commentBannedWarning', info.name))
-
+			setTimeout(() => {
+				actions.checkBanned(p).then((user) => {
+					if (user){
+	
+						var info = self.psdk.userInfo.getShortForm(user.address)
+	
+						if (info){
+							_p.el.find('.errormessage').removeClass('hidden').html(self.app.localization.e('commentBannedWarning', info.name))
+	
+						}
 					}
-				}
-			})
+				})
+			}, 500)
+			
 
 		}
 		
@@ -2205,7 +2277,7 @@ var comments = (function(){
 
 			limits : function(el, message){
 
-				var l = 1000 - message.length;
+				var l = 915 - message.length;
 
 				el.find('.limits').removeClass('bad')
 
@@ -2619,7 +2691,7 @@ var comments = (function(){
 								
 
 								_p.el.find('.refresh-comments').on('click', (e) => {
-									window.requestAnimationFrame(() => {
+									window.rifticker.add(() => {
 										$(e.currentTarget).addClass('refreshing');
 									})
 									
@@ -2728,8 +2800,6 @@ var comments = (function(){
 
 					if (comment.postid == txid){
 
-						console.log("FOCUS", setFocus, actions.findCurrentText())
-
 						if(currents[comment.id]) return 
 						
 						clbks.post(self.psdk.comment.get(comment.id) || comment, comment.optype)
@@ -2836,7 +2906,7 @@ var comments = (function(){
 
 					if(!el.c) return
 
-					window.requestAnimationFrame(() => {
+					window.rifticker.add(() => {
 						if(!el.preloader.hasClass('hidden'))
 							el.preloader.addClass('hidden')
 					})
@@ -3132,7 +3202,6 @@ var comments = (function(){
 
 				el = {};
 				ed = {};
-				
 
 				_in = null
 			},
@@ -3325,7 +3394,7 @@ var comments = (function(){
 
 		_.each(essenses, function(essense){
 
-			window.requestAnimationFrame(() => {
+			window.rifticker.add(() => {
 				essense.destroy();
 			})
 

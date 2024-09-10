@@ -250,6 +250,7 @@ _l.suseractivation = "User Activation";
 _l.sprofile = "Profile";
 _l.spc = "Post count";
 _l.spv = "Video Post count";
+_l.spa = "Audio Post count";
 _l.ssc = "Stars count";
 _l.ccc = "Comments count";
 _l.crc = "Comment Rate count";
@@ -1350,7 +1351,7 @@ _l.sortByDuration = "Duration";
 _l.sortByViews = "Views";
 
 _l.unableToAuthorize = "Unable to authorize";
-_l.unableToAuthorizeBody = "Unfortunately, you cannot upload videos to "+appname+" yet. You need at least 5 PKOIN or 100 reputation to upload videos. Now you can publish videos from YouTube, just paste the link into your post.";
+_l.unableToAuthorizeBody = "Unfortunately, you cannot upload videos via website to "+appname+" yet. You need at least 5 PKOIN or 100 reputation to upload videos. Or you can use the app "+appname+"";
 
 _l.unableToAuthorizeConnection = "Unable to authorize";
 _l.unableToAuthorizeConnectionBody = "Unfortunately, the application cannot authenticate this account on the video server.  Please try again later";
@@ -1551,13 +1552,13 @@ _l.aboutYoutubeThreeColumn7 = "You have lost access to your videos if you didn't
 _l.aboutYoutubeThreeColumn8 = 'The worst thing is: YouTube decisions are arbitrary and are typically final';
 _l.aboutYoutubeThreeColumn9 = 'The worst thing is: YouTube decisions are typically final.';
 _l.aboutYoutubeThreeColumn10 = "You have no way at all to get back your channel, subscribers and money. They're gone, forever.";
-_l.aboutYoutubeThreeColumn11 = "Move to "+appname+" before it’s too late. We can import your videos without effort, and you can get paid 1,000 $ for each 15,000 views! (plus 1,250 interactions and 1000 invited users to your channel)";
+_l.aboutYoutubeThreeColumn11 = "Move to "+appname+" before it’s too late. We can import your videos without effort";
 _l.aboutYoutubeThreeColumn12 = 'What are you waiting for?!';
 
 _l.aboutYoutubeH3Section = "Building a community of followers on YouTube is like building a home on a land you don't own.";
 
 _l.aboutYoutubeImgAndText1 = "EARN WITH "+appname+" NO DEMONETIZATION";
-_l.aboutYoutubeImgAndText2 = ""+appname+" pays you to post videos and for each interaction (like/comment) that you get. Right now "+appname+" has a bonus program that gives you 1,000 $ (in crypto currency) for each 15,000 views + 1,250 interactions + 1,000 invited users to your channel";
+_l.aboutYoutubeImgAndText2 = ""+appname+" pays you to post videos and for each interaction (like/comment) that you get.";
 _l.aboutYoutubeImgAndText3 = 'And you can talk about "sensitive" topics. You will never be blocked or demonetized, if you do not post porn/nudity or illegal content that will be moderated by the community. In addition, if you bring your subscribers, you get referrals, too.'
 _l.aboutYoutubeImgAndText4 = 'Free Speech Zone – Moderated by the Community ';
 _l.aboutYoutubeImgAndText5 = "On "+appname+" you can talk about sensitive topics (and they are multiplying by the day): COVID, politics, climate change, first and second amendment. Community of users moderates "+appname+" and the only topics that are blocked are porn/nudity and illicit content.";
@@ -1628,7 +1629,7 @@ _l.aboutYoutubeThirdBoard25 = ""+appname+" pays you way more than YouTube!";
 _l.aboutYoutubeThirdBoard26 = "You can earn money with "+appname+".";
 _l.aboutYoutubeThirdBoard27 = ""+appname+" uses its own Cryptocurrency:";
 _l.aboutYoutubeThirdBoard28 = 'Each time your posts and videos receive comments and likes, you get PKOIN.';
-_l.aboutYoutubeThirdBoard29 = 'Each time one of your videos gets 15k views, plus 1250 reactions and 1000 referral users, you get 1,000 $ in PKOIN (you can convert them in USD!). THIS IS A LIMITED TIME OFFER!!!';
+_l.aboutYoutubeThirdBoard29 = '';
 _l.aboutYoutubeThirdBoard30 = "Each time someone joins "+appname+" with your referral link, you get PKOIN.";
 _l.aboutYoutubeThirdBoard31 = 'Contact us to learn more and to activate your account as “CREATOR” so that you can post unlimited videos and get paid!';
 
@@ -1743,7 +1744,7 @@ _l.aboutTitterMainBoard31 = "And there`s more! "+appname+" pays you.";
 _l.aboutTitterMainBoard32 = "You can earn money with "+appname+".";
 _l.aboutTitterMainBoard33 = ""+appname+" uses its own Cryptocurrency:";
 _l.aboutTitterMainBoard34 = 'Each time your posts and videos receive comments and likes, you get PKOIN.';
-_l.aboutTitterMainBoard35 = 'Each time one of your videos gets 15,000 views + 1,250 reactions, you get 1,000 $ in PKOIN (you can convert them in USD!). THIS IS A LIMITED TIME OFFER!!!';
+_l.aboutTitterMainBoard35 = '';
 _l.aboutTitterMainBoard36 = "Each time someone joins "+appname+" with your referral link, you get PKOIN.";
 _l.aboutTitterMainBoard37 = 'Contact us to learn more and to activate your account as “CREATOR” so that you can post unlimited videos and get paid!';
 
@@ -1833,7 +1834,7 @@ _l.aboutFbMainBoard3 = "And there`s more! "+appname+" pays you.";
 _l.aboutFbMainBoard31 = "You can earn money with "+appname+".";
 _l.aboutFbMainBoard32 = ""+appname+" uses its own Cryptocurrency:";
 _l.aboutFbMainBoard33 = 'Each time your posts and videos receive comments and likes, you get PKOIN.';
-_l.aboutFbMainBoard34 = 'Each time one of your videos gets 15,000 views + 1,250 reactions, you get 1,000 $ in PKOIN (you can convert them in USD!). THIS IS A LIMITED TIME OFFER!!!';
+_l.aboutFbMainBoard34 = '';
 _l.aboutFbMainBoard34 = "Each time someone joins "+appname+" with your referral link, you get PKOIN.";
 _l.aboutFbMainBoard35 = 'Contact us to learn more and to activate your account as “CREATOR” so that you can post unlimited videos and get paid!';
 
@@ -1930,7 +1931,7 @@ _l.aboutHowItWImgAndText33 = ""+appname+" pays you";
 _l.aboutHowItWImgAndText34 = "You can earn money with "+appname+".";
 _l.aboutHowItWImgAndText35 = ""+appname+" uses its own Cryptocurrency:";
 _l.aboutHowItWImgAndText36 = 'Each time your posts receive comments and likes, you get PKOIN.';
-_l.aboutHowItWImgAndText37 = 'Each time your video gets 15,000 views + 750 “5 stars” reactions, you get 1,000 $ in PKOIN (you can convert them in USD!). THIS IS A LIMITED TIME OFFER!!! ';
+_l.aboutHowItWImgAndText37 = '';
 _l.aboutHowItWImgAndText38 = "Each time someone joins "+appname+" with your referral link, you get PKOIN.";
 _l.aboutHowItWImgAndText39 = 'Contact us to learn more and to activate your account as “CREATOR” so that you can post unlimited videos and get paid!';
 _l.aboutHowItWImgAndText40 = "Next step: contact us to get your "+appname+" account verified and to access the bonus program.";
@@ -2084,7 +2085,7 @@ _l.easyNode_e10020 = "Wallet"
 _l.easyNode_e10021 = "Status"
 _l.easyNode_e10022 = "Requesting..."
 _l.easyNode_e10023 = "Staking"
-_l.easyNode_e10024 = "Node can't stake now. Add at least 50 PKOIN or wait for 60 minutes to activate coins"
+_l.easyNode_e10024 = "If you have already added PKOIN to the node, wait for the height to be fully synchronized"
 _l.easyNode_e10025 = "Balance"
 _l.easyNode_e10026 = "Control"
 _l.easyNode_e10027 = "Deposit"
@@ -2123,6 +2124,7 @@ _l.easyNode_e10060 = "SSD drive"
 _l.easyNode_e10061 = "Your node is running. Close the app anyway?"
 _l.easyNode_e10062 = "Node update is available. Download a new version?"
 _l.easyNode_e10063 = "Node has been successfully updated"
+_l.easyNode_e10064 = "Support"
 
 _l.IHave = "I have";
 _l.downloadNode = "Download Windows Desktop Node";
@@ -2236,7 +2238,7 @@ _l.submitapplication = "Submit your application"
 _l.submitapplicationVideo = "Request PKOIN for video"
 _l.submitapplicationVideoSmall = "Send & request PKOIN"
 
-_l.videobloggerRequest = "If you are a blogger with an established audience, you can get a gift of PKOIN to load video. Click the button below if you are a blogger:"
+_l.videobloggerRequest = "If you are a blogger with an established audience, you can get a gift of PKOIN to load video"
 
 
 _l.videobloggerRequest_pl1 = "Link to existing channel 1"
@@ -2286,7 +2288,7 @@ _l.boosted = "Boosted";
 _l.probability = "Probability";
 
 _l.probabilitytext = function(lang){
-	return "Probability that a post will appear among the first <b>30</b> posts in the feed by language <b>"+lang+"</b> for approximately <b>300</b> minutes"
+	return "Probability that a post will appear among the first <b>30</b> posts in the feed by language <b>"+lang+"</b> for approximately <b>1</b> day"
 };
 
 _l.probabilitytexterror = "Unable to calculate promotion probability";
@@ -2559,9 +2561,9 @@ _l.connectingTo = "Connecting to";
 _l.earnings = "Total earnings";
 _l.earnings2 = "Total earnings";
 
-_l.amountLottery = "Lottery";
-_l.amountDonation = "Donations";
-_l.amountTransfer = "Transfers";
+_l.amountLottery = "Received from blockchain lottery";
+_l.amountDonation = "Donations received";
+_l.amountTransfer = "Transfers completed";
 
 
 _l.copybuiltfrom = "Application build version copied"
@@ -2607,6 +2609,8 @@ _l.permissions_descriptions_messaging = "Give the app permission to display an i
 _l.permissions_name_mobilecamera = "Possibility to upload a photo"
 _l.permissions_descriptions_mobilecamera = "Allow the app to open the mobile gallery"
 
+_l.permissions_name_zaddress = "Get one of the wallet addresses"
+_l.permissions_descriptions_zaddress = "Shows the widget one of your wallet addresses"
 
 
 _l.permissions_ask = "asks for permission"
@@ -2616,6 +2620,8 @@ _l.permissions_forbid = "Forbid"
 _l.permissions = "Permissions"
 
 _l.deleteapplication = "Delete application"
+_l.installpplication = "Install application"
+
 _l.complainapplication = "Complain application"
 
 _l.searchbyapplications = "Find an app"
@@ -2773,6 +2779,7 @@ _l.registration_blocked = _l.lockedaccount
 _l.horizontalSearchUsers = "Accounts"
 _l.information = "Information"
 _l.sendcoins = "Send PKOIN"
+
 _l.notificationsTurnOffQ = 'Are you sure you want to turn off notifications from this user?'
 _l.showblockedusers = "Show blocked users";
 
@@ -2816,7 +2823,7 @@ _l.limits = "Limits"
 _l.pay = "Pay"
 _l.external_prepareTransaction = 'Payment is being processed'
 _l.external_paySucc_nocbpw = 'Payment has been made, the window will be closed'
-_l.external_paySucc_fetch = 'Payment has been made, we transfer the data to the seller'
+_l.external_paySucc_fetch = 'Payment has been made, we are transfering the data to the seller'
 _l.external_paySucc_redirect = "Payment has been made, go to the seller's page"
 _l.external_email_required = 'Enter your email address'
 _l.external_phone_required = 'Enter your phone number'
@@ -2843,8 +2850,13 @@ _l.shipment = "Shipment"
 _l.external_linkWillExpired = "Payment link expires"
 _l.external_linkExpired = "Payment link has expired"
 
-_l.paymentLink = "Payment link"
+_l.payLink = "Payment link"
+_l.authLink = "Authorization link"
+_l.undefinedLink = "Unknown link"
 _l.receiver_address = "Reciever"
+
+_l.authText = "Are you sure you want to log in to the site via "+appname+"?"
+_l.authAllow = "Log in via "+appname
 
 _l.paymentsOnDevice = "Payments"
 _l.scanqrcode = "Scan QR code"
@@ -2853,7 +2865,70 @@ _l.free = "Free"
 _l.discount = "Discount"
 _l.tax = "Taxes"
 
-_l.external_paymentlink_reg = "You have opened the payment link. To make a payment you need to register or log in to your account."
+_l.external_paylink_reg = "You have opened the payment link. To make a payment you need to register or log in to your account."
 
-_l.external_source = "where to send PKOIN from"
+_l.payment_myaddress = "This is a payment link that specifies your user as the payee. Select another user to use it"
+_l.external_source = "Where to send PKOIN from"
 _l.external_tTotal = "Account or wallet"
+_l.description = 'Description'
+_l.getqrcode = 'Show QR code'
+
+
+_l.pkoin_application_info = "Buy via Swipelux mini-application"
+_l.buyswipelux = "Buy via Swipelux"
+_l.buycard = "VISA/Mastercard"
+_l.buyusers = "Buy from users"
+_l.buyviacrypto = "Buy via cryptocurrency"
+
+
+_l.installApplication = "Install the app "+appname+" to upload videos"
+_l.boostlabel= "How to advertise on Bastyon"
+
+_l.monetization_Period = "Period"
+_l.monetization_Publications = "Publications"
+_l.monetization_Ratings = "Ratings"
+_l.monetization_Comments = "Comments"
+_l.monetization_Reward = "Reward"
+_l.monetization_start = "Start monetization program"
+_l.monetization_Monetization = "Monetization"
+_l.monetization_enable = "Enable monetization"
+_l.monetization_monetizationText = "Enable monetization and earn income every week"
+_l.monetization_disable =  "Disable the program"
+_l.monetization_disable_question = "Are you sure you want to stop participating in the monetization program?"
+
+_l.monetization_exchange = "Exchange pocketcoin"
+_l.monetization_buychat = "Contact via chat"
+
+
+_l.advertising_Period = "Period"
+_l.advertising_Publications = "Publications"
+_l.advertising_Boostscount = "Boosts"
+
+_l.advertising_Ratings = "Ratings"
+_l.advertising_Comments = "Comments"
+_l.advertising_Amount = "Spent"
+_l.advertising_Advertising = "Advertising"
+_l.advertising_exchange = "Buy cryptocurrency"
+_l.advertising_buychat = "Contact via chat"
+_l.advertising_Date = "Date"
+
+
+_l.grouping = "Group by"
+_l.groupBy_shares = "shares"
+_l.groupBy_months = "months"
+_l.monetization_disable_time = "You will be disconnected from the monetization program within twenty minutes."
+
+_l.fastmessagemonetization = "as a reward under the monetization program"
+_l.fastmessagemonetization = "as a donate"
+
+_l.sendcoinssm = "Send"
+_l.e130961donate = "How much PKOIN do you want to donate?"
+_l.statsWallet = "Wallet information"
+_l.paymentsDate = "Date"
+_l.paymentsValue = "Value"
+_l.paymentsInformation = "Description"
+_l.showtransactionhistory = "Transactions history"
+
+_l.transactionloading = "Awaiting transaction confirmation";
+
+_l.gototransaction = "Show transaction"

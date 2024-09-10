@@ -356,6 +356,22 @@ Comment = function(txid){
 		v : []
 	}
 
+	self.info = {
+		set : function(_v){
+
+			if(!_v){
+				this.v = ''
+			}
+			else
+
+				this.v = _v
+
+			if (self.on.change)
+				self.on.change('info', this.v)
+		},
+		v : ''
+	}
+
 	self.donate = {
 		set : function(donate){
 
@@ -442,7 +458,7 @@ Comment = function(txid){
 			return 'content'
 		}
 
-		if(self.message.v && (self.message.v).length > 1000){
+		if(self.message.v && (self.message.v).length > 915){
 			return 'messagelength'
 		}
 
@@ -517,6 +533,7 @@ Comment = function(txid){
 				images : _.map(self.images.v, function(i){
 					return (i)
 				}),
+				info : (self.info.v || '')
 
 			}))
 			
@@ -540,7 +557,8 @@ Comment = function(txid){
 				r.msgparsed = {
 					message : self.message.v,
 					url : self.url.v,
-					images : self.images.v
+					images : self.images.v,
+					info : self.info.v
 				}
 			}
 			else{
@@ -550,6 +568,7 @@ Comment = function(txid){
 					images : _.map(self.images.v, function(i){
 						return (i)
 					}),
+					info : self.info.v
 				})
 			}
 			
@@ -589,12 +608,15 @@ Comment = function(txid){
 			self.images.set(_.map(v.msgparsed.images, function(i){
 				return decodeURIComponent(i)
 			}))
+			self.info.set(v.msgparsed.info)
 		}
 
 		if (v.msgparsed){
 			self.url.set(v.msgparsed.url)
 			self.message.set(v.msgparsed.message)
 			self.images.set(v.msgparsed.images)
+			self.info.set(v.msgparsed.info)
+
 		}
 		
 		if (v.donate){
@@ -1588,7 +1610,7 @@ Share = function(lang){
 	}
 
 	self.canSend = function(app, clbk) {
-		if (self.itisvideo() && !self.aliasid) {
+		if (self.itisvideo()) {
 			return app.peertubeHandler.checkTranscoding(self.url.v).then(result => clbk(result));
 		}
 
@@ -2161,6 +2183,175 @@ Transaction = function(){
 	self.type = 'transaction'
 
 }
+
+/* BARTERON */
+
+brtAccount = function(){
+	var self = this;
+
+	self.address = '';
+	self.tags = [];
+	self.geohash = '';
+	self.static = false;
+	self.radius = 0;
+
+	self.validation = function(){
+
+	}
+
+	self.serialize = function(){
+		return self.address +
+					 JSON.stringify({
+						a: self.tags,
+						g: self.geohash,
+						s: self.static,
+						r: self.radius
+					 });
+	}
+
+	self.export = function(alias){
+		if(alias){
+			return {
+				address: self.address,
+				tags: self.tags,
+				geohash: self.geohash,
+				static: self.static,
+				radius: self.radius
+			};
+		}
+
+		return {
+			s1: self.address,
+			p: {
+				s4: JSON.stringify({
+					a: self.tags,
+					g: self.geohash,
+					s: self.static,
+					r: self.radius
+				})
+			}
+		};
+	}
+
+	self.import = function(d){
+		self.address = d.address || app.user.address.value;
+		self.tags = d.tags;
+		self.geohash = d.geohash;
+		self.static = d.static;
+		self.radius = d.radius;
+	}
+
+	self.type = 'brtaccount';
+
+	return self;
+}
+
+brtOffer = function(){
+	var self = this;
+
+	self.hash = null;
+	self.address = '';
+	self.language = '';
+	self.caption = '';
+	self.description = '';
+	self.tag = '';
+	self.tags = [];
+	self.condition = [];
+	self.images = [];
+	self.geohash = '';
+	self.price = 0;
+	self.published = 1;
+
+	self.validation = function(){
+		if(!self.address) return 'address';
+		if(!self.language) return 'language';
+		if(!self.caption) return 'caption';
+		if(!self.description) return 'description';
+		if(!self.tag) return 'tag';
+		if(!self.tags) return 'tags';
+		if(!self.condition) return 'condition';
+		if(!self.images) return 'images';
+		if(!self.geohash) return 'geohash';
+		if(!(self.price > -1)) return 'price';
+	}
+
+	self.serialize = function(){
+		return self.address +
+					 (self.hash ?? '') +
+					 self.language +
+					 self.caption +
+					 self.description +
+					 JSON.stringify({
+						t: self.tag,
+						a: self.tags,
+						c: self.condition,
+						p: self.published
+					 }) +
+					 JSON.stringify(self.images) +
+					 self.geohash +
+					 self.price;
+	}
+
+	self.export = function(alias){
+		if(alias){
+			return {
+				address: self.address,
+				hash: self.hash || null,
+				language: self.language,
+				caption: self.caption,
+				description: self.description,
+				tag: self.tag,
+				tags: self.tags,
+				condition: self.condition,
+				images: self.images,
+				geohash: self.geohash,
+				price: self.price,
+				published: self.published
+			};
+		}
+
+		return {
+			s1: self.address,
+			...(self.hash && { s2: self.hash }),
+			p: {
+				s1: self.language,
+				s2: self.caption,
+				s3: self.description,
+				s4: JSON.stringify({
+					t: self.tag,
+					a: self.tags,
+					c: self.condition,
+					p: self.published
+				}),
+				s5: JSON.stringify(self.images),
+				s6: self.geohash,
+				i1: self.price
+			}
+		};
+	}
+
+	self.import = function(d){
+		self.address = d.address || app.user.address.value;
+		self.hash = d.hash || null;
+		self.language = d.language;
+		self.caption = d.caption;
+		self.description = d.description;
+		self.tag = d.tag;
+		self.tags = d.tags;
+		self.condition = d.condition,
+		self.images = d.images;
+		self.geohash = d.geohash;
+		self.price = d.price;
+		self.published = d.published;
+	}
+
+	self.type = 'brtoffer';
+
+	return self;
+}
+
+
+/* ---- */
 
 
 pUserInfo = function(){
@@ -2982,6 +3173,7 @@ pComment = function(){
 	self.url = ''
 	self.message = ''
 	self.images = [];
+	self.info = ''
 
 	self.postid = '';
 	self.id = '';
@@ -3020,6 +3212,7 @@ pComment = function(){
 			self.url = v.msgparsed.url;
 			self.message = v.msgparsed.message
 			self.images = v.msgparsed.images
+			self.info = v.msgparsed.info || ''
 		}			
 		
 		self.postid = v.postid;
@@ -3084,6 +3277,7 @@ pComment = function(){
 				message : self.message,
 				url : self.url,
 				images : self.images,
+				info : self.info
 			},
 			scoreDown : self.scoreDown,
 			scoreUp : self.scoreUp,
@@ -3451,9 +3645,32 @@ Settings = function(){
 		v : ''
 	};
 
+	self.monetization = {
+		set : function(_v){
+
+			if (_v !== '' && _v !== false && _v !== true){
+				this.v = ''
+			}
+			else
+			{
+				this.v = _v
+			}
+
+			_.each(self.on.change || {}, function(f){
+				f('monetization', this.v)
+			})
+
+		},
+		get : function(){
+			return this.v
+		},
+		v : ''
+	};
+
 	self.clear = function(){
 
 		self.pin.set()
+		self.monetization.set()
 
 	}
 
@@ -3482,7 +3699,8 @@ Settings = function(){
 	self.serialize = function(){
 
         return JSON.stringify({
-			pin: self.pin.v
+			pin: self.pin.v,
+			monetization : self.monetization.v
 		})
 
 	}
@@ -3498,6 +3716,7 @@ Settings = function(){
 				type : self.type,
 				d: JSON.stringify({
 					pin: self.pin.v || "",
+					monetization : (self.monetization.v === "" || self.monetization.v === true || self.monetization.v === false) ? self.monetization.v : ""
 				})
 			} 
 		}
@@ -3505,6 +3724,7 @@ Settings = function(){
 		return {
 			d: JSON.stringify({
 				pin: self.pin.v || "",
+				monetization : (self.monetization.v === "" || self.monetization.v === true || self.monetization.v === false) ? self.monetization.v : ""
 			})
 		}
 
@@ -3528,6 +3748,7 @@ Settings = function(){
 		}
 
 		self.pin.set(parsed.pin || ""); 
+		self.monetization.set(parsed.monetization); 
 
 	}
 
@@ -3558,14 +3779,18 @@ pSettings = function(){
 	var self = this;
 
 	self.pin = '';
+	self.monetization = ''
 	self.address = ''
 
 	self._import = function(dv = {}){
 
 		var v = dv.d
 
-		self.pin = (v || {}).pin || ""
-		self.address = (v || {}).address || ""
+		if(!v) v = {}
+
+		self.pin = v.pin || ""
+		self.monetization = (v.monetization === "" || v.monetization === true || v.monetization === false) ? v.monetization : ""
+		self.address = v.address || ""
 	}
 
 	self.export = function(){
@@ -3608,7 +3833,8 @@ pSettings = function(){
 
 		s.import({
 			d : {
-				pin : self.pin
+				pin : self.pin,
+				monetization : self.monetization
 			}
 		})
 
@@ -3654,7 +3880,10 @@ kits = {
 		accDel : DeleteAccount,
 		transaction : Transaction,
 		contentDelete : Remove,
-		accSet : Settings
+		accSet : Settings,
+		brtoffer : brtOffer,
+		brtaccount : brtAccount
+
 	},
 
 	ini : {

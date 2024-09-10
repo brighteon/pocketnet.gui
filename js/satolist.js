@@ -349,8 +349,39 @@ Platform = function (app, listofnodes) {
         'PVa3Cp2RERR7NxvMkxzK3mhnihPWXqW9P7' : true,
         'PNH7KN8yr5LL8acuMWWkV8J8HMwKyK9NFB' : true,
         'PXNi5TLGn56q1M1v7Ab9dbQQmShjHecy2p' : true,
-        
-
+        'PPrFUMzLohoC7cufa58Rw1HVzvc26Zcktf' : true,
+        'PE1tqFMfLZsw2Q2uYJThX59ZtPTDM1YpoX' : true,
+        'PHYUDXnDVRPERwkKkQrDC71ZFbyTonv7h9' : true,
+        'PT4PaaFXTuYD7Tws23PQZ2YLCCwdwu7tUH' : true,
+        'PXFbuZhiME6j7yjmiSAUt9pguXbr8tmo5F' : true,
+        'PMtPowJsJtHtXR4tW4PSKgfp8TVAMBAA5e' : true,
+        'PVCZ5fs6nyPpRjiXgM2naBBujzjTM3B1z4' : true, 
+        'PJWmitSptX35i95ZWHzCJdop3XczrVnQNk' : true,
+        'PJCazxTPm2thAWqmwqHsWghK59FjZvZ9ZM' : true,
+        'PExrUqBAyXfdgmegm4uQDj64ukyuiL2XrC' : true,
+        'PCGpniQGTmabMQKAWiE1nCTaFFdHatzNyS' : true,
+        'PPxrS15N1tKoQcc29FcPrBqfmHpyURny5B' : true,
+        'PGEBZf7Q8vNFsS9PfrqvDxaPRXk9Yve9cK' : true,
+        'PXFbuZhiME6j7yjmiSAUt9pguXbr8tmo5F' : true,
+        'PHZReox7mFtCW3otDDfZ3pZMgkuRS2MJsS' : true,
+        'PAzs51m8yNxK3y5Km6mmmGtGDcXGB8kCz4' : true,
+        'P9QksuZXdA9bhxhNEeXgjtEJrQR3LWi9V7' : true,
+        'PRtwPBwazZM7U9BZQKFvF9N1uK3Tro5gAC' : true,
+        'PGuPFzGiuuEg5ERzW1dF47raA6vefftP3u' : true,
+        'PC5ZyNr9uMG5ytpTvrCXxgp5Pb6JexqkJ7' : true,
+        'PLLpzbNshW1pRoZe6KbZRuKLhm3mgzCHEn' : true,
+        'PNzUT7RSRMQfXxuxwL8XRXQcmnu1mA4kbY' : true,
+        'PVKBpAURkwhZhnSQktndTHQJhnkuNfq2bY' : true,
+        'PDb83yK1KMq9putBFaGuBCfpksUVVDVZcc' : true,
+        'PGmCWzgCW1CNLkgGSHmgCMKDbuZJia1Bpp' : true,
+        'PDtHcn5AM7kkx1h7nKZ818vBgxMqojjxup' : true,
+        'PCQoRv4b4JTF7sCgC2HVXnmpuLNFy8W2D7' : true,
+        'PAz2RKZhrWpkv1JCFwCnn2aGApHu4n44Uo' : true,
+        'P9QeLfYqEkQdR9eMZ6D789XDGx2sWJHxSw' : true,
+        'PUksA2zZFHk1YZgNu9pjPq8ZVr4UVY9CsS' : true,
+        'PM3aeLBaB6RBAW6mWE6f54BAXgrpRgBzQP' : true,
+        'PFTKDpTWF6m5Uss6dceQqQji9WgcqazV6J' : true,
+        'PQ8AiCHJaTZAThr2TnpkQYDyVd1Hidq4PM' : true,
 
     } 
 
@@ -482,7 +513,7 @@ Platform = function (app, listofnodes) {
 
             listener(alias, status)
 
-            window.requestAnimationFrame(() => {
+            window.rifticker.add(() => {
                 _.each(self.actionListeners, (c, i) => {
                     if (c)
                         c({type : action.object.type, alias, status})
@@ -2663,9 +2694,21 @@ Platform = function (app, listofnodes) {
 
             graph.destroy = function () {
 
-                graph.chart.destroy();
+                if(graph.chart)
+                    graph.chart.destroy();
 
-                graph.el.html('')
+                if (graph.el){
+                    graph.el.remove()
+                }
+                
+
+                graph.el = null;
+
+                graph.series = [];
+
+                delete graph.shell;
+
+                delete graph.stock;
             }
 
             return graph;
@@ -2738,7 +2781,7 @@ Platform = function (app, listofnodes) {
             var tpl = `<div class="horizontalSearchUsersWrapper"><div class="horizontalSearchUserscaption"><span>`+(p.caption || '')+`</span><div class="controlhors"><div class="controlleft controlhor" dir="left"><i class="fas fa-arrow-left"></i></div><div class="controlright controlhor"><i class="fas fa-arrow-right"></i></div></div></div><div class="showmorebywrapper"><div class="showmoreby"></div></div>
             </div>`
 
-            window.requestAnimationFrame(() => {
+            window.rifticker.add(() => {
 
                 el.html(tpl)
 
@@ -2807,7 +2850,7 @@ Platform = function (app, listofnodes) {
             var tpl = `<div class="horizontalLentaWrapper"><div class="horizontalLentacaption"><span>`+(p.caption || '')+`</span><div class="controlhors"><div class="controlleft controlhor" dir="left"><i class="fas fa-arrow-left"></i></div><div class="controlright controlhor"><i class="fas fa-arrow-right"></i></div></div></div><div class="showmorebywrapper"><div class="showmoreby"></div></div>
             </div>`
 
-            window.requestAnimationFrame(() => {
+            window.rifticker.add(() => {
 
                 el.html(tpl)
 
@@ -3071,10 +3114,29 @@ Platform = function (app, listofnodes) {
             })
         },
 
-        route : function(href, el, clbk, p){
+        route : function(href, el, clbk, p = {}, a = {}){
 
-            if(href.indexOf('ext=')){
-                el.html('<div class="internalpocketnetlink"><a elementsid="https://'+app.options.url+'/'+href+'" href="https://'+app.options.url+'/'+href+'"><i class="fas fa-wallet"></i> '+app.localization.e('paymentLink')+'</a></div>')
+            if(a.url && a.url.indexOf('ext=') > -1){
+
+                var type = 'undefined'
+
+                
+                try{
+                    var type = self.sdk.external.type(parameters(a.url, true).ext)
+
+                    var icon = ''
+
+                    if(type == 'pay') icon = '<i class="fas fa-wallet"></i>'
+                    if(type == 'auth') icon = '<i class="fas fa-user"></i>'
+
+                    el.html('<div class="internalpocketnetlink"><b>'+icon+' '+app.localization.e(type + 'Link')+'</b></div>')
+                }
+                catch(e){
+                    console.error('e', e)
+                    el.html('<div class="internalpocketnetlink"><b>'+app.localization.e('undefinedLink')+'</b></div>')
+                }
+
+                
             }
 
             else{
@@ -3087,7 +3149,7 @@ Platform = function (app, listofnodes) {
             if(clbk) clbk()
         },
 
-        channel : function(id, el, clbk, p){
+        channel : function(id, el, clbk, p, a){
 
             var r = false
 
@@ -3128,7 +3190,7 @@ Platform = function (app, listofnodes) {
                 })
 
                 if(f){
-                    self.papi.route(f.href, el, clbk, p)
+                    self.papi.route(f.href, el, clbk, p, a)
                 }
                 else{
 
@@ -3156,7 +3218,8 @@ Platform = function (app, listofnodes) {
 
                 essenseData: {
                     txid : txid,
-                    node : additional.node
+                    node : additional.node,
+                    verify : additional.verify
                 }
             })
         },
@@ -3452,10 +3515,20 @@ Platform = function (app, listofnodes) {
         articledecoration : function(wr, share, extend, clbk){
             var caption = wr.find('.shareBgCaption')
             var capiontextclass = 'caption_small'
+            var edjs = new edjsHTML(null, app)
+
+            var images = edjs.getallimages(share.message)
 
 
             if(share.caption.length > 10) capiontextclass = 'caption_medium'
             if(share.caption.length > 60) capiontextclass = 'caption_long'
+
+            var opengallery = function(src){
+
+
+                self.app.platform.ui.images(images, src)
+
+            }
 
             caption.addClass(capiontextclass)
 
@@ -3485,6 +3558,14 @@ Platform = function (app, listofnodes) {
 
                     })
 
+                    _el.find(".img").on('click', function(){
+                        var src = $(this).attr('i')
+
+                        if (src){
+                            opengallery(src)
+                        }
+                    })
+
                     //self.app.platform.ui.carousel($(this))
                 })
 
@@ -3493,6 +3574,16 @@ Platform = function (app, listofnodes) {
                         self.app.platform.ui.embeding($(this))
                     }catch(e){
                         
+                    }
+                    
+                })
+
+                wr.find('.article_image img').on('click', function(){
+
+                    var src = $(this).attr('src')
+
+                    if (src){
+                        opengallery(src)
                     }
                     
                 })
@@ -4051,7 +4142,9 @@ Platform = function (app, listofnodes) {
 
             globalpreloader(true, true)
 
-            const { name, description, tags } = p;
+            const { name, description, tags, url } = p;
+
+            console.log("SHARE", p)
 
             setTimeout(function(){
                 app.nav.api.load({
@@ -4077,8 +4170,8 @@ Platform = function (app, listofnodes) {
                         name,
                         description,
                         tags,
-
-                        dontsave : (p.repost || p.videoLink) ? true : false
+                        url,
+                        dontsave : (p.repost || p.videoLink || p.dontsave) ? true : false
                     }
                 })
             }, 50)
@@ -4216,6 +4309,7 @@ Platform = function (app, listofnodes) {
                                 sender: sender, 
                                 receiver: receiver,
                                 send : p.send ?? true,
+                                donatemode : p.donatemode,
                                 value : 1,
                                 min : 0.5,
                                 clbk  : function(value, action, txid, _p = {}){
@@ -4507,22 +4601,38 @@ Platform = function (app, listofnodes) {
 
             self.app.platform.sdk.user.stateAction(() => {
 
-                self.app.nav.api.load({
-                    open : true,
-                    href : 'external',
-                    inWnd : true,
-                    essenseData : {
-                        action : ps.action, 
-                        parameters : ps
-                    }
-                })
+                if (ps.action == 'share'){
+
+                    self.app.platform.ui.share({
+						tags : ps.tags,
+                        description : ps.description,
+                        url : ps.url,
+                        dontsave : true
+					})
+
+                }
+                else{
+                    self.app.nav.api.load({
+                        open : true,
+                        href : 'external',
+                        inWnd : true,
+                        essenseData : {
+                            action : ps.action, 
+                            parameters : ps
+                        }
+                    })
+                }
+
+                
 
             }, {
-                text : 'external_paymentlink_reg',
+                text : 'external_'+ps.action+'link_reg',
                 success : 'rcontinue',
                 cancel : 'dcancel'
             })
         },
+
+        
 
         externalFromCurrentUrl : function(){
             var p = parameters()
@@ -4562,7 +4672,9 @@ Platform = function (app, listofnodes) {
             if(!self.sdk.usersettings.meta.useanimations.value) return
 
             var e = function(){
-                self.effects.manager.effect(el, name, parameters, clbk)
+                window.rifticker.add(() => {
+                    self.effects.manager.effect(el, name, parameters, clbk)
+                })
             }
 
             if(!self.effects.manager){
@@ -4586,14 +4698,32 @@ Platform = function (app, listofnodes) {
                 parameters.color || (parameters.color = '#ffa000')
 
                 self.effects.effectinternal(el, 'stars', parameters, clbk)
-            }
+            },
+
+            hearts: function(el, parameters, clbk){
+
+                if(!parameters) parameters = {}
+
+                parameters.opacity = 0.9
+                parameters.scatter = 150
+                parameters.duration = 1800
+                parameters.size = 20
+
+                if(self.app.mobileview){
+                    parameters.duration = 1400
+                }
+
+                parameters.color || (parameters.color = '#a10000')
+
+                self.effects.effectinternal(el, 'hearts', parameters, clbk)
+            },
         },
 
         container : function(place){
 
             var container = $("<div/>", {
                 "class": "effect",
-                "style" : "z-index: 10000; position : absolute; left : "+place.left+"px; top : "+place.top+"px; width : "+place.width+"px; height : "+place.height+"px;"
+                "style" : "pointer-events: none; z-index: 10000; position : absolute; left : "+place.left+"px; top : "+place.top+"px; width : "+place.width+"px; height : "+place.height+"px;"
             })
 
             container.appendTo(self.app.el.app)
@@ -4616,10 +4746,17 @@ Platform = function (app, listofnodes) {
             })
         },
 
+        breakeffect : function(el, clbk){
+            if (typeof _Electron != 'undefined' || !el || self.effects.animation) {
+                if(clbk) clbk()
+                return true
+            }
+        },
+
         templates : {
             commentstars : function(el, value, clbk){
-                if (typeof _Electron != 'undefined' || !el || self.effects.animation) {
-                    if(clbk) clbk()
+
+                if(self.effects.breakeffect(el, clbk)){
                     return
                 }
 
@@ -4646,6 +4783,36 @@ Platform = function (app, listofnodes) {
 
                     if(clbk) clbk()
                 })
+            },
+
+            donatehearts : function(el, clbk){
+                if(self.effects.breakeffect(el, clbk)){
+                    return
+                }
+
+                self.effects.animation = true
+
+                var parameters = {}
+
+                parameters.color = '#ed1f1f'
+
+                if(self.app.mobileview){
+                    parameters.from = {x : 'center', y : 'top'}
+                    parameters.to = {x : 'right', y : 'bottom'}
+                }
+                else{
+                    parameters.from = {x : 'left', y : 'bottom'}
+                    parameters.to = {x : 'center', y : 'center'}
+                }
+
+                self.effects.make({top : 0, left : 0, width : self.app.width, height : self.app.height}, 'hearts', parameters, function(){
+
+                    self.effects.animation = false
+
+                    if(clbk) clbk()
+                })
+
+                
             }
         }
     }
@@ -4799,7 +4966,7 @@ Platform = function (app, listofnodes) {
                 },
                 scroll: function () {
 
-                    /*window.requestAnimationFrame(() => {
+                    /*window.rifticker.add(() => {
 
                     })*/
                     if (app.lastScrollTop >= (typeof p.scrollTop == 'undefined' ? 250 : p.scrollTop)) {
@@ -5474,10 +5641,8 @@ Platform = function (app, listofnodes) {
 
                         var pinPost = function (share, clbk, unpin){
 
-                            var ct = new Settings();
-                            ct.pin.set(unpin ? '' : share.txid);
 
-                            self.app.platform.sdk.user.accSet(ct, function(err, alias){
+                            self.app.platform.sdk.user.accSetMy({pin : unpin ? '' : share.txid}, function(err, alias){
 
                                 if(!err){
 
@@ -6048,7 +6213,6 @@ Platform = function (app, listofnodes) {
         external : {
             expandLink : function(json = {}){
 
-                console.log('json', json)
                 var eExt = {}
 
                 if (json.address) eExt.address = json.address
@@ -6057,7 +6221,7 @@ Platform = function (app, listofnodes) {
                 if (json.paymentHash) eExt.paymentHash = json.paymentHash
                 
     
-                if (json.a)     eExt.action = (json.a == 'p' ? 'pay' : json.a)
+                if (json.a)     eExt.action = (json.a == 'p' ? 'pay' : (json.a == 'a' ? 'auth' : json.a))
                 if (json.ad)    eExt.address = json.ad
                 if (json.s)     eExt.s_url = json.s
                 if (json.sv)    eExt.shipmentValue = json.shipmentValue
@@ -6075,6 +6239,10 @@ Platform = function (app, listofnodes) {
                 if (json.sv)    eExt.saltValue = json.sv
                 if (json.di)    eExt.discount = json.di
                 if (json.ta)    eExt.tax = json.ta
+
+
+                if (json.tg)    eExt.tags = json.tg
+                if (json.u)     eExt.url = json.u
     
                 if (json.st) {
                     eExt.store = {}
@@ -6105,6 +6273,13 @@ Platform = function (app, listofnodes) {
                
                 return eExt
             },
+            type : function(ext){
+
+                var ps = self.sdk.external.getFromHash(ext)
+                    
+                return ps.action            
+            },
+
             getFromHash : function(ext){
                 var ps = self.sdk.external.expandLink(JSON.parse(clearStringXss(ext[0] == '_' ? hexDecode(ext.replace("_", "")) : decodeURI(ext))))
 
@@ -6112,6 +6287,35 @@ Platform = function (app, listofnodes) {
 
                 if(!ps.action){
                     throw 'missing:action'
+                }
+
+                if (ps.action == 'auth'){
+                    if(!ps.c_url_type) ps.c_url_type = 'fetch'
+
+                    if(!ps.c_url){
+                        throw 'missing:c_url'
+                    }
+
+                    try{
+                        var url = new URL(ps.c_url)
+
+                        ps.host = clearStringXss(url.hostname)
+
+                    }catch(e){
+                        throw 'wrong:c_url:notvalid'
+                    }
+                }
+
+                if (ps.action == 'share'){
+                    if(ps.description) ps.description = clearStringXss(ps.description)
+                    if(ps.url) ps.url = clearStringXss(ps.url)
+                    if(ps.tags) {
+                        if(!_.isArray(ps.tags)) throw 'tags:array'
+
+                        ps.tags = _.map(ps.tags, (tag) => {
+                            return clearStringXss(tag)
+                        })
+                    }
                 }
     
                 if (ps.action == 'pay'){
@@ -6133,11 +6337,9 @@ Platform = function (app, listofnodes) {
                     }
                     
                     if(!ps.c_url_type) ps.c_url_type = 'fetch'
-                    if(!ps.payload) ps.payload = {}
+                    //if(!ps.payload) ps.payload = {}
     
                     if((!ps.items || !_.isArray(ps.items) || ps.items.length == 0) && !ps.value) throw 'missing:valueOritems'
-    
-                    console.log('ps.items', ps.items)
     
                     if (ps.items){
     
@@ -6216,8 +6418,6 @@ Platform = function (app, listofnodes) {
     
                     if(!ps.value || ps.value <= 0) throw 'missing:value'
 
-                    console.log("JSON, ps.value", ps.value)
-    
                     //ps.hash = p.ext
                 }
 
@@ -6293,7 +6493,7 @@ Platform = function (app, listofnodes) {
 
 
 					return _.sortBy(allpays, (pay) => {
-                        return pay.updated
+                        return -pay.updated
                     })
 
 				}
@@ -8489,7 +8689,7 @@ Platform = function (app, listofnodes) {
                     self.app.platform.sdk.uiScale.set(zoomNewName);
                 }
 
-                $(window).on('keydown', (e) => scaleUi(e, false, ({ keyCode }) => {
+                self.app.el.window.on('keydown', (e) => scaleUi(e, false, ({ keyCode }) => {
                     /**
                      * Minus - 189
                      * Minus Numpad - 109
@@ -8507,7 +8707,7 @@ Platform = function (app, listofnodes) {
                     return 0;
                 }));
 
-                $(window).on('wheel', (e) => scaleUi(e, true, (e) => {
+                self.app.el.window.on('wheel', (e) => scaleUi(e, true, (e) => {
                     if(!wheelLock) {
                         $('html').addClass('scroll-lock');
                         wheelLock = true;
@@ -9075,6 +9275,28 @@ Platform = function (app, listofnodes) {
 
             },
 
+            getaccountearning: function (address) {
+
+                return app.psdk.monetization.request(() => {
+
+                    return self.app.api.rpc('getaccountearning', [address, 0, 1627534])
+
+                }, address).then(function (s) {
+
+                    var stats = {...s[0]}
+
+					delete stats.address
+
+					_.each(stats, (v, i) => {
+						stats[i] = v / 100000000
+					})
+
+                    return stats
+                })
+
+
+            },
+
             accSet: function (settings, clbk) {
 
                 self.app.platform.actions.addActionAndSendIfCan(settings).then(action => {
@@ -9091,6 +9313,38 @@ Platform = function (app, listofnodes) {
                         clbk(e)
 
                 })
+
+            },
+
+            accSetMy: function (settingsObj, clbk) {
+
+                if(!settingsObj) settingsObj = {}
+
+                self.psdk.accSet.load(self.app.user.address.value).then(() => {
+
+                    var settings = self.psdk.accSet.get(self.app.user.address.value) || {}
+
+                    var ct = new Settings();
+
+                    ct.pin.set(typeof settingsObj.pin == 'undefined' ? (settings.pin || '') : settingsObj.pin);
+                    ct.monetization.set(typeof settingsObj.monetization == 'undefined' ? 
+                        ((settings.monetization === "" || settings.monetization === true || settings.monetization === false) ? settings.monetization : "") : settingsObj.monetization);
+
+                    return self.app.platform.actions.addActionAndSendIfCan(ct)
+
+                }).then(action => {
+
+                    var alias = action.get()
+                
+                    if (clbk) clbk(null, alias)
+    
+                }).catch(e => {
+
+                    if (clbk)
+                        clbk(e)
+
+                })
+                
 
             },
 
@@ -9842,6 +10096,10 @@ Platform = function (app, listofnodes) {
                     else
                     if(p.trial && !info.trial) result.trial = true
 
+                    if (result.balance || result.reputation) {
+                        result.canuseapplacation = (!window.cordova && typeof _Electron == 'undefined')
+                    }
+
                     clbk(result)
                 })
             },
@@ -9862,6 +10120,19 @@ Platform = function (app, listofnodes) {
                         key : 'video',
                         vis : 'scale',
                         name : self.app.localization.e('spv'),
+                        bad : function(remains, limit){
+                            if (limit <= 3) return false
+							
+							if (remains <= 1) {
+								return true
+							}
+                        }
+                    },
+
+                    audio : {
+                        key : 'audio',
+                        vis : 'scale',
+                        name : self.app.localization.e('spa'),
                         bad : function(remains, limit){
                             if (limit <= 3) return false
 							
@@ -10216,8 +10487,9 @@ Platform = function (app, listofnodes) {
                 if(!block) return Promise.reject('block')
                 if (self.currentBlock == block) return Promise.resolve(dummy())
 
-
                 return self.app.api.rpc('getmissedinfo', [self.sdk.address.pnet().address, block, 30]).then(d => {
+
+                    console.log("DATA", d)
 
                     if(!d || !d.length){
                         return Promise.resolve(dummy())
@@ -10396,6 +10668,56 @@ Platform = function (app, listofnodes) {
 
             nameaddressstorage : {},
 
+            setMonetization : function(monetization, clbk){
+                self.app.platform.sdk.user.accSetMy({monetization : monetization || false}, function(err, alias){
+
+                    console.log("ERROR", err)
+
+                    if(!err){
+
+                        if (clbk){
+                            clbk(null, alias)
+                        }
+
+                    } else {
+                        self.app.platform.errorHandler(err, true)
+
+                        if (clbk)
+                            clbk(err, null)
+                    }
+
+                })
+            },
+
+            checkMonetizationOpportunity : function(address){
+
+                if(!address) return false
+                var userinfo = self.psdk.userInfo.get(address)
+
+                if(!userinfo) return false
+
+				return self.app.monetization && self.app.boost && !self.app.pkoindisable && (self.real[address] || userinfo.dev)
+            },
+
+            checkMonetization : function(address){
+
+
+                if (self.sdk.users.checkMonetizationOpportunity(address)){
+
+                    return self.psdk.accSet.load(address).then(s => {
+
+                        var settings = self.psdk.accSet.get(address) || {}
+
+                        return Promise.resolve(settings.monetization === true || settings.monetization === "" ? true : false)
+
+                    })
+
+                }
+                else{
+                    return Promise.resolve(false)
+                }
+            },
+
             getone: function (address, clbk, light, reload) {
 
                 self.sdk.users.get([address], function(data = {}, error){
@@ -10545,8 +10867,6 @@ Platform = function (app, listofnodes) {
                         return 
 
                     }
-
-                    
 
                     if (lf) {
                         if (clbk) clbk(lf.address)
@@ -11243,7 +11563,7 @@ Platform = function (app, listofnodes) {
                 var total = balance.actual
                 var amount = balance.actual - balance.tempbalance
 
-                window.requestAnimationFrame(() => {
+                window.rifticker.add(() => {
                     if (total > 0 && amount < total) {
 
                         if (!el.find('.spendLine').length) {
@@ -11641,6 +11961,15 @@ Platform = function (app, listofnodes) {
                     _.each(og, (o, i) => {
                         og[i] = superXSS(o)
                     })
+
+
+                    if (d.video){
+                        og.video = {}
+
+                        _.each(d.video, (o, i) => {
+                            og.video[i] = superXSS(o)
+                        })
+                    }
 
                     s[url] = og
 
@@ -12142,12 +12471,9 @@ Platform = function (app, listofnodes) {
                     console.error(e)
                 }
 
-                console.log('recommendations, save')
             },
 
             load: function () {
-
-                console.log("recommendations load")
 
                 var p = {};
 
@@ -12197,7 +12523,6 @@ Platform = function (app, listofnodes) {
                     self.sdk.recommendations.scheduler()
 
                     app.platform.sdk.syncStorage.on('change', self.sdk.recommendations.lskey(), () => {
-                        console.log('recommendations, syncStorage')
                         self.sdk.recommendations.load()
                     });
 
@@ -12215,6 +12540,23 @@ Platform = function (app, listofnodes) {
         activity : {
             latest : {},
             allowRequestAfterFive : true,
+
+            getlatest : function(keys, type, count){
+                var r = []
+
+                _.each(keys, (k) => {
+                    r = r.concat(self.sdk.activity.latest[k] || [])
+                })
+
+                r = _.filter(r, (r) => {return r.type == type})
+
+                r = _.sortBy(r, (r) => {return -r.date})
+
+                r = _.uniq(r, (r) => {return r.index})
+
+
+                return _.first(r, count)
+            },
 
             getbestaddress : function(){
 
@@ -12260,7 +12602,7 @@ Platform = function (app, listofnodes) {
                 
                     _.each(s.latest || [], (a, i) => {
 
-                        if(i == 'visited' || i == 'search') return
+                        if(i == 'visited' || i == 'search' || i == 'transaction') return
 
                         _.each(a, (o) => {
                             if(o.type == 'user'){
@@ -12353,6 +12695,7 @@ Platform = function (app, listofnodes) {
                     search : 30,
                     subscribe : 100,
                     visited : 20,
+                    transaction : 20,
                     video : 30
                 }
             },
@@ -12501,7 +12844,7 @@ Platform = function (app, listofnodes) {
 
                 self.sdk.activity.save();
 
-                if(type == 'user' && (key != 'visited' && key == 'search')){
+                if(type == 'user' && (key != 'visited' && key != 'search' && key != 'transaction')){
                     self.sdk.recommendations.scheduler()
                 }
 
@@ -15466,7 +15809,7 @@ Platform = function (app, listofnodes) {
                     }, {
                         method,
                         parameters
-                    }).then(d => {
+                    }, method == 'getboostfeed' ? 'getboostfeed' : null).then(d => {
 
                         var shares = self.psdk.share.gets(_.map(d.contents, (s) => {
                             return s.txid
@@ -15743,9 +16086,11 @@ Platform = function (app, listofnodes) {
                 getboost : function(p, clbk, cache){
 
                     self.app.platform.sdk.node.shares.lightsid(p, clbk, cache, {
-                        method : 'getboostfeed'
+                        method : 'getboostfeed',
+                        rpc : {
+                            fnode : '65.21.252.135:38081'
+                        }
                     })
-
                 },
 
                 lightsid : function(p, clbk, cache, methodparams){
@@ -15796,7 +16141,10 @@ Platform = function (app, listofnodes) {
                                 return encodeURIComponent(t.toLowerCase())
                             })
 
-                            var parameters = [Number(p.height), p.txid || '', p.count, p.lang, p.tagsfilter, p.type ? [p.type] : [], [], [], p.tagsexcluded];
+                            var parameters = [Number(p.height), p.txid || '', mtd == 'getboostfeed' ? 60 * 24 : p.count, p.lang, mtd == 'getboostfeed' ? [] : p.tagsfilter, p.type ? [p.type] : [], [], [], p.tagsexcluded];
+
+
+                            console.log('methodparams', methodparams)
 
                             s.getex(parameters, function (data, error) {
 
@@ -15810,7 +16158,7 @@ Platform = function (app, listofnodes) {
                                 if (clbk)
                                     clbk(shares, error, p)
 
-                            }, mtd)
+                            }, mtd, methodparams.rpc)
 
 
                         }
@@ -16030,6 +16378,19 @@ Platform = function (app, listofnodes) {
 
                         //// filter viewed
 
+                        boostinfo = _.filter(boostinfo, (bi) => {
+                            var cf = _.reduce(bi.flags, (m, c) => {
+                                return m + c
+                            }, 0)
+
+                            if(cf < 10){
+                                return true
+                            }
+
+                            return false
+                        })
+                        //flags
+
                         var boostedmap = _.uniq(randomizerarray(boostinfo, count || 3, 'boost') || [], function(v){
                             return v.txid
                         })
@@ -16183,11 +16544,15 @@ Platform = function (app, listofnodes) {
 
                 toUT: function (tx, address, n) {
 
+
                     var vout = _.find(tx.vout, function (v) {
                         return _.find(v.scriptPubKey.addresses, function (a) {
                             return a == address && (typeof n == 'undefined' || n == v.n)
                         })
                     })
+
+                    console.log('address', vout, address)
+
 
                     var coinbase = deep(tx, 'vin.0.coinbase') || (deep(tx, 'vout.0.scriptPubKey.type') == 'nonstandard') || false
 
@@ -16239,59 +16604,6 @@ Platform = function (app, listofnodes) {
                     return outs
 
                 },
-
-                /*
-                setUnspentoptimizationInterval : function(){
-
-                    if(!unspentoptimizationInterval){
-
-                        self.sdk.node.transactions.unspentOptimization()
-
-                        unspentoptimizationInterval = setInterval(function(){
-                            self.sdk.node.transactions.unspentOptimization()
-                        }, 300000)
-                    }
-
-
-                },
-
-                clearUnspentoptimizationInterval : function(){
-
-                    if (unspentoptimizationInterval){
-                        clearInterval(unspentoptimizationInterval)
-                        unspentoptimizationInterval = null
-                    }
-
-                },
-
-                unspentOptimization : function(){
-
-                    var s = self.sdk.node.transactions;
-                    var pnet = self.sdk.address.pnet();
-
-                    if (pnet && s.unspent){
-
-                        var unspents = _.filter(s.unspent[pnet.address] || [], function(u){
-                            return self.sdk.node.transactions.canSpend(u) && u.amount
-                        })
-
-                        if (unspents.length > 200){
-                            unspents = _.filter(unspents, function(u, i){
-                                return i < 180
-                            })
-
-                            var keyPair = self.app.user.keys()
-
-                            self.sdk.wallet.sendFromInputs(pnet.address, unspents, keyPair, 0, function(err, tx){
-                            })
-
-                        }
-                    }
-
-                },
-                
-                */
-
 
                 get: {
 
@@ -17892,28 +18204,20 @@ Platform = function (app, listofnodes) {
 
                             var link = l.link.replace('/embed/', '/video/');
 
-                            $.ajax({
-                                url : 'https://pocketnet.app:8888/bitchute',
-                                data : {
-                                    url : hexEncode(link)
-                                },
-                                type : 'POST',
-                                timeout : 5000,
-                                success : function(response){
+                            self.app.platform.sdk.remote.getnew(link, 'bitchute').then(og => {
 
-                                    if (response.data.video && response.data.video.as) {
+                                if (og.video && og.video.as) {
 
-                                        return resolve(response.data.video)
+                                    return resolve(og.video)
 
-                                    } else {
-                                        reject()
-                                    }
-
-                                },
-                                error : function(){
+                                } else {
                                     reject()
                                 }
-                            });
+
+                                
+                            }).catch(reject)
+
+
 
                         }).then(r => {
 
@@ -18856,6 +19160,11 @@ Platform = function (app, listofnodes) {
 
                     h+= " PKOIN"
 
+                    if(data.opmessage == 'a:donate' || data.opmessage == 'a:reward' || data.opmessage == 'a:a' || data.opmessage == 'a:monetization'){
+                        h+= ' <i class="fas fa-heart"></i>'
+                    }
+
+
 
                 h += '</div>'
 
@@ -19710,6 +20019,8 @@ Platform = function (app, listofnodes) {
 
                         var addr = platform.app.user.address.value
 
+                        if(!data.addr) data.addr = addr
+
                         data.tx = platform.sdk.node.transactions.toUT(tx, data.addr, data.nout)
 
                         data.amountall = _.reduce(data.txinfo.vout, function (m, v) {
@@ -19785,7 +20096,7 @@ Platform = function (app, listofnodes) {
                                 if (data.amountall >= 0.05 || data.tx.amount >= 0.05) {
                                     n.text = self.tempates._user(data.user) + " sent " + platform.mp.coin(data.tx.amount) + " PKOIN to you"
 
-                                    if (data.opmessage) {
+                                    if (data.opmessage && data.opmessage.indexOf('pay_') > -1) {
                                         n.text = n.text + ' '+self.app.localization.e('e13336')+' "' + data.opmessage + '"'
                                     }
                                     else {
@@ -19874,7 +20185,20 @@ Platform = function (app, listofnodes) {
                                         var txt = platform.app.localization.e('userSent', platform.mp.coin(data.amountall || data.tx.amount))
 
                                         if (data.opmessage) {
-                                            txt += ' '+self.app.localization.e('e13336')+' <span>&ldquo;' + data.opmessage + '&rdquo;</span>'
+
+                                            if(data.opmessage != 'a:donate' && data.opmessage != 'a:reward' && data.opmessage != 'a:a' && data.opmessage != 'a:monetization'){
+                                                txt += ' '+self.app.localization.e('e13336')+' <span>&ldquo;' + data.opmessage + '&rdquo;</span>'
+                                            }
+
+                                            if(data.opmessage == 'a:monetization'){
+                                                txt += ' '+self.app.localization.e('fastmessagemonetization')
+                                            }
+
+                                            if(data.opmessage == 'a:donate'){
+                                                txt += ' '+self.app.localization.e('fastmessagedonate')
+                                            }
+
+                                            
                                         }
 
                                         html += self.tempates.user(data.user, '', true, txt, self.tempates.transaction(data), data.time)
@@ -19937,9 +20261,54 @@ Platform = function (app, listofnodes) {
 
                 fastMessageEvents: function (data, message, close) {
 
+                    if(data.opmessage == 'a:monetization'){
+                        message.el.find('.infomain,.extra').on('click', function(){
+
+
+                            
+                            platform.app.nav.api.go({
+                                open : true,
+                                href : self.app.mobileview ? 'earnings' : 'userpage?id=earnings',
+                                inWnd : self.app.mobileview ? true : false,
+                                history : true,
+                                essenseData : {
+                                }
+                            })
+
+                        })
+                    }
+                    else{
+                        message.el.find('.infomain,.extra').on('click', function(){
+
+                            app.nav.api.load({
+                                open : true,
+                                id : 'transactionview',
+                                inWnd : true,
+                
+                                essenseData : {
+                                    txid : data.txid,
+                                    share : true,
+                                }
+                            })
+
+                        })
+                    }
+
+                    ///data.opmessage
+
                     //message.el.addClass('bright')
 
-                }
+                },
+
+                fastMessageEventsFst : function (data, message, close) {
+
+                    if (data.opmessage == 'a:donate' || data.opmessage == 'a:reward' || data.opmessage == 'a:a' || data.opmessage == 'a:monetization'){
+
+                        self.app.platform.effects.templates.donatehearts(app.el.html, function(){
+                            
+                        })
+                    }
+                },
             },
 
             'newblocks': {
@@ -20337,7 +20706,18 @@ Platform = function (app, listofnodes) {
                 },
 
                 clbks: {
-                }
+                },
+
+                fastMessageEventsFst : function (data, message, close) {
+
+                    if (data.donation && data.amount){
+                        message.el.addClass('dnt')
+
+                        self.app.platform.effects.templates.donatehearts(app.el.html, function(){
+                            
+                        })
+                    }
+                },
             },
 
             event: {
@@ -20353,9 +20733,6 @@ Platform = function (app, listofnodes) {
                         platform.sdk.users.get([data.addrFrom], function () {
 
                             data.user = platform.psdk.userInfo.getShortForm(data.addrFrom)
-
-                            console.log('data', data, wa)
-                            
 
                             data.user.address = data.addrFrom
 
@@ -20876,38 +21253,79 @@ Platform = function (app, listofnodes) {
 
             })
 
+        }
 
+        var rmmessageDestroy = function(message){
+            if (message.timeout) {
+                clearTimeout(message.timeout);
+                message.timeout = null
+            }
+        }
 
+        var rmmessagesDestroy = function(){
+            _.each(self.fastMessages, function (message, i) {
+                rmmessageDestroy(message)
+            })
+        }
+
+        var addmessagesTime = function(time = 5000){
+
+            _.each(self.fastMessages, function (message, i) {
+                destroyMessage(message, time, false, true);
+            })
+
+            
         }
 
         var destroyMessage = function (message, time, noarrange, destroyUser) {
+
+
+            var rmfu = function () {
+
+                
+                
+
+                if(!time){
+                    rmfu2()
+                }
+                else{
+                    message.el.addClass('willhidden')
+
+                    setTimeout(rmfu2, 200)
+                }
+
+            }
+
+            var rmfu2 = function(){
+
+                console.log('destroyMessage', message, time)
+
+                message.el.remove();
+
+                removeEqual(self.fastMessages, {
+                    id: message.id
+                })
+
+                if (message.destroyclbk && destroyUser) {
+                    message.destroyclbk()
+                }
+
+                if (!noarrange)
+                    tArrangeMessages()
+
+            }
 
             if (message.timeout) clearTimeout(message.timeout);
 
             if (platform.focus || noarrange) {
 
-                message.timeout = setTimeout(function () {
-
-                    message.el.fadeOut(300)
-
-                    setTimeout(function () {
-
-                        message.el.remove();
-
-                        removeEqual(self.fastMessages, {
-                            id: message.id
-                        })
-
-                        if (message.destroyclbk && destroyUser) {
-                            message.destroyclbk()
-                        }
-
-                        if (!noarrange)
-                            tArrangeMessages()
-
-                    }, 300)
-
-                }, time)
+                if(time){
+                    message.timeout = setTimeout(rmfu, time)
+                }
+                else{
+                    rmfu()
+                }
+               
             }
 
             else {
@@ -20924,17 +21342,31 @@ Platform = function (app, listofnodes) {
 
         }
 
+        var hideallnotificationselementShowed = false
+
         var hideallnotificationselement = function(show){
+
+            hideallnotificationselementShowed = show
+            
             if(self.hideallnotificationsel){
+                window.rifticker.add(() => {
+                    if(show){
+                        self.hideallnotificationsel.html('<div class="hidenf">'+platform.app.localization.e('hideallnotifications')+'</div>')
+                        self.hideallnotificationsel.find('div').on('click', hideallnotifications)
 
-                if(show){
-                    self.hideallnotificationsel.html('<div class="hidenf">'+platform.app.localization.e('hideallnotifications')+'</div>')
-                    self.hideallnotificationsel.find('div').on('click', hideallnotifications)
+                    }
+                    else{
+                        self.hideallnotificationsel.addClass('willhidden')
 
-                }
-                else{
-                    self.hideallnotificationsel.html('')
-                }
+                        setTimeout(function () {
+                            if (hideallnotificationselementShowed){
+                                return
+                            }
+                            self.hideallnotificationsel.html('')
+                            self.hideallnotificationsel.removeClass('willhidden')
+                        }, 200)
+                    }
+                })
 
             }
         }
@@ -20951,27 +21383,44 @@ Platform = function (app, listofnodes) {
             var mtbl = platform.app.mobileview
 
 			if (mtbl){
-				maxCount = 1;
-                showremove = 0;
+				maxCount = 2;
+                showremove = 2;
 			}
 
 			var remove = self.fastMessages.length - maxCount;
 
 			var s = false;
 
+            console.log('self.fastMessages.length', self.fastMessages.length)
+
 			if(self.fastMessages.length >= maxCount){
 				_.each(self.fastMessages, function(m, i){
 
-					if(!mtbl && !m.expanded && !m.el.hasClass('smallsize')){
+					if(!m.expanded && !m.el.hasClass('smallsize')){
 						m.el.addClass('smallsize');
 						s = true
 					}
 
 				})
 			}
+            else{
+                _.each(self.fastMessages, function(m, i){
+					if (m.el.hasClass('smallsize')){
+						m.el.removeClass('smallsize');
+					}
+				})
+            }
+
+            if (mtbl){
+                boffset = platform.app.margintop
+            }
 
             if (showremove && self.fastMessages.length >= showremove){
                 boffset = 50
+
+                if (mtbl){
+                    boffset += platform.app.margintop
+                }
 
                 hideallnotificationselement(true)
             }
@@ -20985,24 +21434,37 @@ Platform = function (app, listofnodes) {
             _.each(self.fastMessages, function(m, i){
 
                 if(i < remove){
-                    destroyMessage(m, 1, true)
+                    /*if(!isMobile()) {
+                        destroyMessage(m, 0, true)
+                    }
+                    else {*/
+                        m.el.addClass('hidden')
+
+                        rmmessageDestroy(m)
+                        
+                    //}
                 }
 
                 else
                 {
-                    if(!mtbl){
-                        offset += 5;
-                    }
 
-                    if(!mtbl){
-                        var r = offset
-                        window.requestAnimationFrame(() => {
+                    if (m.el.hasClass('hidden')){
+                        m.el.removeClass('hidden')
+                        destroyMessage(m, 5000, false, true)
+                    }
+                    
+                    offset += 5;
+                
+                    var r = offset
+
+                    window.rifticker.add(() => {
+                        if(!mtbl){
                             m.el.css('bottom', r + 'px');
-                        })
+                        }else{
+                            m.el.css('top', r + 'px');
+                        }
+                    })
                         
-                    }
-                        
-
                     offset += m.el.outerHeight();
                 }
 
@@ -21011,7 +21473,7 @@ Platform = function (app, listofnodes) {
 
 		}
 
-        var tArrangeMessages = _.debounce(arrangeMessages, 300)
+        var tArrangeMessages = _.debounce(arrangeMessages, 200)
 
         self.getMissed = function (initial) {
 
@@ -21030,12 +21492,17 @@ Platform = function (app, listofnodes) {
                 self.messageHandler(block, function () {
                     self.loadingMissed = false;
 
+                    console.log('notifications', notifications)
+
                     if(!notifications) return
 
                     lazyEach({
                         array: notifications,
                         action: function (p) {
-                            self.messageHandler(p.item, p.success)
+                            
+                            p.success()
+
+                            self.messageHandler(p.item)
                         },
 
                         all: {
@@ -21060,13 +21527,11 @@ Platform = function (app, listofnodes) {
 
         self.destroyMessages = function () {
 
-            _.each(self.fastMessages, function (message, i) {
-                destroyMessage(message, 1, true)
+            _.each(_.clone(self.fastMessages), function (message, i) {
+                destroyMessage(message, 0, true)
             })
 
-            setTimeout(function(){
-                tArrangeMessages()
-            }, 301)
+            tArrangeMessages()
         }
 
         self.fastMessageByJson = function(json, destroyclbk, p = {}){
@@ -21114,10 +21579,14 @@ Platform = function (app, listofnodes) {
                     p.click() 
                     destroyMessage(message, 1)
 
+                    setTimeout(() => {
+                        addmessagesTime(15000)
+                    }, 50)
+
                     return
                 }
 
-                if (platform.app.mobileview){
+                /*if (platform.app.mobileview){
 
                     platform.app.nav.api.go({
                         open : true,
@@ -21128,9 +21597,20 @@ Platform = function (app, listofnodes) {
                         }
                     })
 
+                    if(!p.click)
+                        destroyMessage(message, 1)
+
+                    setTimeout(() => {
+                        rmmessagesDestroy()
+                    }, 50)
+
                 }
-                else{
+                else{*/
                     if(!message.expanded){
+                        
+                        setTimeout(() => {
+                            addmessagesTime(15000)
+                        }, 50)
 
                         message.el.removeClass('smallsize');
 
@@ -21140,13 +21620,13 @@ Platform = function (app, listofnodes) {
 
                         setTimeout(function(){
                             tArrangeMessages();
-                        }, 300)
+                        }, 200)
                     }
-                }
+                //}
 
 
 
-			})
+            })
 
             message.el.on('mouseenter', function () {
                 clearTimeout(message.timeout);
@@ -21163,24 +21643,26 @@ Platform = function (app, listofnodes) {
             })
 
             if (isTablet()) {
-                var d = 25
+                var d = 60
                 var parallax = new SwipeParallaxNew({
                     //prop : 'position',
                     el: message.el,
                     allowPageScroll : false,
                     directions: {
-                        up : {
+                        left : {
                             //endmove : true,
-                            trueshold: 1,
+                            trueshold: 15,
                             distance : d,
                             positionclbk: function (px) {
                                 var p = 1 - Math.min(px / d, 1)
-                                message.el.css('opacity', p)
                             },
 
                             clbk: function () {
-                                message.el.remove()
-                                destroyMessage(message, 1, false, true);
+                                destroyMessage(message, 0)
+
+                                setTimeout(() => {
+                                    rmmessagesDestroy()
+                                }, 50)
                             }
 
                         }
@@ -21191,12 +21673,20 @@ Platform = function (app, listofnodes) {
 
             tArrangeMessages();
 
+
             return message
         }
 
         self.messageHandler = function (data, clbk) {
 
+
             data || (data = {})
+
+            if(!data.msg && !data.mesType){
+                if(data.vin && data.vout){
+                    data.msg = 'transaction'
+                }
+            }
 
             if (data.msg || data.mesType) {
 
@@ -21213,12 +21703,6 @@ Platform = function (app, listofnodes) {
 
                 if (!m) m = {}
 
-
-                if (m.checkHandler) {
-                    if (!m.checkHandler(data, m)) {
-                        return
-                    }
-                }
 
                 if (data.txid) {
 
@@ -21281,6 +21765,12 @@ Platform = function (app, listofnodes) {
 
                                     if (m.fastMessageEvents) {
                                         m.fastMessageEvents(data, message, () => {
+                                            destroyMessage(message, 1)
+                                        })
+                                    }
+
+                                    if (m.fastMessageEventsFst) {
+                                        m.fastMessageEventsFst(data, message, () => {
                                             destroyMessage(message, 1)
                                         })
                                     }
@@ -21632,6 +22122,16 @@ Platform = function (app, listofnodes) {
             })*/
 
             /*self.messageHandler({
+                "addr": "PQ8AiCHJaTZAThr2TnpkQYDyVd1Hidq4PM",
+                "msg": "transaction",
+                "txid": "8b1b924b74d5231fc180b62af879be656a2c3659fbbd94212e65325a8b4b387f",
+                "time": 1725542676,
+                "amount": "200000000",
+                "nout": "1",
+                "node": "95.31.30.84:38081:8087"
+            })
+
+            self.messageHandler({
                 addr: "PR7srzZt4EfcNb3s27grgmiG8aB9vYNV82",
                 amount: "166666",
                 msg: "transaction",
@@ -21639,6 +22139,31 @@ Platform = function (app, listofnodes) {
                 nout: "7",
                 time: 1629883584,
                 txid: "4e73740eba080aae73aceb80636dcf8f3fe8aed1a9c8c7de417a59ee2d54d357"
+            })
+
+
+                
+            self.messageHandler({
+                "txid": "87cf9a5c0da04779e21a2100cc0c4f209e93c1ce4ed9b59b29ccb95b435e4f0b",
+                "time": 1725569767,
+                "nblock": 2924284,
+                "addrFrom": "PHdW4pwWbFdoofVhSEfPSHgradmrvZdbE5",
+                "nameFrom": "Daniel_Satchkov",
+                "avatarFrom": "https://i.imgur.com/5kkmKpS.jpg",
+                "msg": "event",
+                "mesType": "postfromprivate",
+                "postsCnt": 1
+            })
+            self.messageHandler({
+                "txid": "e4598a0838a16cbc222757212f2b439b3971e4df808930fb9c80e9f6968329e3",
+                "time": 1725564976,
+                "nblock": 2924201,
+                "addrFrom": "PL8nRqbUwALzoAxuukpgujZnsvsRdxhDgZ",
+                "nameFrom": "Lornet",
+                "avatarFrom": "https://bastyon.com:8092/i/JIUHlCHyfdksewIyPyBhjt.jfif",
+                "msg": "event",
+                "mesType": "postfromprivate",
+                "postsCnt": 1
             })*/
 
             
@@ -21679,9 +22204,9 @@ Platform = function (app, listofnodes) {
                 nout: "3",
                 time: 1640237360,
                 txid: "acbd05c9ac81fe9ca2b12bdb7c2fe1127270a9b94fed872d71c7d079004243e9",
-            })*/
+            })
 
-            /*self.messageHandler({
+            self.messageHandler({
                 addr: "PQ8AiCHJaTZAThr2TnpkQYDyVd1Hidq4PM",
                 addrFrom: "PMGPzPbZnYEbVtYY4sajELjpWnT71w1cN8",
                 mesType: "post",
@@ -21691,9 +22216,9 @@ Platform = function (app, listofnodes) {
                 reason: "post",
                 time: "1619694710",
                 txid: "670be9561196c76b68ec81948de2c39e03af0add79df1e236be49f359fd38626"
-            })*/
+            })
 
-            /*self.messageHandler({
+            self.messageHandler({
                 addr: "PQ8AiCHJaTZAThr2TnpkQYDyVd1Hidq4PM",
                 addrFrom: "PR7srzZt4EfcNb3s27grgmiG8aB9vYNV82",
                 mesType: "subscribe",
@@ -21701,9 +22226,9 @@ Platform = function (app, listofnodes) {
                 node: "135.181.196.243:38081:8087",
                 time: 1625762423,
                 txid: "6119caaadaef37be8f3716be8280e88206adf043f38fc1665d7e42bdcf90128a"
-            })*/
+            })
 
-			/*self.messageHandler({
+			self.messageHandler({
                 addr: "PR7srzZt4EfcNb3s27grgmiG8aB9vYNV82",
                 addrFrom: "PTcArXMkhsKMUrzQKn2SXmaVZv4Q7sEpBt",
                 mesType: "postfromprivate",
@@ -21725,12 +22250,15 @@ Platform = function (app, listofnodes) {
                 txid: "65fee9b1e925833c5ff623178efecc436d3af0c9f6a4baa0b73c52907a9d1d7b"
             })*/
 
+            
+
             // test coin
 
             //self.messageHandler({"addr":"TSVui5YmA3JNYvSjGK23Y2S8Rckb2eV3kn","msg":"transaction","txid":"a6819e0de29c148a193932da4581b79cae02163f717962a86ccbf259f915a4be","time":1657701744,"amount":"1000000","nout":"2","node":"116.203.219.28:39091:6067"})
 
 		}, 3000)
     }
+    
     
     self.convertUTCSS = function (str) {
 
@@ -22642,8 +23170,6 @@ Platform = function (app, listofnodes) {
         self.sdk.ustate.clbks = {};
 
         self.sdk.registrations.clbks = {};
-
-        console.log("DESTROY")
         self.sdk.sharesObserver.destroy()
         self.sdk.recommendations.destroy()
 
@@ -23150,7 +23676,7 @@ Platform = function (app, listofnodes) {
                             actionSubType: 'AUTHORIZED_SESSION',
                         });
     
-                        setTimeout(() => {
+                        ricfbl(() => {
                             self.matrixchat.init()
                         }, 10)
                         
@@ -23161,7 +23687,7 @@ Platform = function (app, listofnodes) {
     
                         setTimeout(self.acceptterms, 5000)
     
-                        setTimeout(function(){
+                        ricfbl(function(){
     
                             self.app.peertubeHandler.init()
     
@@ -23356,7 +23882,7 @@ Platform = function (app, listofnodes) {
                     return
                 }
 
-                    self.matrixchat.import(clbk)
+                self.matrixchat.import(clbk)
             })
         },
 
@@ -23401,6 +23927,7 @@ Platform = function (app, listofnodes) {
 
                             if(typeof _Electron != 'undefined') path = './'
 
+                            console.log('isTablet', isTablet())
                             
                             var matrix = `<div class="wrapper matrixchatwrapper">
                                 <matrix-element
@@ -23413,6 +23940,7 @@ Platform = function (app, listofnodes) {
                                     ctheme="`+self.sdk.theme.current+`"
                                     localization="`+self.app.localization.key+`"
                                     fcmtoken="`+(self.fcmtoken || "")+`"
+                                    viewtype="`+(isTablet() ? "split" : "single")+`"
                                     isSoundAvailable="`+(self.sdk.usersettings.meta.sound.value)+`"
                                     pkoindisabled="`+(self.app.pkoindisable)+`"
                                     massmailingenabled="` + massmailingenabled +`"
@@ -23422,7 +23950,7 @@ Platform = function (app, listofnodes) {
                                 </matrix-element>
                             </div>`
 
-                            window.requestAnimationFrame(() => {
+                            window.rifticker.add(() => {
                                 $('#matrix').html(matrix);
 
                                 self.matrixchat.el = $('.matrixchatwrapper')
@@ -23765,9 +24293,11 @@ Platform = function (app, listofnodes) {
                             })
 
                             self.app.platform.ui.externalFromCurrentUrl()
+
+                            return false;
                         }
         
-                        return false;
+                        
                     }
 
                     self.app.nav.api.load({
@@ -23825,7 +24355,7 @@ Platform = function (app, listofnodes) {
                 var wnds = self.app.el.windows.find('.wnd:not(.pipmini)')
                 var pips = self.app.el.windows.find('.wnd.pipmini')
 
-                window.requestAnimationFrame(() => {
+                window.rifticker.add(() => {
                     if (value){
                         wnds.css('z-index', 999)
                     }else{
@@ -23850,6 +24380,15 @@ Platform = function (app, listofnodes) {
                 else{
                     app.mobile.reload.destroyparallax()
                 }
+
+
+                if(!value){
+                    self.app.mobile.unsleep(false)
+                }
+                else{
+                    self.app.mobile.unsleep(true)
+                }
+                
 
 
             }
@@ -24102,7 +24641,7 @@ Platform = function (app, listofnodes) {
                 }
                     
                 
-                self.app.mobile.backgroundMode(false)
+                //self.app.mobile.backgroundMode(false)
 
             }
 
@@ -24133,21 +24672,6 @@ Platform = function (app, listofnodes) {
     
                         else{
 
-
-                            self.app.mobile.backgroundMode(true)
-
-                            /*
-                            var r = $(self.activecall.ui.root)
-    
-                            var video = r.find('#remote')[0]
-
-                            self.app.mobile.backgroundMode(true)
-    
-                            video.requestPictureInPicture().then(() => {
-                                haspip = true
-                            }).catch(e => {
-                                console.error(e)
-                            })*/
     
                             
                         }
@@ -24224,8 +24748,8 @@ Platform = function (app, listofnodes) {
 
             }
 
-            $(window).on('focus', f);
-            $(window).on('blur', uf);
+            self.app.el.window.on('focus', f);
+            self.app.el.window.on('blur', uf);
 
         }
 
@@ -24254,8 +24778,8 @@ Platform = function (app, listofnodes) {
 
             }
 
-            $(window).off('focus', f);
-            $(window).off('blur', uf);
+            self.app.el.window.off('focus', f);
+            self.app.el.window.off('blur', uf);
 
 
         }
@@ -24702,6 +25226,15 @@ Platform = function (app, listofnodes) {
 
                     self.app.mobile.unsleep(false)
 
+                    self.app.mobile.pip.supported((r) => {
+
+                        if(r){ }
+                        else{
+                            self.app.mobile.backgroundMode(false)
+                        }
+                        
+                    })
+
                     clbks.view()
 				},
 				onConnected:(call, ui)=> {
@@ -24713,6 +25246,15 @@ Platform = function (app, listofnodes) {
                     }
 
                     self.app.mobile.unsleep(true)
+
+                    self.app.mobile.pip.supported((r) => {
+
+                        if(r){ }
+                        else{
+                            self.app.mobile.backgroundMode(true)
+                        }
+
+                    })
 
                     self.activecall = {
                         call, ui

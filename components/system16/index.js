@@ -166,7 +166,7 @@ var system16 = (function(){
 				renders.webserveradmin(el.c)
 			},
 			'hexCaptcha' : function(_el){
-				changes.server.hexCaptcha = JSON.parse(_el.attr('value'))
+				changes.server.hexCaptcha = !JSON.parse(_el.attr('value'))
 				if(changes.server.hexCaptcha == system.server.hexCaptcha) delete changes.server.hexCaptcha
 
 				renders.webserveradmin(el.c)
@@ -401,10 +401,11 @@ var system16 = (function(){
 					stats = lastelements(stats, 1000)
 
 					if (rif){
-						cancelAnimationFrame(rif)
+						//cancelAnimationFrame(rif)
+						rifticker.cancel(rif)
 					}
 	
-					rif = window.requestAnimationFrame(() => {
+					rif = rifticker.add(() => {
 						rif = null
 						
 						if (el.c){
@@ -3774,10 +3775,56 @@ var system16 = (function(){
 					el : elc.find('.peertubeWrapper')
 
 				},
-				function(){
+				function(_p){
 
 
 					renders.peertubeinstancestable(elc)
+
+					if(actions.admin()){
+						_p.el.find('.restartcomponent').on('click', function(){
+							new dialog({
+								class : 'zindex',
+								html : "Do you really want to restart peertube component?",
+								btn1text : self.app.localization.e('dyes'),
+								btn2text : self.app.localization.e('dno'),
+								success : function(){	
+
+									globalpreloader(true)
+									proxy.fetchauth('peertube/restart', {
+									
+										data : {}
+		
+									}).catch(e => {
+										
+										return Promise.resolve()
+			
+									}).then(r => {
+
+										topPreloader(100);
+
+										setTimeout(() => {
+											globalpreloader(false)
+
+											actions.refresh()
+										}, 4000)
+										
+
+										//renders.peertubecontent(el.c)
+					
+										
+			
+									})
+
+									
+															
+								}
+							})
+						})
+					}
+
+						
+
+					
 
 					if (clbk)
 						clbk()
@@ -4615,7 +4662,7 @@ var system16 = (function(){
 
 		_.each(essenses, function(essense){
 
-			window.requestAnimationFrame(() => {
+			window.rifticker.add(() => {
 				essense.destroy();
 			})
 

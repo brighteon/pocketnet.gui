@@ -41,6 +41,8 @@ var ActionOptions = {
                 }
             },
 
+            //saveTxToStorage : true
+
          
         },
         upvoteShare : {
@@ -285,7 +287,7 @@ var Action = function(account, object, priority, settings){
 
     self.import = function(e){
 
-        if(e.updated){
+        if (e.updated){
             var updated = new Date(e.updated)
 
             if (updated < self.updated) return
@@ -608,6 +610,8 @@ var Action = function(account, object, priority, settings){
         var opreturnData = null
         var method = 'sendrawtransaction'
 
+        //return Promise.reject('deprecated')
+
         //////////////
 
         if (self.object.serialize){
@@ -729,7 +733,7 @@ var Action = function(account, object, priority, settings){
         if ((options.calculateFee && options.calculateFee(self)) && !calculatedFee){
             var feerate = await account.parent.estimateFee()
 
-            return makeTransaction(false, Math.min(tx.virtualSize() * feerate, 0.0999), send)
+            return makeTransaction(false, Math.min(tx.virtualSize() * Math.min(feerate, 0.00002499 / 2), 0.0999), send)
         }
 
         var hex = tx.toHex();
@@ -758,6 +762,10 @@ var Action = function(account, object, priority, settings){
 
             self.transaction = transaction
 
+            if (options.saveTxToStorage){
+                account.parent.saveTxToStorage(transaction, tx)
+            }
+
             self.checkConfirmationUntil = (new Date()).addSeconds(35)
 
             delete self.sending
@@ -776,8 +784,6 @@ var Action = function(account, object, priority, settings){
             delete self.inputs
             delete self.outputs
             delete self.sending
-
-            
 
             if((code == -26 || code == -25 || code == 16 || code == 261)){
 
@@ -984,7 +990,7 @@ var Action = function(account, object, priority, settings){
             return Promise.reject('actions_alreadySent')
         }
 
-        if (self.sending && (new Date()).addSeconds(-365) < self.sending){
+        if (self.sending && (new Date()).addSeconds(-120) < self.sending){
             return Promise.reject('actions_alreadySending')
         }
 
@@ -2243,6 +2249,10 @@ var Account = function(address, parent){
 
             _.each(self.actions.value, (obj2) => {
 
+                if(action.object.type != obj2.object.type) {
+                    return
+                }
+
                 if(!obj2.transaction && !obj2.sent && !obj2.completed && (!obj2.rejected && !obj2.rejectWait)){
                     if(!action.options.collision(action, obj2)){
                         obj2.rejected = 'actions_collision'
@@ -2420,13 +2430,27 @@ var Account = function(address, parent){
         }
 
 
-        if(!self.unspents.value.length) return balance
+        //if(!self.unspents.value.length) return balance
 
         var tempbalance = _.reduce(self.actions.value, (m, action) => {
 
             if(action.completed || action.rejected) return m
 
+            var validInput = true
+
+            if( _.find(action.inputs, (i) => {
+
+                if(! _.find(self.unspents.value, (u) => {
+                    return u.txid == i.txid && u.vout == i.vout
+                })) return true
+
+            })) validInput = false
+
+
+            if(!validInput) return m
+
             var toThisAddress = _.reduce(action.outputs, (m, output) => {
+                
                 
                 if(_.find(adresses, (a) => {return a == output.address})){
                     return m + output.amount
@@ -2558,6 +2582,12 @@ var Actions = function(app, api, storage = localStorage){
         events[key] = _.filter(events[key], function(k){
             return k != f
         })
+    }
+
+    self.txStorage = {}
+
+    self.saveTxToStorage = function(hash, tx){
+        self.txStorage[hash] = tx
     }
 
     self.estimateFee = function(){
@@ -2727,7 +2757,7 @@ var Actions = function(app, api, storage = localStorage){
         if(!account) return actions
 
         _.each(account.actions.value, (a) => {
-            if(a.settings.application == application) actions.push(application)
+            if(a.settings.application == application) actions.push(a)
         })
 
         return actions

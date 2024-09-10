@@ -24,7 +24,14 @@ var donate = (function(){
 						}
 					])
 					transaction.feemode.set('include')
-					transaction.message.set('')
+
+					if(ed.donatemode){
+						transaction.message.set('a:donate')
+					}
+					else{
+						transaction.message.set('')
+					}
+					
 
 					
 
@@ -186,7 +193,8 @@ var donate = (function(){
 							receiver : self.psdk.userInfo.get(ed.receiver),
 							sender : self.psdk.userInfo.getmy(),
 							input,
-							error : false
+							error : false,
+							ed
 						};
 
 						clbk(data);
@@ -242,7 +250,7 @@ var donate = (function(){
 
 		_.each(essenses, function(essense){
 
-			window.requestAnimationFrame(() => {
+			window.rifticker.add(() => {
 				essense.destroy();
 			})
 

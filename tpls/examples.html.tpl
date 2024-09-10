@@ -244,6 +244,106 @@
         </script>
         <!-- example 2: PaymentLink: end -->
 
+
+        <!-- example 3: Auth: begin -->
+        <div>
+            <h2>__VAR__.name auth button</h2>
+        </div>
+        <div class="example" >
+            <div class="example" id="authButton">
+            </div>
+        </div>
+
+        <script>
+            window.addEventListener("bastyonLibLoaded", function() {
+
+                var auth = window.bastyonLib.auth({
+                    auth : {
+                        
+
+                        /*
+                        
+                            Server url
+
+                            If specified, the buyer will need to fill out a delivery form
+
+                            The server must process a request like
+
+                            {
+                                signature : {
+                                    "nonce": "",
+                                    "signature": "",
+                                    "pubkey": "",
+                                    "address": "",
+                                    "v": 1
+                                }
+                            }
+
+                            And return the answer
+
+                            {
+                                redirect_url : ''
+                            }
+
+                            Or
+
+                            {
+                                error : {
+                                    text : 'Signature check failed'
+                                }
+                            }
+                        
+                        */
+
+                        "c_url": "https://6.pocketnet.app:8899/ping",
+
+                        
+                    }
+                })
+
+                var button = auth.makeButton()
+
+                var elem = document.getElementById('authButton');
+                    elem.append(button)
+            });
+        </script>
+        <!-- example 3: Auth: end -->
+
+
+        <!-- example 4: Share: begin -->
+        <div>
+            <h2>__VAR__.name share button</h2>
+        </div>
+        <div class="example" >
+            <div class="example" id="shareButton">
+            </div>
+        </div>
+
+        <script>
+            window.addEventListener("bastyonLibLoaded", function() {
+
+                var share = window.bastyonLib.share({
+                    share : {
+                        
+
+                        description : "test info",
+                        url : 'https://github.com/pocketnetteam/pocketnet.gui',
+                        tags : ['bastyon', 'test']
+
+                        
+                    }
+                })
+
+                var button = share.makeButton()
+
+                var elem = document.getElementById('shareButton');
+                    elem.append(button)
+            });
+        </script>
+        <!-- example 3: Auth: end -->
+
+        <!-- <script src="https://localhost/pocketnet/external.js"></script> -->
+        
         <script src="https://__VAR__.domain/external.js"></script>
     </body>
 </html>

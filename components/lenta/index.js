@@ -302,7 +302,7 @@ var lenta = (function(){
 							actions.destroyShare(share)
 						})
 
-						window.requestAnimationFrame(() => {
+						window.rifticker.add(() => {
 							$(this).html('<div class="optimizationDiv" style="height:'+h+'px"></div>').addClass('optimized').attr('optimization', id)
 						})
 						
@@ -578,7 +578,7 @@ var lenta = (function(){
 
 			rebuilddelay : function(){
 
-				window.requestAnimationFrame(() => {
+				window.rifticker.add(() => {
 					if (el.c)
 						el.c.addClass('rebuilding')
 				})
@@ -656,10 +656,6 @@ var lenta = (function(){
 				authorsettings = {}
 				showMoreStatus = {}
 
-				/*_.each(shareInitedMap, function(s, id){
-					delete self.app.platform.sdk.node.shares.storage.trx[id]
-				})*/
-
 				_.each(players, function(p){
 					if (p.p)
 						p.p.destroy()
@@ -681,6 +677,12 @@ var lenta = (function(){
 					if (p)
 						p.destroy()
 				})
+
+				_.each(carousels, function(carousel){
+					carousel.destroy()
+				})
+
+				carousels = {}
 
 				boosted = []
 				boostplaces = {}
@@ -745,8 +747,6 @@ var lenta = (function(){
 					var last = _.min(larray, (s) => {
 						return s.id
 					})
-
-					console.log('save observe', essenseData.observe + k, first, last)
 
 					if (first && last){
 						self.app.platform.sdk.sharesObserver.view(essenseData.observe + k, first.id, last.id)
@@ -829,6 +829,8 @@ var lenta = (function(){
 								return true
 							}
 						})
+
+						console.log('boost position', position)
 	
 						if(position){
 	
@@ -861,8 +863,18 @@ var lenta = (function(){
 							
 											}
 											else{
+
+												var elBst = null
+												
+												if (essenseData.author || recommended == 'best' || recommended == 'recommended'){
+													elBst = el.share[share.txid]
+												}
+												else{
+													elBst = el.share[share.txid].closest('.authorgroup')
+												}
+
 												var _el = $("<div/>", {'class' : 'boosted'})
-													_el.insertAfter(el.share[share.txid].closest('.authorgroup'))
+													_el.insertAfter(elBst)
 													_el.html(html)
 											}
 
@@ -1121,6 +1133,7 @@ var lenta = (function(){
 							}
 						},
 
+
 						pause : function(){
 
 							videopaused = true
@@ -1226,7 +1239,7 @@ var lenta = (function(){
 				if(!showMoreStatus[share.txid]) m = trimHtml(m, 750, 15);
 				var nm = self.app.actions.emoji(nl2br(findAndReplaceLink(m, true)))
 
-				window.requestAnimationFrame(() => {
+				window.rifticker.add(() => {
 
 					_el.find('.sharecaption span').html(c)
 
@@ -2943,7 +2956,7 @@ var lenta = (function(){
 				if(show){
 					loadertimeout = setTimeout(() => {
 
-						window.requestAnimationFrame(() => {
+						window.rifticker.add(() => {
 
 							if(el.loader && !el.loader.hasClass('loading')){
 								el.loader.addClass('loading')
@@ -2964,7 +2977,7 @@ var lenta = (function(){
 					}
 
 					if (el.loader && el.loader.hasClass('loading')){
-						window.requestAnimationFrame(() => {
+						window.rifticker.add(() => {
 							el.loader.removeClass('loading')
 						})
 					}
@@ -3396,7 +3409,7 @@ var lenta = (function(){
 
 					var c = function(){
 
-						window.requestAnimationFrame(() => {
+						window.rifticker.add(() => {
 
 							if(!p.el.hasClass('rendered')){
 								p.el.addClass('rendered')
@@ -3547,7 +3560,7 @@ var lenta = (function(){
 
 				if (el.share && el.share[share.txid] ){
 
-					window.requestAnimationFrame(() => {
+					window.rifticker.add(() => {
 
 						self.shell({
 							name :  'stars',
@@ -3885,7 +3898,7 @@ var lenta = (function(){
 
 								if(aspectRatio > 1.66) aspectRatio = 1.66
 
-								window.requestAnimationFrame(() => {
+								window.rifticker.add(() => {
 									el.height( Math.min( self.app.height / 1.5, images.width() || lwidth || self.app.width) * aspectRatio)
 								})
 							})
@@ -3914,28 +3927,28 @@ var lenta = (function(){
 
 										var h = w * ( _img.naturalHeight / _img.naturalWidth) 
 
-										window.requestAnimationFrame(() => {
+										window.rifticker.add(() => {
 
 											el.height(h);
 										})
 									}
-									window.requestAnimationFrame(() => {
+									window.rifticker.add(() => {
 
 										
 										el.width(w);
 									})
 								}
 
-								if(_img.naturalHeight >= _img.naturalWidth && (essenseData.openapi|| image.images.length == 1)){
+								if(_img.naturalHeight >= _img.naturalWidth && (essenseData.openapi || image.images.length == 1)){
 									ac = 'h2'
 
-									window.requestAnimationFrame(() => {
+									window.rifticker.add(() => {
 										el.height(_w * (_img.naturalHeight / _img.naturalWidth))
 									})
 								}
 
 								if(ac){
-									window.requestAnimationFrame(() => {
+									window.rifticker.add(() => {
 										el.addClass(ac)
 									})
 								}
@@ -3950,7 +3963,7 @@ var lenta = (function(){
 
 					var isclbk = function(){
 
-						window.requestAnimationFrame(() => {
+						window.rifticker.add(() => {
 						
 							images.addClass('active')
 							_el.addClass('active')
@@ -4762,8 +4775,6 @@ var lenta = (function(){
 									return
 								}
 
-								console.log("error", error)
-
 								offsetblock = offsetblock + period
 
 								///
@@ -5191,11 +5202,11 @@ var lenta = (function(){
 
 				self.app.platform.clbks._focus[mid] = function(time){
 
-					if(self.app.mobileview && !fullscreenvideoShowed){
+					/*if(self.app.mobileview && !fullscreenvideoShowed){
 						videosVolume = 0
 						self.sdk.videos.volume = videosVolume 
 						self.sdk.videos.save()
-					}
+					}*/
 
 					if ((window.cordova || isInStandaloneMode()) && !fullscreenvideoShowed && !essenseData.txids && !making && time > 1200 && !essenseData.second){
 
@@ -5265,6 +5276,8 @@ var lenta = (function(){
 				load.boosted(function(shares){
 					boosted = shares
 
+					console.log('boosted', boosted)
+
 
 					actions.includeboost()
 				})
@@ -5309,7 +5322,7 @@ var lenta = (function(){
 				}
 
 				if(essenseData.author && beginmaterial){
-					window.requestAnimationFrame(() => {
+					window.rifticker.add(() => {
 						el.c.addClass('showprev')
 					})
 				}
@@ -5320,10 +5333,6 @@ var lenta = (function(){
 
 			if(essenseData.observe && essenseData.includesub){
 				subloaded = !self.app.platform.sdk.sharesObserver.hasnewkeys([essenseData.observe + '_sub', 'sub'])
-
-
-				console.log('observer', subloaded)
-
 
 				var tagsfilter = self.app.platform.sdk.categories.gettags()
 				var tagsexcluded = self.app.platform.sdk.categories.gettagsexcluded()
@@ -5347,7 +5356,7 @@ var lenta = (function(){
 				if (error){
 					making = false;
 
-					window.requestAnimationFrame(() => {
+					window.rifticker.add(() => {
 						el.c.addClass('networkError')
 					})
 				
@@ -5360,7 +5369,7 @@ var lenta = (function(){
 					return;
 				}
 
-				window.requestAnimationFrame(() => {
+				window.rifticker.add(() => {
 					if (el.c && el.c.hasClass('networkError'))
 						el.c.removeClass('networkError')
 				})
@@ -5382,20 +5391,16 @@ var lenta = (function(){
 								events.videosInview()
 							}, 50)
 
-							///
-
-							/*if(beginmaterial){
-								console.log('beginmaterial', beginmaterial)
-							}*/
+							
 
 
-							window.requestAnimationFrame(function(){
+							window.rifticker.add(function(){
 								if(!el.shares) return
 								el.shares.addClass('initing')
 							}, 200)
 
 							setTimeout(() => {
-								window.requestAnimationFrame(() => {
+								window.rifticker.add(() => {
 									if(!el.shares) return
 									el.shares.removeClass('notinited')
 									el.shares.removeClass('initing')
@@ -5442,12 +5447,8 @@ var lenta = (function(){
 										
 								}
 
-								console.log("PPP", p)
-	
 								if(p.v){
 
-									console.log("HERE", video)
-	
 									if(video){
 									}
 									else{	
@@ -5479,8 +5480,6 @@ var lenta = (function(){
 
 
 							if(shares.length < 5 && essenseData.includesub && !loading && (!ended && recommended != 'recommended' && recommended != 'best')){
-
-								console.log('actions.loadmore')
 
 								actions.loadmore()
 							}
@@ -5674,10 +5673,6 @@ var lenta = (function(){
 				fullscreenvideoShowed = null
 				fullscreenvideoShowing = null
 
-				/*_.each(shareInitedMap, function(s, id){
-					delete self.app.platform.sdk.node.shares.storage.trx[id]
-				})*/
-
 				_.each(recommendations, function(p, id){
 					if (p)
 						p.clearessense()
@@ -5685,7 +5680,6 @@ var lenta = (function(){
 
 				recommendations = {}
 				recommendationsMaking = {}
-
 
 				_.each(_reposts, function(p){
 					if (p)
@@ -5760,7 +5754,7 @@ var lenta = (function(){
 					if (p.p){
 
 						if (p.p.playing){
-							p.p.pause()
+							self.app.actions.playingvideo(null, p.p)
 						}
 
 						p.p.destroy()
@@ -5780,6 +5774,7 @@ var lenta = (function(){
 					el.w.off('resize', events.resize);
 				}
 				
+				
 
 				if(el.c) el.c.empty()
 
@@ -5788,6 +5783,8 @@ var lenta = (function(){
 				essenseData = {}
 
 				w = null
+
+				actions.clear()
 			},
 
 			authclbk : function(){
@@ -5819,7 +5816,10 @@ var lenta = (function(){
 
 				clearnewmaterials()	
 
-				lwidth = el.c.width()
+				rifticker.add(() => {
+					lwidth = el.c.width()
+				})
+				
 
 				make(null, p);
 
@@ -5861,7 +5861,7 @@ var lenta = (function(){
 
 	self.stop = function(){
 		_.each(essenses, function(essense){
-			window.requestAnimationFrame(() => {
+			window.rifticker.add(() => {
 				essense.destroy();
 			})
 		})

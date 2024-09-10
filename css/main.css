@@ -808,6 +808,10 @@ button.nopadding {
   padding-left: 0;
   padding-right: 0;
 }
+button .logo20 {
+  width: 15px;
+  display: inline;
+}
 @media (pointer: hover) {
   button:hover {
     background: transparent;
@@ -4425,6 +4429,9 @@ html.mobileview.android .wnd .wndback {
   color: rgb(var(--color-text-ac-2));
   border-color: rgb(var(--color-text-ac-2));
 }
+.sharepostmenu .menuitem.donate .fa-heart {
+  color: #ed1f1f;
+}
 .sharepostmenu.downloadMenu h2 {
   margin-top: 0px;
   font-size: 20px;
@@ -4503,8 +4510,7 @@ html.mobileview .matrixchatwrapper.active {
 html.mobileview .tooltipMobileDialog {
   -webkit-overflow-scrolling: touch;
   overscroll-behavior: contain;
-  backdrop-filter: blur(4px);
-  -webkit-backdrop-filter: blur(4px);
+  background: rgba(var(--color-shadow-var), 0.96);
 }
 html.mobileview .tooltipMobileDialog .mobiledialogcontent {
   -webkit-transform: translateY(100%);
@@ -5020,6 +5026,10 @@ html.allcontent_application #footerWrapper {
   font-size: 0.8em;
   color: rgb(var(--neutral-grad-3));
 }
+.fastMessage .fa-heart,
+.notification .fa-heart {
+  color: #ed1f1f;
+}
 .fastMessage .messagethumbs,
 .notification .messagethumbs {
   width: 44px;
@@ -5307,7 +5317,7 @@ html.allcontent_application #footerWrapper {
 }
 .fastMessage .cwrapper > div .infomain .donate,
 .notification .cwrapper > div .infomain .donate {
-  color: rgb(var(--color-good));
+  font-weight: 700;
 }
 .fastMessage .gotoprofileWrapper,
 .notification .gotoprofileWrapper {
@@ -5340,18 +5350,27 @@ html.allcontent_application #footerWrapper {
 }
 .fastMessage {
   border-radius: 12px;
-  -moz-transition: bottom 0.3s;
-  -o-transition: bottom 0.3s;
-  -webkit-transition: bottom 0.3s;
-  transition: bottom 0.3s;
+  -moz-transition: bottom 0.2s;
+  -o-transition: bottom 0.2s;
+  -webkit-transition: bottom 0.2s;
+  transition: bottom 0.2s;
+}
+.fastMessage.willhidden {
+  -moz-transition: opacity 0.2s;
+  -o-transition: opacity 0.2s;
+  -webkit-transition: opacity 0.2s;
+  transition: opacity 0.2s;
+  opacity: 0;
 }
 .fastMessage.smallsize {
   padding: 0.5em;
   width: 390px;
   cursor: pointer;
 }
-.fastMessage.smallsize:hover {
-  background: rgba(var(--color-shadow-base), 0.8);
+@media (pointer: hover) {
+  .fastMessage.smallsize:hover {
+    background: rgba(var(--color-shadow-base), 0.8);
+  }
 }
 .fastMessage.smallsize .cwrapper > div.cellforimage {
   display: none;
@@ -5377,7 +5396,7 @@ html.allcontent_application #footerWrapper {
   width: 390px;
   background: rgba(var(--color-shadow-base), 0.98);
   color: rgb(var(--color-txt-ac-1));
-  z-index: 140;
+  z-index: 1400;
   overflow: hidden;
   padding: 1em;
   text-align: center;
@@ -5387,13 +5406,16 @@ html.allcontent_application #footerWrapper {
   justify-content: center;
   border-radius: 12px;
   cursor: pointer;
-  -moz-transition: opacity 0.3s;
-  -o-transition: opacity 0.3s;
-  -webkit-transition: opacity 0.3s;
-  transition: opacity 0.3s;
+  -moz-transition: opacity 0.2s;
+  -o-transition: opacity 0.2s;
+  -webkit-transition: opacity 0.2s;
+  transition: opacity 0.2s;
 }
 #hideallnotificationsel .hidenf:hover {
   opacity: 0.8;
+}
+#hideallnotificationsel.willhidden .hidenf {
+  opacity: 0;
 }
 .closecsscross {
   position: relative;
@@ -5446,7 +5468,7 @@ html.allcontent_application #footerWrapper {
   color: rgb(var(--text-on-bg-shadow-color));
   text-align: center;
   font-size: 0.9em;
-  z-index: 140;
+  z-index: 1400;
   cursor: pointer;
 }
 #hideallnotifications .hidenf:hover {
@@ -5462,9 +5484,13 @@ html.allcontent_application #footerWrapper {
   color: rgb(var(--text-on-bg-shadow-color));
   padding: 0.75em;
   padding-left: 1em;
+  padding-right: 2em;
   font-size: 1em;
-  z-index: 140;
+  z-index: 1400;
   overflow: hidden;
+}
+.fastMessage.smallsize {
+  padding-right: 2em;
 }
 .fastMessage button {
   padding-right: 0;
@@ -5486,6 +5512,9 @@ html.allcontent_application #footerWrapper {
 }
 .fastMessage .subscribeWrapper > div.forsubscribe button {
   color: rgb(var(--color-text-ac));
+}
+.fastMessage .cwrapper {
+  align-items: center;
 }
 .fastMessage .commentmessagewrapper > div.foranswer button {
   color: rgb(var(--color-text-ac));
@@ -5516,8 +5545,10 @@ html.allcontent_application #footerWrapper {
   -webkit-transition: 0.3s;
   transition: 0.3s;
 }
-.fastMessage .close:hover {
-  color: rgb(var(--neutral-grad-3));
+@media (pointer: hover) {
+  .fastMessage .close:hover {
+    color: rgb(var(--neutral-grad-3));
+  }
 }
 .fastMessage .fastMessageChat .user {
   font-weight: 700;
@@ -5584,6 +5615,12 @@ html.allcontent_application #footerWrapper {
 }
 .fastMessage .ghost {
   color: rgb(var(--color-bg-ac));
+}
+.fastMessage.dnt {
+  background: #ed1f1f;
+}
+.fastMessage.dnt .transactionmessagewrapper > div.foramount {
+  color: rgb(var(--text-on-bg-shadow-color));
 }
 .fastMessage.bright {
   background: rgba(var(--color-bg-ac-bright), 0.98);
@@ -5771,6 +5808,7 @@ html.allcontent_application #footerWrapper {
 .article_body .article_image img {
   border-radius: 5px;
   display: block;
+  cursor: pointer;
 }
 .article_body .article_image .article_image_caption {
   text-align: center;
@@ -5811,6 +5849,7 @@ html.allcontent_application #footerWrapper {
 }
 .article_body .article_carousel .img {
   background-size: contain!important;
+  cursor: pointer;
 }
 .article_body .article_this_embed {
   padding: 1.5em;
@@ -6005,8 +6044,16 @@ html.mobileview .plyr__volume {
 html.mobileview .plyr__volume input {
   display: none;
 }
-html.mobileview #hideallnotificationsel {
-  display: none;
+html.mobileview #hideallnotificationsel .hidenf {
+  position: fixed;
+  top: calc(5px + var(--app-margin-top));
+  left: 0.25em;
+  right: 0.25em;
+  bottom: auto;
+  width: auto;
+}
+html.mobileview #hideallnotificationsel .hidenf:hover {
+  opacity: 0.8;
 }
 html.mobileview #panelWrapper {
   position: fixed;
@@ -6046,7 +6093,7 @@ html.mobileview #panelWrapper {
   transition: transform 0.3s;
   -webkit-backface-visibility: hidden;
 }
-html.mobileview #navigation {
+html.mobileview #bnavigation {
   will-change: transform;
   -webkit-backface-visibility: hidden;
 }
@@ -6059,10 +6106,10 @@ html.mobileview.scrollmodedown #panelWrapper {
 html.mobileview.scrollmodedown #comments .captionfwrapper {
   transform: translateY(calc(-65px - var(--app-margin-top)));
 }
-html.mobileview.scrollmodedown #navigation .nmenu {
+html.mobileview.scrollmodedown #bnavigation .nmenu {
   transform: translateY(calc(var(--app-margin-bottom, 0) + 60px + 0.5em));
 }
-html.mobileview.scrollmodedown #navigation .fakem {
+html.mobileview.scrollmodedown #bnavigation .fakem {
   display: block;
   position: absolute;
   left: 0;
@@ -6070,7 +6117,7 @@ html.mobileview.scrollmodedown #navigation .fakem {
   right: 0;
   height: calc(var(--app-margin-bottom, 0) + 60px);
 }
-html.mobileview #navigation .fakem {
+html.mobileview #bnavigation .fakem {
   display: none;
 }
 html.mobileview.openapipnet .contentWrapper {
@@ -6109,7 +6156,7 @@ html.mobileview #panelWrapper {
   transition: transform 0.3s;
   -webkit-backface-visibility: hidden;
 }
-html.mobileview #navigation {
+html.mobileview #bnavigation {
   will-change: transform;
   -webkit-backface-visibility: hidden;
 }
@@ -6119,10 +6166,10 @@ html.mobileview.scrollmodedown #menu .menuWrapper {
 html.mobileview.scrollmodedown #panelWrapper {
   transform: translateY(-165px);
 }
-html.mobileview.scrollmodedown #navigation .nmenu {
+html.mobileview.scrollmodedown #bnavigation .nmenu {
   transform: translateY(calc(var(--app-margin-bottom, 0) + 60px + 0.5em));
 }
-html.mobileview.scrollmodedown #navigation .fakem {
+html.mobileview.scrollmodedown #bnavigation .fakem {
   display: block;
   position: absolute;
   left: 0;
@@ -6130,7 +6177,7 @@ html.mobileview.scrollmodedown #navigation .fakem {
   right: 0;
   height: 70px;
 }
-html.mobileview #navigation .fakem {
+html.mobileview #bnavigation .fakem {
   display: none;
 }
 /*t*/
@@ -6682,8 +6729,20 @@ html.mobileview .fastMessage {
   width: auto;
   min-width: 0;
   max-width: none;
-  border-radius: 6px;
+  border-radius: 12px;
   bottom: auto;
+  padding-right: 1em;
+  -moz-transition: top 0.3s;
+  -o-transition: top 0.3s;
+  -webkit-transition: top 0.3s;
+  transition: top 0.3s;
+}
+html.mobileview .fastMessage.willhidden {
+  -moz-transition: opacity 0.2s;
+  -o-transition: opacity 0.2s;
+  -webkit-transition: opacity 0.2s;
+  transition: opacity 0.2s;
+  opacity: 0;
 }
 html.mobileview .fastMessage .fmCnt {
   width: 100%;
@@ -6718,6 +6777,16 @@ html.mobileview .fastMessage .notification .subscribeWrapper > div.forsubscribe 
 }
 html.mobileview .fastMessage .foramount {
   width: auto!important;
+}
+html.mobileview .fastMessage.smallsize {
+  padding-right: 2em;
+}
+html.mobileview .fastMessage.smallsize .close {
+  padding-top: 0;
+  padding-bottom: 0;
+  height: 100%;
+  display: flex;
+  align-items: center;
 }
 html.mobileview .fastMessage .foranswer,
 html.mobileview .notification .foranswer {

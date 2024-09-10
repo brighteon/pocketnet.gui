@@ -57,6 +57,10 @@ var pSDK = function ({ app, api, actions }) {
             time: 60 // temp
         },
 
+        getboostfeed : {
+            time : 60 * 15
+        },
+
         share: {
             time: 240
         },
@@ -93,7 +97,15 @@ var pSDK = function ({ app, api, actions }) {
 
         postScores : {
             time : 240
-        }
+        },
+
+        monetization : {
+            time : 60 * 15
+        },
+
+        transactionsRequest : {
+            time : 60
+        },
     }
 
     var storages = _.map(dbmeta, (v, i) => {return i})
@@ -1119,6 +1131,7 @@ var pSDK = function ({ app, api, actions }) {
 
             if (object.address == exp.actor) {
                 object.pin = exp.pin
+                object.monetization = exp.monetization
                 object.temp = exp.temp
                 object.relay = exp.relay
                 object.extended = true
@@ -1191,36 +1204,51 @@ var pSDK = function ({ app, api, actions }) {
 
             return _.filter(_.map(rawcomments, (c) => {
                 
+                
                 //if(c.deleted) return
 
-                if(!c.msgparsed && !c.msg) return null
-
-                try {
-
-                    c.msgparsed = c.msgparsed || JSON.parse(c.msg)
-
-                    if(_.isObject(c.msgparsed)){
-                        c.msgparsed.url = clearStringXss(trydecode(c.msgparsed.url || ""));
-
-                        c.msgparsed.message = clearStringXss(trydecode(c.msgparsed.message || "")).replace(/\n{2,}/g, '\n\n')
-    
-                        c.msgparsed.images = _.filter(_.map(c.msgparsed.images || [], function (i) {
-    
-                            return checkIfAllowedImageApply(clearStringXss(trydecode(i)))
-                        }), function(i){return i});
+                /*if(!c.msgparsed && !c.msg) {
+                    if(!c.deleted){
+                        return null
                     }
+                    
+                }*/
 
-                    else{
+                if(c.msgparsed || c.msg) {
+
+                    try {
+
+                        c.msgparsed = c.msgparsed || JSON.parse(c.msg)
+
+                        if(_.isObject(c.msgparsed)){
+                            c.msgparsed.url = clearStringXss(trydecode(c.msgparsed.url || ""));
+
+                            c.msgparsed.message = clearStringXss(trydecode(c.msgparsed.message || "")).replace(/\n{2,}/g, '\n\n')
+        
+                            c.msgparsed.images = _.filter(_.map(c.msgparsed.images || [], function (i) {
+        
+                                return checkIfAllowedImageApply(clearStringXss(trydecode(i)))
+                            }), function(i){return i});
+                        }
+
+                        else{
+                            return null
+                        }
+
+                        
+
+                    }
+                    catch (e) {
+                        console.error(e)
+                        console.log(c)
                         return null
                     }
 
-                    
-
                 }
-                catch (e) {
-                    console.error(e)
-                    console.log(c)
-                    return null
+                else{
+                    if(!c.deleted){
+                        return null
+                    }
                 }
 
 
@@ -1349,6 +1377,7 @@ var pSDK = function ({ app, api, actions }) {
                 this.applyAction(objects['share'][exp.postid], exp)
 
                 clearallfromdb('commentRequest')
+                clearfromdb('share', [exp.postid])
             }
         },
         applyAction: function (object, exp) {
@@ -1530,10 +1559,26 @@ var pSDK = function ({ app, api, actions }) {
         }
     }
 
+    self.monetization = {
+        keys : ['monetization'],
+
+        request: function (executor, hash) {
+
+            return request('monetization', hash, (data) => {
+                
+                return executor(data)
+
+            }, {
+                requestIndexedDb: 'monetization'
+            })
+        },
+
+    }
+
     self.share = {
         keys: ['share'],
 
-        request: function (executor, hash) {
+        request: function (executor, hash, cacheIndex) {
 
 
             return request('share', hash, (data) => {
@@ -1564,15 +1609,13 @@ var pSDK = function ({ app, api, actions }) {
                 })
 
             }, {
-                requestIndexedDb: 'shareRequest',
+                requestIndexedDb: cacheIndex || 'shareRequest',
 
                 insertFromResponse: (r) => this.insertFromResponseEx(r)
             })
         },
 
         insertFromResponseEx: function (response) {
-
-            console.log('response.users', response.users)
 
             self.userInfo.insertFromResponse(self.userInfo.cleanData(response.users), true)
 
@@ -2153,9 +2196,10 @@ var pSDK = function ({ app, api, actions }) {
                 }
 
                 clearfromdb('postScores', [exp.share.v])
-
+                clearfromdb('share', [exp.share.v])
                 //// long like cache
 
+                
                 if(exp.actor == app.user.address.value){
                     settodb('myScore', [result]).then(() => {
                     }).catch(e => {
@@ -2301,6 +2345,27 @@ var pSDK = function ({ app, api, actions }) {
             })
 
 
+        },
+
+        loadAddressesList : function({addresses, block, page = 0, pagesize = 10}, update){
+ 
+            if(!block || !addresses) return Promise.reject('payload')
+            if(!_.isArray(addresses)) addresses = [addresses]
+
+            var hash = JSON.stringify(addresses) + '_' + block + '_' + page + '_' + pagesize
+
+            return request('transaction', hash, (data) => {
+
+                return api.rpc('getaddresstransactions', [addresses[0], block, page * pagesize, pagesize, 0, [1, 2, 3]]).catch(e => {
+
+                    return Promise.reject(e)
+                })
+                
+            }, {
+                update,
+                requestIndexedDb: 'transactionsRequest'
+            })
+            
         }
     }
 
@@ -2410,9 +2475,9 @@ var pSDK = function ({ app, api, actions }) {
             return loadone('blocking', address, (ids) => {
 
                 return api.rpc('getuserblockings', [ids[0], '1', '', '', 0, 5000], {
-                    rpc : {
+                    /*rpc : {
                         fnode : '65.21.56.203:38081'
-                    }
+                    }*/
                 }).then(r => {
 
                     /*r = _.map(r, (v) => {
@@ -2682,7 +2747,6 @@ var pSDK = function ({ app, api, actions }) {
 
     self.ws = {
         update : function(type, wsdata){
-            console.log('type, wsdata', type, wsdata)
 
             var status = 'completed'
             var alias = null
@@ -2747,7 +2811,12 @@ var pSDK = function ({ app, api, actions }) {
 
             if (alias){
                 _.each(self.updatelisteners, (l) => {
-                    l({type, alias, status}, 'updateListener')
+                    try{
+                       l({type, alias, status}, 'updateListener')
+                    }catch(e){
+                        
+                    }
+                   
                 })
             }
             

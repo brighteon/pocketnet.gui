@@ -1600,8 +1600,6 @@ var share = (function(){
 
 				self.app.platform.sdk.ustate.me(function(_mestate){
 
-					console.log('_mestate' , _mestate)
-
 					self.shell({
 						name :  'postline',
 						el : el.postline,
@@ -1639,7 +1637,7 @@ var share = (function(){
 						initUpload({
 							el : p.el.find('.images'),
 				
-							ext : ['png', 'jpeg', 'jpg', 'gif', 'jfif'],
+							ext : ['png', 'jpeg', 'jpg', 'gif', 'jfif', 'webp', 'avif'],
 		
 							dropZone : el.c,
 							app : self.app,
@@ -2004,7 +2002,7 @@ var share = (function(){
 							initUpload({
 								el : el.urlWrapper.find('.uploadpeertubewp'),
 					
-								ext : ['png', 'jpeg', 'jpg', 'webp', 'jfif'],
+								ext : ['png', 'jpeg', 'jpg', 'webp', 'jfif', 'avif'],
 								app : self.app,
 								dropZone : el.urlWrapper,
 		
@@ -2648,10 +2646,9 @@ var share = (function(){
 
 				currentShare.app = self.app
 
-				if(!essenseData.share){
+				if(!essenseData.share && !essenseData.dontsave){
 
 					state.load()
-
 					
 					currentShare.language.set(self.app.localization.key)
 				}
@@ -2685,10 +2682,22 @@ var share = (function(){
 					el.c.find('.emojionearea-editor').off('pasteImage')
 
 				try{
-					if (el.eMessage) el.eMessage[0].emojioneArea.destroy();
+					if (el.eMessage) {
+		
+						el.eMessage[0].emojioneArea.destroy();
+
+						el.eMessage.remove()
+
+						delete el.eMessage[0].emojioneArea
+
+
+						console.log('destroy')
+					}
+
+					
 				}
 				catch(e){
-
+					console.error(e)
 				}
 				
 
@@ -2719,6 +2728,7 @@ var share = (function(){
 				}
 
 				
+				
 
 				$('html').off('click', events.unfocus);
 
@@ -2728,6 +2738,8 @@ var share = (function(){
 					sortable.destroy()
 					sortable = null
 				}
+
+				if(el.c) el.c.empty()
 
 				el = {};
 					
@@ -2761,10 +2773,14 @@ var share = (function(){
 					currentShare.caption.set('');
 					currentShare.images.set();
 					currentShare.repost.set();
+
+					if (essenseData.name) {
+						currentShare.caption.set(findAndReplaceLinkClearReverse(essenseData.name));
+					}
 				}
 
-				if (essenseData.name) {
-					currentShare.caption.set(findAndReplaceLinkClearReverse(essenseData.name));
+				if (essenseData.url) {
+					currentShare.url.set(essenseData.url);
 				}
 
 				if (essenseData.description) {
@@ -2806,7 +2822,7 @@ var share = (function(){
 
 			wnd : {
 				close : function(){
-	
+					self.nav.api.history.removeParameters(['ext'])
 					
 					if (essenseData.close){
 						essenseData.close()
@@ -2835,7 +2851,7 @@ var share = (function(){
 
 		_.each(essenses, function(essense){
 
-			window.requestAnimationFrame(() => {
+			window.rifticker.add(() => {
 				essense.destroy();
 			})
 

@@ -125,17 +125,23 @@ var userpage = (function(){
 			})
 
 			if(!self.app.pkoindisable){
-				reports.push({
-					name : self.app.localization.e('earnings2'),
-					id : 'earnings',
-					report : 'earnings',
-					//openReportPageMobile : true,
-					mobile : false,
-					if : function(){
-						return !self.app.platform.sdk.user.myaccauntdeleted()
-						
-					}
-				})
+				if(self.app.user.validate() && self.app.platform.sdk.users.checkMonetizationOpportunity(self.app.user.address.value)) {
+
+					
+
+					reports.push({
+						name :  self.app.localization.e('monetization_Monetization'),
+						id : 'earnings',
+						report : 'earnings',
+						//openReportPageMobile : true,
+						mobile : false,
+						if : function(){
+							return !self.app.platform.sdk.user.myaccauntdeleted()
+							
+						}
+					})
+
+				}
 			}
 
 			
@@ -522,7 +528,7 @@ var userpage = (function(){
 			},*/
 
 			closeReport : function(){
-				window.requestAnimationFrame(() => {
+				window.rifticker.add(() => {
 					el.report.html('')
 					el.c.removeClass('reportshowed')
 				})
@@ -570,7 +576,7 @@ var userpage = (function(){
 
 				el.c.find('[rid="'+id+'"]').addClass('active')
 
-				window.requestAnimationFrame(() => {
+				window.rifticker.add(() => {
 					el.c.addClass('reportshowed')
 				})
 				
@@ -1275,7 +1281,7 @@ var userpage = (function(){
 
 		_.each(essenses, function(essense){
 
-			window.requestAnimationFrame(() => {
+			window.rifticker.add(() => {
 				essense.destroy();
 			})
 

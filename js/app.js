@@ -110,6 +110,12 @@ Application = function (p) {
 		electron = require('electron');
 	}
 
+	console.log('monet', p)
+
+	if (p.monetization && typeof window.Monetization != 'undefined'){
+		self.monetization = new window.Monetization(self, p.monetization)
+	}
+	
 	//self._meta = window.projects_meta
 	self.meta = window.project_config || {}
 	
@@ -331,7 +337,7 @@ Application = function (p) {
 
 		self.mobileview = istouchstylecalculate()
 
-		window.requestAnimationFrame(() => {
+		var id = window.rifticker.add(() => {
 
 			if (self.mobileview) {
 				self.el.html.addClass('mobileview').removeClass('wsview')
@@ -341,6 +347,7 @@ Application = function (p) {
 			}
 
 		})
+
 	}
 
 	var checkTouchStyle = function () {
@@ -911,10 +918,6 @@ Application = function (p) {
 
 	}
 
-	if (self.curation()) {
-		delete self.backmap.index
-	}
-
 	self.options.backmap = self.backMap
 
 	var prepareMap = function () {
@@ -935,6 +938,8 @@ Application = function (p) {
 			var canuse = self.api.ready.use()
 
 			if (canuse) {
+
+				self.api.getPeertubeserversList()
 
 				var stateAdresses = []
 				var infoAdresses = []
@@ -982,8 +987,6 @@ Application = function (p) {
 
 				}
 
-
-
 			}
 		})
 	}
@@ -995,8 +998,8 @@ Application = function (p) {
 
 		self.api = new Api(self)
 		self.api.initIf(() => {
-			/// acceleration
 			acceleration()
+			
 		}).then(() => {
 
 		})
@@ -1681,6 +1684,7 @@ Application = function (p) {
 
 		playingvideo: function (v, from) {
 
+			console.log("PLAYING", v ,from)
 			
 
 			if(from && from.player_id){
@@ -1695,8 +1699,17 @@ Application = function (p) {
 				try {
 					self.playingvideo.pause()
 
-					if (self.playingvideo.player_id)
-						self.playingvideocollisions[self.playingvideo.player_id] = true
+					if (self.playingvideo.player_id){
+						var i = self.playingvideo.player_id
+
+						self.playingvideocollisions[i] = true
+
+						setTimeout(() => {
+							delete self.playingvideocollisions[i]
+						}, 20)
+					}
+
+					
 				}
 				catch (e) {
 				}
@@ -2103,18 +2116,17 @@ Application = function (p) {
 		var value = time || new Date()
 		var today = moment()
 
-
-		if ((today.diff(value, 'days')) === 0) {
+		if ((today.diff(value, 'days')) === 0 && moment(value).day() == today.day()) {
 
 			if ((today.diff(value, 'hours') < 12)) return moment(moment.utc(value).toDate()).local().fromNow();
 
-			return new Date(value).toLocaleTimeString([], { hour: '2-digit', minute: "2-digit", hour12: false })
+			return  new Date(value).toLocaleTimeString([], { hour: '2-digit', minute: "2-digit", hour12: false })
 		}
 
 		var mvalue = moment(value)
 
 		if (today.year() === mvalue.year())
-			return mvalue.local().format('D MMMM')
+			return mvalue.local().format('D MMMM, HH:mm')
 
 		return mvalue.local().format('D MMMM YYYY')
 	}
@@ -2397,7 +2409,7 @@ Application = function (p) {
 		safearea: function () {
 			if (window.cordova) {
 				document.documentElement.style.setProperty('--app-margin-top-default', `25px`);
-				margintop = 20
+				self.margintop = 25
 			}
 			else {
 				document.documentElement.style.setProperty('--app-margin-top-default', `0px`);
@@ -2814,6 +2826,8 @@ Application = function (p) {
 			if (window.cordova) {
 				if (window.cordova.plugins && window.cordova.plugins.backgroundMode) {
 
+					console.log('playing set backgroundMode', t)
+
 					if (t) {
 						cordova.plugins.backgroundMode.enable()
 					}
@@ -2876,7 +2890,7 @@ Application = function (p) {
 			initdestroyparallaxAuto : function(){
 				var scrollTop = self.actions.getScroll()
 
-				if (!scrollTop) {
+				if (!scrollTop && _.isEmpty(self.nav.wnds)) {
 					self.mobile.reload.initparallax()
 				}
 				else {
@@ -2948,68 +2962,85 @@ Application = function (p) {
 									self.el.topsmallpreloader.css('transform', '')
 									self.el.topsmallpreloader.removeClass('show')
 
+									self.psdk.clearStorageAndObjects()
+        							self.psdk.clearIdCacheAll()
+
+									self.platform.sdk.recommendations.init()
+
 									globalpreloader(true)
 
-									_.each(self.modules, (m) => {
-										if(!m.module) return
-										_.each(m.module.essenses, (mm) => {
-											if(mm.willreload) mm.willreload()
+
+									lazyActions([
+                
+										self.platform.sdk.ustate.me,
+										self.platform.sdk.user.get,
+										self.platform.sdk.usersettings.init
+					
+									], function () {
+										_.each(self.modules, (m) => {
+											if(!m.module) return
+											_.each(m.module.essenses, (mm) => {
+												if(mm.willreload) mm.willreload()
+											})
 										})
-									})
-
-									setTimeout(function () {
-
-										if (self.platform.loadingWithErrors) {
-
-											self.platform.appstate(function () {
-
+	
+										setTimeout(function () {
+	
+											if (self.platform.loadingWithErrors) {
+	
+												self.platform.appstate(function () {
+	
+													setTimeout(function () {
+														globalpreloader(false)
+	
+														self.mobile.reload.reloading = false
+	
+													}, 200)
+	
+												})
+	
+											}
+											else {
+	
+												self.user.isState(function (state) {
+	
+													if (state) {
+	
+														var account = self.platform.actions.getCurrentAccount()
+	
+														if (account) {
+															account.updateUnspents()
+															account.releaseCheckInAnotherSession()
+														}
+	
+														self.platform.ws.getMissed()
+													}
+	
+												})
+	
+												if (self.nav.current.module) {
+	
+													self.nav.current.module.restart({
+														essenseData: self.nav.current.essenseData || {},
+														primary: true
+													})
+												}
+	
+	
 												setTimeout(function () {
 													globalpreloader(false)
-
+	
 													self.mobile.reload.reloading = false
-
 												}, 200)
-
-											})
-
-										}
-										else {
-
-											self.user.isState(function (state) {
-
-												if (state) {
-
-													var account = self.platform.actions.getCurrentAccount()
-
-													if (account) {
-														account.updateUnspents()
-														account.releaseCheckInAnotherSession()
-													}
-
-													self.platform.ws.getMissed()
-												}
-
-											})
-
-											if (self.nav.current.module) {
-
-												self.nav.current.module.restart({
-													essenseData: self.nav.current.essenseData || {},
-													primary: true
-												})
+	
 											}
+	
+	
+										}, 100)
+									})
 
-
-											setTimeout(function () {
-												globalpreloader(false)
-
-												self.mobile.reload.reloading = false
-											}, 200)
-
-										}
-
-
-									}, 100)
+									
+									
 
 
 								}
@@ -3213,31 +3244,27 @@ Application = function (p) {
 	self.ref = null;
 
 	try {
-		self.Logger.info({
-			actionId: 'APP_LOADED_FROM_EXTERNAL_LINK',
-			actionSubType: 'USER_FROM_EXTERNAL_SESSION',
-		});
-
+		
 		self.ref = parameters().ref || localStorage['ref'];
 		self.dsubref = parameters().dsubref || localStorage['dsubref'];
-
 		localStorage['dsubref'] = self.dsubref
-	} catch (e) { }
+	} catch (e) { 
+	}
 
 
-	self.options.device = localStorage['device'] || makeid();
+	
 	try {
+		
+		self.options.device = localStorage['device'] || self.id;
 		localStorage['device'] = self.options.device
+
 	} catch (e) { }
 
-	if (typeof window != 'undefined') { self.fref = deep(window, 'location.href') }
 
 	edjsHTML = edjsHTMLCnt(null, self)
 
 	return self;
 }
-
-topPreloader(85);
 
 if (typeof module != "undefined") {
 	module.exports = Application;

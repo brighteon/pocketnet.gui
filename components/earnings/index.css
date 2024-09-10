@@ -1,3 +1,269 @@
+#earnings .monetizationOpportunityFail {
+  text-align: center;
+  padding: 2em;
+}
+#earnings .monetizationChange {
+  padding-top: 4em;
+  padding-bottom: 4em;
+}
+#earnings .monetizationChange .exchangesProfiles {
+  display: flex;
+  padding: 1em 0;
+}
+#earnings .monetizationChange .exchange {
+  padding: 0.5em;
+  background: rgba(var(--background-main), 0.5);
+  max-width: 300px;
+  margin-right: 0.5em;
+  opacity: 0;
+  -moz-transition: 0.3s;
+  -o-transition: 0.3s;
+  -webkit-transition: 0.3s;
+  transition: 0.3s;
+}
+#earnings .monetizationChange .exchange.loaded {
+  opacity: 1;
+}
+#earnings .monetizationChange .exchange #channel .channel {
+  position: relative;
+  background: transparent;
+}
+#earnings .monetizationChange .exchange #channel .channel .icon {
+  position: absolute;
+  right: 0;
+  top: 0;
+}
+#earnings .monetizationChange .exchange #channel .channel .icon .usericon {
+  width: 22px;
+  height: 22px;
+  line-height: 22px;
+}
+#earnings .monetizationChange .exchange #channel .channel .usericon {
+  margin-left: 0;
+}
+#earnings .monetizationChange .exchange #channel .channel .userinfo {
+  flex-flow: column;
+}
+#earnings .monetizationChange .exchange #channel .channel .userinfo .openprofilebutton {
+  min-width: 0;
+}
+#earnings .monetizationChange .exchange .panel [menuitem="posts"],
+#earnings .monetizationChange .exchange .panel [menuitem="followers"],
+#earnings .monetizationChange .exchange .panel [menuitem="following"] {
+  display: none;
+}
+#earnings .monetizationChange .exchange .blockWrapper {
+  display: none;
+}
+#earnings .monetizationEnablePreview {
+  text-align: center;
+  padding: 2em;
+  margin-bottom: 2em;
+}
+#earnings .monetizationEnablePreview .monetizationCaption span {
+  font-size: 2em;
+}
+#earnings .monetizationEnablePreview .monetizationAction {
+  margin-top: 1em;
+}
+#earnings .monetization {
+  margin-top: 1em;
+  margin-bottom: 2em;
+}
+#earnings .monetization .monetizationInfo {
+  padding-left: 0.5em;
+  padding-bottom: 1em;
+}
+#earnings .monetization .monetizationInfo .smalltip {
+  color: rgb(var(--color-good));
+}
+#earnings .monetization .monetizationInfo .smalltip i {
+  font-size: 0.8em;
+}
+#earnings .monetization .monetizationInfo .smalltip span {
+  font-size: 0.8em;
+  text-decoration: underline;
+}
+#earnings .monetization .monetizationCaption {
+  padding-left: 0.5em;
+}
+#earnings .monetization .monetizationCaption span {
+  font-size: 2em;
+}
+#earnings .monetization .monetizationPanel .work {
+  display: flex;
+  align-items: center;
+}
+#earnings .monetization .disableMonetization {
+  margin-left: auto;
+  cursor: pointer;
+}
+#earnings .monetization .disableMonetization span {
+  font-size: 0.8em;
+  color: rgb(var(--neutral-grad-3));
+}
+#earnings .monetization .disableMonetization:hover span {
+  color: rgb(var(--color-bad));
+}
+#earnings .monetization .year {
+  padding-left: 0.5em;
+  margin-top: 1em;
+  margin-bottom: 1em;
+}
+#earnings .monetization .year span {
+  font-size: 2em;
+  font-weight: 700;
+}
+#earnings .monetization .year i {
+  margin-bottom: 6px;
+  width: 33px;
+  text-align: center;
+  color: rgb(var(--neutral-grad-2));
+  cursor: pointer;
+  -moz-transition: 0.3s;
+  -o-transition: 0.3s;
+  -webkit-transition: 0.3s;
+  transition: 0.3s;
+}
+#earnings .monetization .year i:hover {
+  color: rgb(var(--neutral-grad-4));
+}
+#earnings .monetization .error,
+#earnings .monetization .startof {
+  margin-top: 1em;
+  margin-bottom: 1em;
+  padding: 2em;
+  text-align: center;
+  background: rgba(var(--background-main), 0.5);
+}
+#earnings .monetization .error {
+  margin-left: 1em;
+  margin-right: 1em;
+}
+#earnings .monetization .monetizationTable {
+  position: relative;
+}
+#earnings .monetization .monetizationTable .tableCaption {
+  border-bottom: 1px solid rgb(var(--neutral-grad-0));
+  z-index: 2;
+  position: sticky;
+  top: calc(65px + var(--app-margin-top));
+  left: 0;
+  right: 0;
+}
+#earnings .monetization .monetizationTable .tableCaption > div span {
+  font-size: 0.8em;
+  font-weight: 700;
+}
+#earnings .monetization .monetizationTable .totalWrapper {
+  position: sticky;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  z-index: 2;
+}
+#earnings .monetization .monetizationTable .tableTotal {
+  border-top: 2px solid rgb(var(--neutral-grad-3));
+}
+#earnings .monetization .monetizationTable .tableTotal .reward span {
+  font-weight: 700;
+  color: rgb(var(--color-txt-ac-1));
+}
+#earnings .monetization .monetizationTable .tableTotal .reward i {
+  width: auto;
+}
+#earnings .monetization .monetizationTable .postsTable .sharepreview {
+  padding-top: 0;
+  font-size: 1.1em;
+}
+#earnings .monetization .monetizationTable .postsTable .sharepreview i {
+  width: auto;
+}
+#earnings .monetization .monetizationTable .beforeprogram {
+  color: rgb(var(--neutral-grad-2));
+}
+#earnings .monetization .monetizationTable .postsTable,
+#earnings .monetization .monetizationTable .weeks {
+  display: none;
+}
+#earnings .monetization .monetizationTable .month.expanded .weeks {
+  display: block;
+}
+#earnings .monetization .monetizationTable .week.expanded .postsTable {
+  display: block;
+}
+#earnings .monetization .monetizationTable .expanded > div > div > i.expandicon {
+  -webkit-transform: rotate(180deg);
+  -moz-transform: rotate(180deg);
+  -ms-transform: rotate(180deg);
+  -o-transform: rotate(180deg);
+  transform: rotate(180deg);
+}
+#earnings .monetization .monetizationTable .table {
+  background: rgb(var(--background-total-theme));
+}
+#earnings .monetization .monetizationTable .table:nth-child(2n) {
+  background: rgba(var(--neutral-grad-0), 0.3);
+}
+#earnings .monetization .monetizationTable .table.monthTable {
+  border-bottom: 1px solid rgba(var(--neutral-grad-0), 0.3);
+}
+#earnings .monetization .monetizationTable .table.canexpand {
+  cursor: pointer;
+  -moz-transition: 0.3s;
+  -o-transition: 0.3s;
+  -webkit-transition: 0.3s;
+  transition: 0.3s;
+}
+#earnings .monetization .monetizationTable .table.canexpand:hover {
+  opacity: 0.8;
+}
+#earnings .monetization .monetizationTable .table.canexpand:hover > div i.expandicon {
+  color: rgb(var(--neutral-grad-4));
+}
+#earnings .monetization .monetizationTable .table .period {
+  width: 50%;
+}
+#earnings .monetization .monetizationTable .table .reward {
+  width: 100px;
+}
+#earnings .monetization .monetizationTable .table .reward i {
+  width: auto;
+}
+#earnings .monetization .monetizationTable .table > div {
+  padding: 1em 0.5em;
+  border-right: 1px solid rgb(var(--neutral-grad-0));
+  text-align: center;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  overflow: hidden;
+}
+#earnings .monetization .monetizationTable .table > div i {
+  width: 33px;
+  text-align: center;
+  color: rgb(var(--neutral-grad-2));
+}
+#earnings .monetization .monetizationTable .table > div:nth-child(1) {
+  text-align: left;
+}
+#earnings .monetization .monetizationTable .table > div:nth-last-child(1) {
+  border-right: 0;
+  text-align: right;
+}
+#earnings .monetization .monetizationTable .table .openpostsmonth,
+#earnings .monetization .monetizationTable .table .openpostsweek {
+  width: auto;
+  cursor: pointer;
+  font-size: 0.7em;
+  -moz-transition: 0.3s;
+  -o-transition: 0.3s;
+  -webkit-transition: 0.3s;
+  transition: 0.3s;
+}
+#earnings .monetization .monetizationTable .table .openpostsmonth:hover,
+#earnings .monetization .monetizationTable .table .openpostsweek:hover {
+  color: rgb(var(--neutral-grad-4));
+}
 #earnings .earnings {
   background: rgb(var(--background-secondary-theme));
   min-height: 600px;
@@ -207,6 +473,12 @@
   font-size: 0.7em;
   font-weight: 700;
 }
+.wnd #earnings .monetization .monetizationTable .tableCaption {
+  position: static;
+}
+.wnd #earnings .monetization .monetizationTable .totalWrapper {
+  position: static;
+}
 /*t*/
 @media only screen and (max-width: 1024px) {
   #earnings .earnings .content .totalItem .metricablock .vidgetIconWrapper .vidgetIcon .repv {
@@ -217,6 +489,25 @@
 @media only screen and (max-width: 768px) {
   #earnings {
     min-height: none;
+  }
+  #earnings .monetization .monetizationChange .exchangesProfiles {
+    display: flex;
+    flex-flow: column;
+    padding: 1em;
+  }
+  #earnings .monetization .monetizationChange .exchangesProfiles .exchange {
+    max-width: none;
+    margin-right: 0;
+    margin-bottom: 1em;
+  }
+  #earnings .monetization .disableMonetization {
+    margin-right: 0.5em;
+  }
+  #earnings .monetization .monetizationTable .table .period {
+    width: 40%;
+  }
+  #earnings .monetization .monetizationTable .table .reward {
+    width: 80px;
   }
   #earnings .earnings {
     background: rgb(var(--background-secondary-theme));
@@ -234,206 +525,5 @@
   }
   #earnings .earnings .content .totalItem .metricablockwrapper .metricablock .vidgetIconWrapper .vidgetIcon .repv {
     font-size: 1.3em;
-  }
-  #earnings .buypkoin {
-    padding: 0.5em;
-  }
-  #earnings .buypkoin .ways {
-    display: flex;
-    align-items: flex-start;
-    flex-wrap: wrap;
-  }
-  #earnings .buypkoin .ways > div {
-    flex-shrink: 1;
-    flex-basis: content;
-    flex-grow: 1;
-    padding-bottom: 3em;
-  }
-  #earnings .buypkoin .row {
-    padding: 0;
-  }
-  #earnings .buypkoin .row .button {
-    min-width: 310px;
-  }
-  #earnings .buypkoin .row.flx {
-    justify-content: center;
-  }
-  #earnings .buypkoin .row.flx > div {
-    width: 12.5%;
-    padding: 0.5em 0.5em;
-    text-align: center;
-  }
-  #earnings .buypkoin .row.forfiats {
-    justify-content: center;
-  }
-  #earnings .buypkoin .row.forfiats > div {
-    width: 25%;
-  }
-  #earnings .buypkoin .row.one {
-    display: block;
-    padding: 0.5em 0;
-    margin-bottom: 1.5em;
-  }
-  #earnings .buypkoin .row.one .wrp {
-    padding: 2em 1em;
-  }
-  #earnings .buypkoin .row.one .flxbtn {
-    flex-direction: column;
-    text-align: center;
-    justify-content: center;
-  }
-  #earnings .buypkoin .row.one .flxbtn div {
-    margin-right: 0;
-  }
-  #earnings .buypkoin .row.one .flxbtnlbk {
-    margin-top: 1em;
-  }
-  #earnings .buypkoin .row.table {
-    display: block;
-    text-align: center;
-  }
-  #earnings .buypkoin .row.table > div {
-    display: block;
-  }
-  #earnings .buypkoin .row.table .reciever {
-    margin: 0 auto;
-  }
-  #earnings .htls,
-  #earnings .crowdfunding,
-  #earnings .deposit,
-  #earnings .send {
-    border: 0;
-  }
-  #earnings .htls .linkForDepositReady,
-  #earnings .crowdfunding .linkForDepositReady,
-  #earnings .deposit .linkForDepositReady,
-  #earnings .send .linkForDepositReady,
-  #earnings .htls .linkForDeposit,
-  #earnings .crowdfunding .linkForDeposit,
-  #earnings .deposit .linkForDeposit,
-  #earnings .send .linkForDeposit,
-  #earnings .htls .addressForDeposit,
-  #earnings .crowdfunding .addressForDeposit,
-  #earnings .deposit .addressForDeposit,
-  #earnings .send .addressForDeposit,
-  #earnings .htls .action,
-  #earnings .crowdfunding .action,
-  #earnings .deposit .action,
-  #earnings .send .action {
-    margin-top: 0.5em;
-    padding: 0.5em 0;
-  }
-  #earnings .htls .linkparams,
-  #earnings .crowdfunding .linkparams,
-  #earnings .deposit .linkparams,
-  #earnings .send .linkparams {
-    padding: 1em 0;
-  }
-  #earnings .htls .linkparams .value,
-  #earnings .crowdfunding .linkparams .value,
-  #earnings .deposit .linkparams .value,
-  #earnings .send .linkparams .value {
-    font-size: 0.9em;
-  }
-  #earnings .htls button,
-  #earnings .crowdfunding button,
-  #earnings .deposit button,
-  #earnings .send button {
-    min-width: 0;
-    width: 100%;
-    max-width: none!important;
-  }
-  #earnings .htls .row,
-  #earnings .crowdfunding .row,
-  #earnings .deposit .row,
-  #earnings .send .row {
-    display: block;
-  }
-  #earnings .htls .row > div,
-  #earnings .crowdfunding .row > div,
-  #earnings .deposit .row > div,
-  #earnings .send .row > div {
-    display: block;
-    width: 100%;
-  }
-  #earnings .htls .row > div.changer,
-  #earnings .crowdfunding .row > div.changer,
-  #earnings .deposit .row > div.changer,
-  #earnings .send .row > div.changer {
-    display: none;
-  }
-  #earnings .htls .row > div.address,
-  #earnings .crowdfunding .row > div.address,
-  #earnings .deposit .row > div.address,
-  #earnings .send .row > div.address {
-    width: 100%;
-  }
-  #earnings .htls .row > div.label,
-  #earnings .crowdfunding .row > div.label,
-  #earnings .deposit .row > div.label,
-  #earnings .send .row > div.label {
-    width: 100%;
-  }
-  #earnings .crowdfunding {
-    border: 0;
-    background: rgb(var(--background-secondary-theme));
-  }
-  #earnings .deposit {
-    border: 0;
-    background: rgb(var(--background-secondary-theme));
-  }
-  #earnings .deposit .qrcoderesult .imageqr {
-    width: 225px;
-    height: 225px;
-    margin: 0 auto;
-  }
-  #earnings .deposit .depositaddress .adrwrapper {
-    padding: 1em 0;
-  }
-  #earnings .deposit .depositaddress .adrwrapper .adr {
-    font-size: 0.9em;
-  }
-  #earnings .deposit .actionbody textarea {
-    padding: 0.5em;
-    height: 150px;
-  }
-  #earnings .deposit .actionbody button {
-    width: 100%;
-    min-width: 0;
-  }
-  #earnings .addresses .addressesGroupCaption {
-    padding: 0.5em;
-  }
-  #earnings .addresses .adressesTable {
-    border-bottom: 1px solid rgb(var(--color-medium-theme));
-    padding: 0 0.5em;
-  }
-  #earnings .addresses .adressesTable > div {
-    vertical-align: top;
-    padding: 1.5em 0;
-  }
-  #earnings .addresses .adressesTable > div.name {
-    padding-left: 0;
-    font-weight: 500;
-    overflow: hidden;
-    text-overflow: ellipsis;
-  }
-  #earnings .addresses .adressesTable > div.panel {
-    display: none;
-  }
-  #earnings .addresses .adressesTable > div.balance {
-    padding-left: 1em;
-    width: 31%;
-    font-weight: 700;
-  }
-  #earnings .addresses .adressesTable > div.percent {
-    font-weight: 700;
-    width: 22%;
-  }
-  #earnings .addresses .adressesTable > div a {
-    display: none;
-  }
-  #earnings .addresses .adressesTable > div:nth-last-child(1) {
-    padding-right: 0;
   }
 }

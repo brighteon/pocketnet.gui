@@ -406,9 +406,9 @@ var pkoin = (function(){
 	
 						if (valSum){
 	
-							if (valSum && valSum < 0.5){
+							if (valSum && valSum < 2.5){
 	
-								sitemessage(self.app.localization.e('minPkoin', 0.5))
+								sitemessage(self.app.localization.e('minPkoin', 2.5))
 	
 							} else if (valSum < Number(balance)){
 
@@ -556,7 +556,7 @@ var pkoin = (function(){
 
 		_.each(essenses, function(essense){
 
-			window.requestAnimationFrame(() => {
+			window.rifticker.add(() => {
 				essense.destroy();
 			})
 

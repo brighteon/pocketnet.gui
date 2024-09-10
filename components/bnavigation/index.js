@@ -1,4 +1,4 @@
-var navigation = (function(){
+var bnavigation = (function(){
 
 	var self = new nModule();
 
@@ -221,7 +221,7 @@ var navigation = (function(){
 
 				var data = {};
 
-				w = $(window)
+				//w = self.app.el.window
 
 				clbk(data);
 
@@ -236,12 +236,13 @@ var navigation = (function(){
 				delete self.app.events.scroll.navigation
 				delete self.app.platform.sdk.registrations.clbks.navigation
 
-				if(window.cordova){
+				if (window.cordova){
 					window.removeEventListener('keyboardWillShow', renders.hide);
 					window.removeEventListener('keyboardWillHide', renders.show);	
 				}
 
 				delete self.app.nav.clbks.history.navigation
+
 
 				if (el){
 					
@@ -284,7 +285,7 @@ var navigation = (function(){
 
 		_.each(essenses, function(essense){
 
-			window.requestAnimationFrame(() => {
+			window.rifticker.add(() => {
 				essense.destroy();
 			})
 
@@ -298,11 +299,11 @@ var navigation = (function(){
 
 if(typeof module != "undefined")
 {
-	module.exports = navigation;
+	module.exports = bnavigation;
 }
 else{
 
-	app.modules.navigation = {};
-	app.modules.navigation.module = navigation;
+	app.modules.bnavigation = {};
+	app.modules.bnavigation.module = bnavigation;
 
 }

@@ -51,6 +51,7 @@ var Proxy = function (settings, manage, test, logger, reverseproxy) {
 		self.test = test
 		self.reverseproxy = reverseproxy
 
+
 	var server = new Server(settings.server, settings.admins, manage);
 	var wss = new WSS(settings.admins, manage);
 	var pocketnet = new Pocketnet();
@@ -416,10 +417,9 @@ var Proxy = function (settings, manage, test, logger, reverseproxy) {
 			return wallet.init()
 		},
 
-		addqueue: function (key, address, ip) {
-			return wallet.kit.addqueue(key, address, ip)
+		addqueue: function (key, address, ip, amount) {
+			return wallet.kit.addqueue(key, address, ip, amount)
 		},
-
 
 		destroy: function () {
 			return wallet.destroy()
@@ -769,13 +769,16 @@ var Proxy = function (settings, manage, test, logger, reverseproxy) {
 
 							// FIXME: This is a temporary solution. Archive servers must be checked by order
 							if (s.archived.length === 2) {
+
+								var archiveS = {...list.archive[s.archived[0]], archiveDouble: true, cantuploading : true}
+
 								serversList.push({
 									...list.archive[s.archived[0]],
 									archiveDouble: true,
 								});
 								serversList.push(list.archive[s.archived[1]]);
 							} else {
-								serversList.push(list.archive[s.archived[0]]);
+								serversList.push({...list.archive[s.archived[0]], cantuploading : true});
 							}
 						}
 
@@ -819,7 +822,7 @@ var Proxy = function (settings, manage, test, logger, reverseproxy) {
 
 		re: function () {
 			return this.destroy().then(r => {
-				this.init()
+				return this.init()
 			})
 		},
 
@@ -1708,9 +1711,19 @@ var Proxy = function (settings, manage, test, logger, reverseproxy) {
 				action: function ({ url }) {
 
 
-					return Promise.reject({
-						error : 'deprecated'
-					})
+					return new Promise((resolve, reject) => {
+						remote.nmake(url, function (err, data) {
+							if (!err) {
+								resolve({
+									data: data,
+								});
+							} else {
+								reject(err);
+							}
+						}, {
+							bitchute : true
+						});
+					});
 
 				},
 			},
@@ -2146,7 +2159,22 @@ var Proxy = function (settings, manage, test, logger, reverseproxy) {
 		},
 
 		peertube: {
+			restart : {
+				authorization: 'signature',
+				path : '/peertube/restart',
+				action: function ({ A }) {
 
+					if(!A) return Promise.reject('none')
+
+					return self.peertube.re().then(() => {
+						return Promise.resolve({
+							data: 'success'
+						});
+					}).catch(e => {
+						return Promise.reject(e);
+					})
+				}
+			},
 		},
 
 		translate : {

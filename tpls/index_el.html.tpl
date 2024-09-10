@@ -19,7 +19,7 @@
         connect-src https: data: wss: http: ws: file: data: blob:;
         img-src 'self' blob: data: http: https: file:;
         script-src 'self' blob: https://__VAR__.domain https://player.vimeo.com https://www.youtube.com https://s.ytimg.com https://cdn.jsdelivr.net/joypixels/ https://cdnjs.cloudflare.com/ajax/libs/lamejs/ 'unsafe-eval' 'unsafe-inline';
-        frame-src 'self' https://__VAR__.domain https://player.vimeo.com https://www.youtube.com https://www.brighteon.com  https://stream.brighteon.com;
+        frame-src 'self' https:;
         style-src 'self' data: __VAR__.domain:* https://cdn.jsdelivr.net/joypixels/ https://use.fontawesome.com 'unsafe-inline' ;
         font-src 'self' data: __VAR__.domain:* https://use.fontawesome.com;
         media-src data: blob: *">
@@ -201,6 +201,9 @@
         <script join src="js/lib/pocketnet/btc17.js?v=4"></script>
         <script join src="js/lib/pocketnet/buffer.js?v=4"></script>
         <script join src="js/lib/client/system16.js?v=4"></script>
+        <script join src="js/lib/client/monetization.js?v=4"></script>
+
+        
         <script join src="js/lib/client/api.js?v=4"></script>       
         <script src="js/vendor/pbkdf2.js"></script>
         <script src="js/vendor/sha1.js"></script>   

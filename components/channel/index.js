@@ -84,8 +84,6 @@ var channel = (function(){
 			blocking : function(){
 				self.app.mobile.vibration.small()
 
-				console.log('author', author)
-
 				var me = self.app.psdk.userInfo.getmy()
 				if(!me) return 
 
@@ -120,6 +118,13 @@ var channel = (function(){
 			el.c.find('.blockWrapper').on('click', function(){
 				actions.blocking()
 			})
+
+			if(ed.customaction){
+				el.c.find('.customaction').on('click', function(){
+					ed.customaction.action(author.data)
+				})
+			}
+			
 			
 			_.each(reports, function(r, j){
 				if(r.events){
@@ -240,7 +245,7 @@ var channel = (function(){
 
 		_.each(essenses, function(essense){
 
-			window.requestAnimationFrame(() => {
+			window.rifticker.add(() => {
 				essense.destroy();
 			})
 
