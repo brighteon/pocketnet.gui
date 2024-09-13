@@ -68,14 +68,14 @@
                 "github" : {
                     "name": "BrighteonSetup.dmg",
                     "url": "https://api.github.com/repos/brighteon/pocketnet.gui/releases/latest",
-                    "page": "https://github.com/brighteon/pocketnet.gui/blob/master/README.md#download-bastyon-on-your-devices"
+                    "page": "https://github.com/brighteon/pocketnet.gui/blob/master/README.md#download-brighteon-on-your-devices"
                 }
             },
             "linux" : {
                 "github" : {
                     "name": "BrighteonSetup.deb",
                     "url": "https://api.github.com/repos/brighteon/pocketnet.gui/releases/latest",
-                    "page": "https://github.com/brighteon/pocketnet.gui/blob/master/README.md#download-bastyon-on-your-devices"
+                    "page": "https://github.com/brighteon/pocketnet.gui/blob/master/README.md#download-brighteon-on-your-devices"
                 }
             }
         },
