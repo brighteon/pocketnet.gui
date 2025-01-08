@@ -154,12 +154,17 @@ const publics = {
     getbarterondeals: true,
     getbarteronoffersdetails: true,
     getbarteroncomplexdeals: true,
+    getbarterongroups : true,
     // Jury
     getalljury: true,
     getjuryassigned: true,
     getjurymoderators: true,
 
-    getbans : true
+    getbans : true,
+
+    getapps : true,
+    getappscores : true,
+    getappcomments : true
 
 }
 
@@ -319,6 +324,17 @@ function rpc(request, callback, obj) {
             } 
 
         }
+
+        
+
+        if (res.status === 408) {
+
+            exceededError = {
+                error : errorMessage + 'Connection Rejected: sql request timeout',
+                code : 408
+            } 
+
+        }
         
 
         const data = res?.data;
@@ -353,6 +369,7 @@ function rpc(request, callback, obj) {
 
     })
     .catch(err => {
+
 
         called = true;
 
@@ -547,14 +564,17 @@ RpcClient.callspec = {
     getbarterondeals: 'obj',
     getbarteronoffersdetails: 'obj',
     getbarteroncomplexdeals: 'obj',
+    getbarterongroups: 'obj',
     // Jury
     getalljury: '',
     getjuryassigned: 'str',
     getjurymoderators: 'str',
 
-    getbans: 'str'
+    getbans: 'str',
 
-    
+    getapps : 'obj str int int int str bool',
+    getappscores : 'str int int int str bool',
+    getappcomments : 'str int int int str bool'
 
 };
 

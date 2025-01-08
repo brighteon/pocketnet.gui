@@ -255,6 +255,8 @@ _l.stp = "Начинающий";
 _l.stpg = "Топ";
 _l.stpreal = "Верифицированный";
 _l.stpdev = "Разработчик "+appname+"";
+_l.stpmoderator = "Модератор";
+
 
 _l.trialreputationtip = "Чтобы стать топовым пользователем необходимо набрать валидную репутацию. По крайней мере 100 топовых пользователей сети должны положительно оценить ваш контент (После трёх месяцев это требование смягчается до 30 пользователей). Кроме этого ваша репутация должна быть выше 100";
 
@@ -1017,6 +1019,22 @@ _l.selectnode = function(a) {
 _l.shareBareLink = "Поделиться Видео";
 _l.videoCopied = "Ссылка на видео успешно скопирована";
 
+_l.removeVideoDialog = "Вы уверены, что хотите удалить это видео?"
+
+_l.pterror_meta = "Неопределенный запрос"
+_l.pterror_host = "Видеосервер не найден"
+_l.pterror_link = "Неизвестная ссылка"
+_l.pterror_removeerror = "Невозможно удалить медиа. Попробуйте еще раз."
+_l.pterror_updateempty = "Изменений для обновления не найдено"
+_l.pterror_uploaderror = "Видео не было загружено"
+_l.pterror_dailyquotalimit = "Вы достигли лимита на загрузку видео"
+_l.pterror_videoQuotaUsedDaily = "Не удалось получить информацию о канале (квота)"
+_l.pterror_usersMe = "Не удалось получить информацию о канале"
+_l.pterror_oauthClientsLocal = "Не удалось получить информацию oAuth с сервера"
+_l.pterror_pocketnetAuth = "Авторизация не удалась"
+_l.pterror_getToken = "Невозможно получить токен"
+_l.pterror_videonotselected = "Видео не выбрано"
+
 _l.period = "Период";
 _l.periodday = "Один день";
 _l.period3day = "Три дня";
@@ -1170,6 +1188,7 @@ _l.editVideoDescription = "Изменить название/описание в
 _l.errorChangingDescription = "Ошибка изменения видео";
 _l.downloadVideo = "Скачать видео в сохранённые";
 _l.deleteSavedVideo = "Удалить видео из сохранённых";
+_l.downloadingVideo = "Сохранение видео";
 _l.selectQuality = "Выберите качество загружаемого видео";
 _l.downloadedVideos = "Сохранённые видео";
 _l.deleteAllDownloadedVideos = "Удалить все видео из сохранённых";
@@ -1909,6 +1928,8 @@ _l.easyNode_e10061 = "Ваша Нода запущена. Все равно за
 _l.easyNode_e10062 = "Доступно обновление Ноды. Загрузить новую версию?"
 _l.easyNode_e10063 = "Нода успешно обновлена"
 _l.easyNode_e10064 = "Поддержка"
+_l.easyNode_e10065 = "Экспортируйте кошелек и сохраните в надежном месте перед пополнением баланса!"
+
 
 _l.IHave = "У меня";
 _l.downloadNode = "Скачать Ноду для Windows";
@@ -2125,6 +2146,7 @@ _l.lowstar_reason_1 = "Эротика/Порно"
 _l.lowstar_reason_2 = "Детская эксплуатация"
 _l.lowstar_reason_3 = "Прямая угроза насилия"
 _l.lowstar_reason_4 = "Нелегальные наркотики"
+_l.lowstar_reason_5 = "Нарушение автроских прав"
 _l.lowstar2 = "Пожалуйста, не используйте рейтинги с одной или двумя звёздами по другим причинам."
 _l.lowstar3 = "Если вы ставите 1 или 2 звезды по причинам, не указанным выше, то после выхода алгоритма модерации, члены жюри лишат ваш аккаунт репутации навсегда."
 
@@ -2601,6 +2623,9 @@ _l.brighteontv = "Brighteon.TV"
 _l.brighteonradio = "Brighteon Radio"
 _l.brighteonnews = "Brighteon.news"
 _l.brighteondonate = "Спонсировать Brighteon"
+_l.permissions_name_externallink = "Открытие внешних ссылок";
+_l.permissions_descriptions_externallink = "Приложение запрашивает доступ на открытие внешних ссылок в браузере или других приложениях";
+
 
 _l.limits = "Лимиты"
 _l.pay = "Оплатить"
@@ -2724,3 +2749,160 @@ _l.foreground_service_mediaPlayback_title = appname
 _l.foreground_service_mediaPlayback_text = "В "+appname+" воспроизводится видео"
 _l.foreground_service_mediaUploading_title = appname
 _l.foreground_service_mediaUploading_text = "В "+appname+" происходит загрузка видео"
+
+
+_l.stateactionDefault = "Чтобы совершить действие вы должны зарегистрироваться или войти в свой аккаунт."
+
+_l.incomingVideoCall = "Входящий видео звонок"
+_l.incomingAudioCall = "Входящий аудио звонок"
+
+_l.connecting = "Устанавливается соединение"
+
+_l.quotanow = function(v){
+	return "Вы можете загрузить видео размером не больше чем"
+}
+
+_l.jury = "Жюри"
+_l.juryQuestionPost = "Вы подтверждаете, что пост не соответствует правилам "+appname+" по следующему основанию"
+_l.juryQuestionComment =  "Вы подтверждаете, что комментарий не соответствует правилам "+appname+" по следующему основанию"
+_l.juryQuestionUser = "Вы подтверждаете, что пользователь нарушает правила "+appname+" по следующему основанию"
+_l.juryvote_success =  "Ваше решение успешно принято"
+_l.juryconfirm = "Вы подтверждаете Ваше решение?"
+
+_l.openin = "Открыть в"
+
+_l.monet_title = "В Бастионе с 9 сентября вышла новая программа рекламы и монетизации для блогеров."
+_l.monet_subtitle = "Что это программа из себя представляет, как работает, кто участвует, как начисляются заработки, и зачем она нужна?"
+
+_l.monet_howworks_title = "Как работает:";
+_l.monet_howworks_text_1 = "Рекламодатели продвигают свои товары или услуги на Бастионе (информация для рекламодателей здесь bastyon.com/boost). Реклама попадает в главную ленту, а также в каналы авторов. Все заработки с главной ленты идут узлам (информация как заработать через простой узел bastyon.com/easynode), а с каналов авторам – самим авторам. Бастион не корпорация, не работает на прибыль, поэтому все деньги от рекламы на каналах идут авторам.";
+_l.monet_participation_title = "Кто участвует и какие выплаты:";
+_l.monet_participation_text_1 = "На первом этапе монетизация работает только на каналах авторов с галочкой верификации. Со временем программа  будет распространяться на другие каналы с большой активностью. Авторы  могут отключать монетизацию, убирая рекламу и лишая себя выплат."
+_l.monet_participation_text_2 = `Если у вас есть канал вне Бастиона с более чем 1 тыс подписчиков, вы можете написать на <a href="mailto:support@bastyon.com">support@bastyon.com</a> и запросить галочку верификации.`
+_l.monet_participation_text_3 = "ВАЖНО:  Авторы зарабатывают пропорционально активности и количеству людей на канале. Чем больше  комментариев и рейтингов, тем больше выплаты из рекламного пула. В  настройках у авторов есть кабинет Монетизация, в котором отображается  история и можно увидеть выплаты. Выплаты происходят в конце каждой  недели за активность на постах, выставленных в течении двух последних  недель.";
+_l.monet_monet_withdrawal_title = "Как выводить заработки авторам (очень просто):";
+_l.monet_monet_withdrawal_text_1 = `Авторы могут выводить PKOIN  через биржи Tapbit, Digifineх или через обменники из рук в руки в рубли, доллары, или любые другие валюты. Для  удобства авторов, некоторые старые обменники выведены прямо в кабинете  монетизации. Другие обменники и активной историей больше года буду  добавляться в кабинет. Если есть вопросы по выводу, пишите в поддержку <a href="mailto:support@bastyon.com">support@bastyon.com</a>`
+_l.monet_calculation_title = "Как рассчитываются выплаты?";
+_l.monet_calculation_text1 = "Начисления варьируются в зависимости от того сколько рекламы на неделе, и сколько заплатили рекламодатели. Деньги от рекламодателей полностью делятся между авторами, но сумма зависит от общей суммы от рекламы и от активности на канале (оценки и комментарии). Рост аудитории сопровождается приходом новых рекламодателей, что должно вести к повышению заработков. Активные каналы могут зарабатывать от эквивалента 50-75 долларов в неделю и выше.";
+_l.monet_increaseearnings_title = "Как увеличить заработок:";
+_l.monet_increaseearnings_text1 = "Создавать больше контента";
+_l.monet_increaseearnings_text2 = "Звать больше людей для активности";
+_l.monet_increaseearnings_text3 = "Длина видео не играет роли в Бастионе, так как реклама не врезается внутри ролика, играет активность под постами";
+
+_l.monet_footer_1 = "Внутренняя экономика Бастиона – Монетизация – Покеткойн (PKOIN)";
+_l.monet_signup = "ЗАРЕГИСТРИРОВАТЬСЯ НА БАСТИОНЕ";
+_l.monet_footer_2 = `*Напишите на <a href="mailto:support@bastyon.com">support@bastyon.com</a>, чтобы зарабатывать через рекламу на канале`;
+
+
+
+_l.miniApp_requiredMessage = "Это поле не может быть пустым";
+_l.miniApp_publishMessage = "Публикация мини-приложения: {0}";
+_l.miniApp_deleteConfirmation = "Вы уверены, что хотите удалить мини-приложение?";
+_l.miniApp_yesButton = "Да";
+_l.miniApp_noButton = "Отмена";
+_l.miniApp_deleteSuccessMessage = "Приложение было успешно удалено.";
+_l.miniApp_deleteErrorMessage = "Не удалось удалить приложение. Попробуйте ещё раз позже.";
+_l.miniApp_loadErrorMessage = "Не удалось загрузить данные приложения.";
+_l.miniApp_editErrorMessage = "Не удалось отредактировать приложение. Попробуйте ещё раз позже.";
+
+_l.miniApp_iconAltText = "Иконка приложения";
+_l.miniApp_publishButton = "Публиковать";
+_l.miniApp_editButton = "Редактировать";
+_l.miniApp_deleteButton = "Удалить";
+_l.miniApp_authorLabel = "Автор";
+_l.miniApp_tagsLabel = "Тэги";
+_l.miniApp_permissionsLabel = "Права доступа";
+_l.miniApp_idLabel = "ID";
+_l.miniApp_linkLabel = "Ссылка на приложение";
+_l.miniApp_goToAppLinkText = "Перейти к приложению";
+_l.miniApp_descriptionUnavailable = "Описание недоступно";
+_l.miniApp_editTitle = "Редактирование приложения: ";
+_l.miniApp_scopeLabel = "Scope";
+_l.miniApp_nameLabel = "Название";
+_l.miniApp_saveButton = "Сохранить";
+_l.miniApp_cancelButton = "Отмена";
+_l.miniApp_importManifestError = "Ошибка импорта манифеста. Это может произойти, если файл `b_manifest.json` отсутствует, повреждён или имеет некорректный JSON-формат.";
+_l.miniApp_importIconError = "Ошибка импорта иконки приложения. Это может произойти, если файл `b_icon.png` отсутствует или недоступен.";
+_l.miniApp_brokenManifestError = "Манифест приложения повреждён. Это может быть вызвано синтаксической ошибкой JSON или недостающими ключами в манифесте.";
+_l.miniApp_brokenPermissionsError = "Некорректные или пустые разрешения в манифесте. Убедитесь, что разрешения указаны корректно.";
+_l.miniApp_missingIdError = "В манифесте отсутствует идентификатор приложения. Поле `id` должно быть заполнено.";
+_l.miniApp_missingNameError = "В манифесте отсутствует имя приложения. Поле `name` должно быть заполнено.";
+_l.miniApp_missingVersionError = "В манифесте отсутствует версия приложения. Поле `version` должно быть заполнено.";
+_l.miniApp_missingDescriptionEnError = "Не указано описание приложения на английском языке в разделе `descriptions`.";
+_l.miniApp_missingScopeError = "Отсутствует информация о `scope` в манифесте. Убедитесь, что указано корректное значение `scope`.";
+_l.miniApp_brokenAuthorError = "Некорректный автор приложения. Это может быть вызвано отсутствием или неверным форматом поля `author` (ожидается адрес в формате Base58).";
+_l.miniApp_discrepancyIdError = "Несоответствие между ID приложения в манифесте и ID приложения, указанным в процессе установки.";
+_l.miniApp_discrepancyDevelopError = "Несоответствие статуса разработки (`develop`) между манифестом и указанным приложением.";
+_l.miniApp_discrepancyAuthorError = "Добавление невозможно: автор приложения, указанный в манифесте, не совпадает с вашим адресом. Вы не можете добавлять приложения, которым не владеете.";
+_l.miniApp_conflictIdAlreadyExistsError = "Конфликт: приложение с таким идентификатором уже существует. Проверьте ID нового приложения или удалите существующее.";
+_l.miniApp_permissionDeniedError = "Пользователь отклонил разрешение, запрошенное приложением.";
+_l.miniApp_permissionMissingError = "Одно из запрашиваемых приложением разрешений отсутствует в манифесте.";
+_l.miniApp_permissionsEmptyError = "Запрашиваемый список разрешений пуст. Приложение должно запрашивать хотя бы одно разрешение.";
+_l.miniApp_parametersMissingError = "Одно или несколько обязательных параметров отсутствуют при выполнении действия.";
+_l.miniApp_locationNotAvailableError = "Не удалось получить данные геолокации. Проверьте разрешения или состояние GPS.";
+_l.miniApp_messageEmptyError = "Сообщение для функции alert пустое. Убедитесь, что передан текст сообщения.";
+_l.miniApp_versionError = "Версия манифеста не соответствует установленной версии приложения.";
+_l.miniApp_userAuthorizedError = "Пользователь уже авторизован. Регистрация невозможна.";
+_l.miniApp_imagesMax10Error = "Превышено допустимое количество загружаемых изображений (максимум 10).";
+_l.miniApp_brokenZAddressesError = "Не удалось получить z-адреса пользователя. Возможно, данные отсутствуют или некорректны.";
+_l.miniApp_mobileCameraNotSupportedError = "Камера мобильного устройства не поддерживается приложением.";
+_l.miniApp_mobileCameraCancelError = "Пользователь отменил доступ к камере или загрузку изображений.";
+_l.miniApp_permissionNotExistInManifestError = "Запрошенное разрешение отсутствует в манифесте приложения.";
+_l.miniApp_permissionRequestError = "Ошибка при запросе разрешения у пользователя. Убедитесь, что разрешение корректно указано.";
+_l.miniApp_errorCodeAppDataError = "Ошибка в данных локального хранилища приложения.";
+_l.miniApp_missingApplicationError = "Приложение не найдено в установленном списке. Возможно, оно было удалено или ID указан некорректно.";
+_l.miniApp_publishSuccessMessage = "Приложение успешно опубликовано.";
+_l.miniApp_publishErrorMessage = "Произошла ошибка при публикации приложения.";
+_l.miniApp_publishOnlyTestNetworkMessage = "В данный момент публикация доступна только в тестовой сети.";
+_l.miniApp_scopeDescription = "Введите доменное имя без протокола (например, 'example.com'). Приложение должно поддерживать протокол HTTPS.";
+_l.miniApp_createTitle = "Создание нового мини-приложения";
+_l.miniApp_createDescription = "Убедитесь, что все данные совпадают с полями, указанными в файле `b_manifest.json` приложения. Любые расхождения могут вызвать ошибки при установке.";
+_l.miniApp_tagsRequiredMessage = "Укажите хотя бы один тег для приложения.";
+_l.miniApp_idInvalidMessage = "ID должен быть в формате доменного имени, например, app.pocketnet или example.app. Используйте только буквы в нижнем регистре и хотя бы одну точку.";
+_l.miniApp_scopeInvalidMessage = "Поле scope должно быть в формате поддомена, например, app.pocketnet. Используйте только строчные буквы, цифры и точки без префиксов https:// или www."
+_l.miniApp_extendedTags = "Максимальное количество тегов, которое вы можете добавить, — ";
+
+
+_l.miniApp_documentationButtonLabel = "Документация";
+_l.miniApp_createButtonLabel = "Создать приложение";
+_l.miniApp_myAppsButtonLabel = "Созданные мной";
+_l.miniApp_appsButtonLabel = "Приложения";
+
+_l.miniApp_heroTitle = "Мощная платформа для ваших проектов";
+_l.miniApp_heroSubtitle = "Разрабатывайте приложения и используйте все возможности Бастиона в вашем бизнесе.";
+_l.miniApp_heroCtaButton = "Начать работу";
+
+_l.miniApp_featuresTitle = "Возможности";
+_l.miniApp_featureDecentralizedTitle = "Децентрализованность";
+_l.miniApp_featureDecentralizedDescription = "Создавайте приложения без централизованного контроля, обеспечивая безопасность ваших данных.";
+_l.miniApp_featureScalableTitle = "Масштабируемость";
+_l.miniApp_featureScalableDescription = "Используйте сеть Бастиона для поддержки приложений любого размера.";
+_l.miniApp_featureCryptoIntegrationTitle = "Легкая интеграция криптовалютных платежей";
+_l.miniApp_featureCryptoIntegrationDescription = "Встраивайте криптовалютные платежи в ваши приложения для удобства пользователей.";
+_l.miniApp_featureApiAccessTitle = "Полный доступ к API Бастиона";
+_l.miniApp_featureApiAccessDescription = "Используйте все возможности API Бастиона для создания функциональных и инновационных приложений.";
+_l.juryCaptionPost = "Нарушает ли публикация правила размещения контента в "+appname+"?"
+_l.juryCaptionComment = "Нарушает ли комментарий правила размещения контента в "+appname+"?"
+_l.juryCaptionUser = "Нарушает ли канал автора правила размещения контента в "+appname+"?"
+_l.juryCaptionReason = "Причина"
+_l.juryYes = "Да, нарушает"
+_l.juryNo = "Нет, не нарушает"
+_l.makePost = "Сделать публикацию"
+
+
+_l.askdefaultapplink = function(appname){ return "Открыть ли данную ссылку в миниприложении " + appname + "?"};
+_l.nomoreaskdefaultapplink = function({name, scope}){ return "Всегда открывать ссылки на "+scope+" в миниприложении " + name};
+_l.redirectminiappsuccess = function(appname){ return "Ссылка открыта в миниприложении " + appname};
+_l.chat = "Чат"
+_l.emptyntime1 = 'Пожалуйста, выберите дату и время публикации'
+
+
+_l.postWaitDelayed = function(time){
+    return 'Публикация будет опубликована: ' + time 
+}
+
+_l.fordevelopers = "Для разработчиков"
+
+_l.interfacemobilelayoutmenu = "Кнопка чата посередине нижней панели"
+_l.interface = "Интерфейс"
+

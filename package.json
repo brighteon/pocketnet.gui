@@ -2,11 +2,11 @@
     "name": "brighteon",
     "project": "Brighteon",
 
-    "version": "0.8.99",
+    "version": "0.9.109",
 
-    "versionsuffix": "6",
-    "cordovaversion": "1.8.99",
-    "cordovaversioncode": "180996",
+    "versionsuffix": "0",
+    "cordovaversion": "1.8.109",
+    "cordovaversioncode": "1801090",
 
     "description": "Brighteon desktop application",
     "author": "Pocketnet Community <support@brighteon.io>",
@@ -16,6 +16,7 @@
     "repository": "github:brighteon/pocketnet.gui",
     "scripts": {
         "start": "electron . --development",
+        "startinspect": "electron . --development --inspect=9229",
         "start:test": "electron . --development --test",
         "pack": "electron-builder -w --dir --x64",
         "build": "npm run build:proxy16 && npm run dev:brighteon",

@@ -1124,6 +1124,8 @@ var authorn = (function(){
 			
 			lenta : function(){
 
+				if(modules.lenta) modules.lenta.destroy()
+
 				var hr = 'authorn?address=' + author.address
 				var n =  app.platform.api.name(author.address)
 				if (n) hr = n.toLowerCase() + "?"
@@ -1138,7 +1140,7 @@ var authorn = (function(){
 					renderclbk : function(){
 
 					},
-
+					fixposition : true,
 					canloadmorescroll : function(){
 
 						if(openedpost) return false
@@ -1156,10 +1158,6 @@ var authorn = (function(){
 				}
 
 
-				
-
-				
-
 				el.lenta.html('')
 
 				if(!author.reputationBlocked && !author.deleted){
@@ -1175,8 +1173,6 @@ var authorn = (function(){
 					monetizationPromise.then((m) => {
 
 						params.includeboost = monetizationStatic && m
-
-
 
 						self.nav.api.load({
 
@@ -1532,7 +1528,6 @@ var authorn = (function(){
 				if (address && author.address != address){
 
 					get(address, () => {
-
 						destroy();
 						init();
 					})
@@ -1626,7 +1621,8 @@ var authorn = (function(){
 				el.blocking = el.c.find('.blocking')
 				el.upbackbutton = el.c.find('.upbackbuttonwrapper')
 
-				self.sdk.activity.adduser('visited', author.address)
+				if(!self.app.user.isItMe(author.address))
+					self.sdk.activity.adduser('visited', author.address)
 
 				initEvents();
 				init()

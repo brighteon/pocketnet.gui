@@ -110,8 +110,6 @@ Application = function (p) {
 		electron = require('electron');
 	}
 
-	console.log('monet', p)
-
 	if (p.monetization && typeof window.Monetization != 'undefined'){
 		self.monetization = new window.Monetization(self, p.monetization)
 	}
@@ -139,13 +137,36 @@ Application = function (p) {
 	self.pkoindisable = window.cordova && isios();
 	self.cutversion = window.cordova && isios();
 
+	self.electronview = typeof _Electron != 'undefined' && _Electron
+
 	self.margintop = 0
+	
+	self.caneditdelaypost = false
+
+
+	if (self.test) {
+		self.publishapps = true
+	}
+
+	if (self.test) {
+		self.delaypost = true
+	}
+
+	try{
+		if(localStorage['testdelaypost']){
+			self.delaypost = true
+		}
+		
+	}catch(e){
+
+	}
 
 	self.options = {
 
 		url: url,
 
 		matrix: p.matrix,
+		matrixMirrors : p.matrixMirrors,
 
 		nav: {
 			navPrefix: window.pocketnetpublicpath || '/pocketnet',
@@ -893,28 +914,34 @@ Application = function (p) {
 
 		index: {
 			href: 'index',
-			childrens: ['author', 'authorn', 'chat', 's', 'share', 'userpage'],
+			childrens: ['author', 'authorn', 'chat', 's', 'share', 'userpage', 'post', 'application', 'home'],
 		},
 
 		s: {
 			href: 's',
-			childrens: ['author', 'authorn', 'chat', 's', 'share', 'userpage']
+			childrens: ['author', 'authorn', 'chat', 's', 'share', 'userpage', 'post', 'application', 'home']
 		},
 
 		author: {
 			href: 'author',
-			childrens: ['author', 'authorn', 's', 'chat', 'share', 'userpage', 'post']
+			childrens: ['author', 'authorn', 's', 'chat', 'share', 'userpage', 'post', 'post', 'application', 'home']
 		},
 
 		authorn: {
 			href: 'authorn',
-			childrens: ['author', 'authorn', 's', 'chat', 'share', 'userpage', 'post']
+			childrens: ['author', 'authorn', 's', 'chat', 'share', 'userpage', 'post', 'post', 'application', 'home']
 		},
 
 		userpage: {
 			href: 'userpage',
-			childrens: ['userpage', 'share', 'authorn', 'author', 'post', 'authorization', 'registration', 'pkview']
+			childrens: ['userpage', 'share', 'authorn', 'author', 'post', 'authorization', 'registration', 'pkview', 'application', 'home']
+		},
+
+		home : {
+			href : 'home',
+			childrens : ['application']
 		}
+
 
 	}
 
@@ -1408,6 +1435,7 @@ Application = function (p) {
 		self.el = {
 			camera: $('#camera'),
 			content: $('#content'),
+			miniapps: $('#miniappscnt'),
 			app: $('#application'),
 			header: $('#headerWrapper'),
 			menu: $('#menuWrapper'),
@@ -1684,9 +1712,6 @@ Application = function (p) {
 
 		playingvideo: function (v, from) {
 
-			console.log("PLAYING", v ,from)
-			
-
 			if(from && from.player_id){
 				if(self.playingvideocollisions[from.player_id]){
 					delete self.playingvideocollisions[from.player_id]
@@ -1780,6 +1805,7 @@ Application = function (p) {
 				scrollrif = null
 
 				self.el.window.scrollTop(to)
+
 				self.scrollTop = to
 
 				setTimeout(function () {
@@ -2345,6 +2371,14 @@ Application = function (p) {
 
 	self.mobile = {
 
+		removescrollmodedown : function(){
+			if (app.el.html.hasClass('scrollmodedown')) {
+				window.requestAnimationFrame(() => {
+					app.el.html.removeClass('scrollmodedown')
+				})
+			}
+		},
+
 		audiotoggle: function (mode = 'SPEAKER') {
 
 			if (typeof window.AudioToggle != 'undefined') {
@@ -2825,8 +2859,6 @@ Application = function (p) {
 
 			if (window.cordova) {
 				if (window.cordova.plugins && window.cordova.plugins.backgroundMode) {
-
-					console.log('playing set backgroundMode', t)
 
 					if (t) {
 

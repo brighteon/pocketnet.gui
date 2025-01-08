@@ -75,7 +75,6 @@ var BastyonSdk = function(){
         window.history[changeState] = new Proxy(window.history[changeState], {
             
             apply (target, thisArg, argList) {
-                console.log('changeState', changeState)
                 const [state, title, url] = argList
                 onChangeState(state, title, url, changeState === 'replaceState')
                 
@@ -100,7 +99,6 @@ var BastyonSdk = function(){
             }
 
         }
-        //console.log('application:event:inapp', event)
     })
 
     var on = function(key, data){
@@ -201,10 +199,25 @@ var BastyonSdk = function(){
 
     //////////////////
 
-    self.rpc = function(method, parameters = []){
+    self.rpc = function(method, parameters = [], options){
+
+        /*
+        options = {
+            rpc : {
+                fnode : '65.21.252.135:38081'
+            }
+        } 
+
+        options = {
+            fnode : '65.21.252.135:38081'
+        }
+        
+        */
+
         return action('rpc', {
             method,
-            parameters
+            parameters,
+            options
         })
     }
 
@@ -255,6 +268,15 @@ var BastyonSdk = function(){
         }
     }
 
+    self.open = {
+        post : function(txid){
+            return action('open.post', {txid})
+        },
+        donation : function(receiver){
+            return action('open.donation', {receiver})
+        },
+    }
+
     self.permissions = {
         check : function({permission}){
             return action('checkPermission', {permission})
@@ -271,6 +293,10 @@ var BastyonSdk = function(){
         })
     }
 
+    self.openExternalLink = function(url){
+        return action('openExternalLink', {url})
+    }
+
     self.barteron = {
         account : function(data){
             return action('barteron.account', data)
@@ -278,6 +304,10 @@ var BastyonSdk = function(){
 
         offer : function(data){
             return action('barteron.offer', data)
+        },
+
+        removeOffer : function(data){
+            return action('barteron.removeOffer', data)
         },
 
         comment : function(data){
@@ -396,6 +426,7 @@ var BastyonSdk = function(){
                 }
     
                 document.documentElement.setAttribute('theme', theme.rootid);
+                document.documentElement.setAttribute('bastyon', 'bastyon');
     
                 document.documentElement.style.setProperty('--app-margin-top', `${margintop}`);
 
@@ -412,6 +443,19 @@ var BastyonSdk = function(){
         } catch (e) {
             return true;
         }
+    }
+
+    self.extendMetamaskOptions = function(options){
+        
+        if(self.applicationInfo.device == 'application_electron'){
+            options.shouldShimWeb3 = false
+        }
+
+        options.openDeeplink = function(url){
+            self.openExternalLink(url)
+        }
+
+        return options
     }
 
 
