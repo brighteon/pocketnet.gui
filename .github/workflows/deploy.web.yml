@@ -28,7 +28,7 @@ jobs:
           tar czf /tmp/brighteon.tgz -C /tmp/brighteon .
 
       - name: Upload artifact
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: brighteon.tgz
           path: /tmp/brighteon.tgz
@@ -41,7 +41,7 @@ jobs:
         runner: [ btio1, btio2, btio3, btio4 ]
     steps:
       - name: Download artifact
-        uses: actions/download-artifact@v3
+        uses: actions/download-artifact@v4
         with:
           name: brighteon.tgz
       - name: Install
