@@ -34,6 +34,10 @@
 #leftpanel .brighteonSites .brtitems .reportCaption {
   margin-bottom: 0.75em;
 }
+#leftpanel .brighteonSites .brtitems .iconimage {
+  margin-right: 10px;
+  width: 20px;
+}
 #leftpanel .brighteonSites .brtitems i {
   text-align: center;
   margin-right: 10px;

@@ -156,26 +156,24 @@ var deleted = app.platform.sdk.user.myaccauntdeleted();
 			
 						<% } %>
 
+						<div class="items askaiwrapper">
+							<div class="item  right onlyicon aiext" events="aiext">
+
+								<div class="icon">
+									<div class="icn">
+										<a href="https://brighteon.ai/" cordovalink="_system" external="external">
+											<button class="button askai"><img class="iconimage" src="img/Icon-AI-Gray.svg"> <span>Ask AI</span></button>
+										</a>
+									</div>
+								</div>
+								
+
+							</div>
+						</div>
+
 						<% if(state) { %>
 
 							<% if(!deleted) {%>
-
-								<!--<div elementsid="keyexportWrapper" class="items keyexportWrapper <% if(typeof key== 'undefined' || !key) {%> hidden <% } %>">
-									<div class="item  right onlyicon keyexport" events="keyexport">
-
-										<div class="icon">
-											<div class="icn">
-												<i class="fas fa-key"></i>
-											</div>
-
-											<div class="amount">
-											</div>
-
-										</div>
-
-									</div>
-								</div>-->
-
 
 								<div elementsid="notificationsWrapper <% if(typeof key != 'undefined' && key) {%> hidden <% } %>" class="items notificationsWrapper">
 									<div class="item  right onlyicon activities" events="activities">

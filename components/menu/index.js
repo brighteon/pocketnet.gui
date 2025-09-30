@@ -373,6 +373,20 @@ var menu = (function(){
 				}
 			},
 
+			aiext : {
+				init : function(el){
+
+					//self.app.nav.api.externalTarget(el)
+
+				},
+
+				click : function(el){
+
+					
+
+				}
+			},
+
 			activities : {
 				init : function(el){
 

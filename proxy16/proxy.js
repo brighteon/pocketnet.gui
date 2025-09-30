@@ -1134,7 +1134,7 @@ var Proxy = function (settings, manage, test, logger, reverseproxy) {
 					r.data = {contents}
 				}
 
-				var posts = r.data.contents || []
+				var posts = r.data.contents || r.data.posts || []
 
 					result = r
 

@@ -3,6 +3,20 @@
 
 #menu{
 
+	button.askai{
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		border-radius: 20px;
+		padding-right: 2 * @rhythm;
+		background: #6f64ff;
+		border-color: #6f64ff;
+		img{
+			filter:  brightness(0) invert(1);
+		}
+		
+	}
+
 	.rightchatspacer{
 		height: 100%;
 	}
@@ -1051,6 +1065,10 @@ html.mobileview{
 		.signup{
 			margin-left: 2 * @rhythm;
 			margin-right: 2 * @rhythm;
+		}
+
+		.askaiwrapper{
+			display: none;
 		}
 		
 

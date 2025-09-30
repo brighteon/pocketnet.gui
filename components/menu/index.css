@@ -1,3 +1,15 @@
+#menu button.askai {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 20px;
+  padding-right: 1em;
+  background: #6f64ff;
+  border-color: #6f64ff;
+}
+#menu button.askai img {
+  filter: brightness(0) invert(1);
+}
 #menu .rightchatspacer {
   height: 100%;
 }
@@ -759,6 +771,9 @@ html.mobileview #menu {
 html.mobileview #menu .signup {
   margin-left: 1em;
   margin-right: 1em;
+}
+html.mobileview #menu .askaiwrapper {
+  display: none;
 }
 html.mobileview #menu .sections {
   width: 100%;
